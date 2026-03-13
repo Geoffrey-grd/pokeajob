@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+    <html>
+
+        <head>
+            <title>Mon projet</title>
+        </head>
+
+        <body>
+            <h1>{{ message }}</h1>
+
+            {% for user in users %}
+            <h2>{{ user.email }}</h2>
+            <p>{{ user.password }}</p>
+            {% endfor %}
+            
+        </body>
+    </html> 
