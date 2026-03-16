@@ -7,6 +7,18 @@ use Core\View;
 $router = new Router();
 
 /* ROUTES GÉNÉRALES */
-$router->get("/", "HomeController@index"); // ou une page d'accueil
+$router->get("/", "AuthController@login");
+
+$router->post("/loginregister", "AuthController@form_type");
+
+$router->get("/boo", "HomeController@boo");
 
 $router->dispatch();
+
+
+
+
+
+
+
+

@@ -1,0 +1,117 @@
+:root {
+    /* Variables globales du projet (couleurs, espaces, tailles). */
+    --color-bg-start: #212a83;
+    --color-bg-end: #0038ff;
+    --color-accent: #f7c711;
+    --color-text: #ffffff;
+    --color-text-dark: #2c3e50;
+    --color-border: #000000;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+
+    --top-nav-h: 70px;
+    --bottom-nav-h: 70px;
+
+    --z-fixed: 1000;
+    --z-overlay: 1100;
+    --z-menu: 1200;
+
+    --layout-tablet: 760px;
+    --layout-desktop: 1200px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--color-text);
+    background: linear-gradient(to bottom right, var(--color-bg-start), var(--color-bg-end));
+    background-attachment: fixed;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+main {
+    /* Garde de la place pour les barres fixes du haut et du bas. */
+    padding-top: calc(var(--top-nav-h) + 16px);
+    padding-bottom: calc(var(--bottom-nav-h) + 16px);
+}
+
+@media (min-width: 768px) {
+    body {
+        font-size: 17px;
+    }
+
+    main {
+        padding-top: calc(var(--top-nav-h) + 20px);
+        padding-bottom: calc(var(--bottom-nav-h) + 20px);
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 18px;
+    }
+
+    main {
+        padding-top: calc(var(--top-nav-h) + 24px);
+        padding-bottom: calc(var(--bottom-nav-h) + 24px);
+    }
+}

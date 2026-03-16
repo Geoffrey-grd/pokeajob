@@ -1,0 +1,119 @@
+/* Styles communs du formulaire de connexion/inscription. */
+.form-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: var(--space-5);
+    font-size: 1.6rem;
+}
+
+.login-form .form-group {
+    margin-bottom: var(--space-5);
+}
+
+.login-form input,
+.login-form select.form-select {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-form input:focus,
+.login-form select.form-select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.18);
+}
+
+.login-form select.form-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 44px;
+}
+
+.checkbox-group {
+    /* Aligne proprement la case et un texte qui peut aller sur 2 lignes. */
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.checkbox-group input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    accent-color: #3498db;
+    cursor: pointer;
+}
+
+.checkbox-group label {
+    cursor: pointer;
+    line-height: 1.4;
+}
+
+.checkbox-group label,
+.form-links p,
+.separator {
+    color: #555;
+    font-size: 0.85rem;
+}
+
+.form-options {
+    /* Ajoute un petit espace avant le bouton principal. */
+    margin-bottom: var(--space-5);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #fff;
+    background: #f39c12;
+}
+
+.login-btn:hover {
+    background: #e67e22;
+}
+
+.form-links,
+.account-links {
+    text-align: center;
+    margin-top: var(--space-5);
+}
+
+.forgot-password,
+.register-link,
+.account-link {
+    color: #3498db;
+}
+
+.account-links {
+    padding-top: var(--space-4);
+    border-top: 1px solid #e0e0e0;
+}
+
+@media (min-width: 768px) {
+    .form-container {
+        padding: 30px;
+    }
+}

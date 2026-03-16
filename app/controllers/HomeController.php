@@ -23,5 +23,9 @@ class HomeController {
 
     }
 
+    public function boo() {
+        View::render("boo.twig");
+    }
+
     
 }

@@ -1,0 +1,127 @@
+/* Cadre general de la page connexion/inscription. */
+.page-auth {
+    color: #fff;
+    background: linear-gradient(135deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+}
+
+.page-auth main {
+    width: 100%;
+    max-width: 450px;
+    padding: var(--space-4);
+    margin: 0 auto;
+}
+
+.page-auth .login-box {
+    background: rgba(52, 152, 219, 0.9);
+    border-radius: 20px;
+    padding: var(--space-6) var(--space-4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.page-auth .logo {
+    text-align: center;
+    margin-bottom: var(--space-5);
+}
+
+.page-auth .logo-img {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+/* Boutons pour changer de mode: connexion ou inscription. */
+.auth-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+}
+
+.auth-switch__btn {
+    min-height: 42px;
+    border: 2px solid #cad5ff;
+    border-radius: var(--radius-pill);
+    background: #eef2ff;
+    color: #1f2b6b;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.auth-switch__btn.is-active {
+    border-color: var(--color-border);
+    background: var(--color-accent);
+    color: #000;
+}
+
+.auth-switch--roles {
+    /* En mobile on garde des boutons lisibles sur 2 colonnes. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: var(--space-2);
+    margin-bottom: 0;
+}
+
+.role-switch__btn {
+    min-height: 40px;
+    font-size: 0.9rem;
+}
+
+.is-hidden {
+    /* Classe utilitaire pour masquer les champs non utiles. */
+    display: none !important;
+}
+
+/* Espace sous la navbar fixe du haut. */
+.page-auth main {
+    padding-top: calc(var(--top-nav-h) + var(--space-5));
+    padding-bottom: var(--space-5);
+}
+
+@media (min-width: 768px) {
+    /* Sur tablette/PC, on centre le bloc au milieu de l'ecran. */
+    .page-auth {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .page-auth main {
+        flex: 1;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: calc(var(--top-nav-h) + var(--space-4)) var(--space-6) var(--space-6);
+    }
+
+    .page-auth .login-container {
+        width: 100%;
+        max-width: 560px;
+    }
+
+    .page-auth .login-box {
+        padding: 40px 30px;
+    }
+
+    .auth-switch--roles {
+        /* 3 roles visibles proprement: etudiant, entreprise, pilote. */
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-auth main {
+        padding-top: calc(var(--top-nav-h) + var(--space-6));
+    }
+
+    .page-auth .login-container {
+        max-width: 700px;
+    }
+
+    .page-auth .login-box {
+        padding: 48px 40px;
+    }
+
+    .page-auth .logo-img {
+        max-width: 220px;
+    }
+}
