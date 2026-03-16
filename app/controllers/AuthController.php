@@ -44,15 +44,7 @@ class AuthController {
                 $_SESSION["email"] = $user["email"];
                 $_SESSION["role"] = $user["role"];
 
-                if ($user["role"] == "etudiant") {
-                    header("Location: /boo1");
-                } 
-                else if ($user["role"] == "pilote") {
-                    header("Location: /boo2");
-                } 
-                else if ($user["role"] == "entreprise") {
-                    header("Location: /boo3");
-                }
+                header("Location: /offers-list");
                 exit(); 
             } else {
                 $error = "Identifiant ou mot de passe incorrect.";

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/core.css">
+    <link rel="stylesheet" href="assets/navbar.css">
+    <link rel="stylesheet" href="assets/card.css">
+    <link rel="stylesheet" href="assets/offer_list.css">
+    <script src="assets/index.js" defer></script>
+    <title>PokeAJob - Accueil</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/pokeball-apple-touch-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+
+
+
+<body>
+    <header>
+        <nav class="navbar--top">
+            <button id="openbtn" class="navbar__menu" aria-label="Ouvrir le menu" aria-expanded="false">
+                <span class="burger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+
+            <!-- Menu lateral ouvert/ferme par le bouton burger. -->
+            <div id="burgermenu" class="burgermenu" aria-hidden="true">
+                <button id="closebtn" type="button" class="close" aria-label="Fermer le menu">
+                    <span class="burger-icon burger-icon--close">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+                <ul class="menu menu--main">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="search.html">Offres</a></li>
+                    <li><a href="connexion.html">Mon profil</a></li>
+                </ul>
+                <ul class="menu menu--footer">
+                    <li><a href="test_redirection.html">Mentions Légales</a></li>
+                    <li><a href="connexion.html">Déconnexion</a></li>
+                </ul>
+            </div>
+            <!-- Fond sombre clique pour fermer le menu. -->
+            <div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
+
+            <a class="navbar__logo" href="index.html"> <img src="images/Logo_PokeAJob.png" alt="Logo du site"></a>
+            <a class="navbar__profile" href="connexion.html"> <img src="images/Profile.png" alt="Logo de profil"></a>
+        </nav>
+    </header>
+
+
+
+    {% block content %}
+    {% endblock %}
+
+    
+
+        <!-- Barre de navigation basse (tableau, recherche, favoris). -->
+    <footer>
+        <nav class="navbar--bottom">
+            <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a>
+            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__wishlist" href="search.html"> <img src="images/wishlist_menu.png" alt="Wishlist"></a>
+        </nav>
+    </footer>
+
+</body>
+
+
+</html>
