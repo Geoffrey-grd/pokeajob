@@ -8,20 +8,11 @@ use Core\View;
 require_once __DIR__ . "/../../config/database.php";
 
 
-// class LoginRegisterController {
-
-//     public function ShowLoginRegisterPage() {
-//         global $conn;
-//             View::render("login-register.twig");
-//     }
-// }
-
-
-
-
-
-
 class AuthController {
+
+    public function renderLoginRegister() {
+        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken()]);
+    }
 
     public function form_type() {
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -35,12 +26,11 @@ class AuthController {
     }
     
 
-
     public function login() {
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
 
-        //$error = "";
+        $error = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Csrf::verifyToken($_POST["csrf_token"]);
@@ -54,13 +44,21 @@ class AuthController {
                 $_SESSION["email"] = $user["email"];
                 $_SESSION["role"] = $user["role"];
 
-                header("Location: /boo");
+                if ($user["role"] == "etudiant") {
+                    header("Location: /boo1");
+                } 
+                else if ($user["role"] == "pilote") {
+                    header("Location: /boo2");
+                } 
+                else if ($user["role"] == "entreprise") {
+                    header("Location: /boo3");
+                }
                 exit(); 
             } else {
-                //$error = "Identifiant ou mot de passe incorrect.";
+                $error = "Identifiant ou mot de passe incorrect.";
             }
         }
-        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken()]);
+        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "error" => $error]);
     }
 
 
@@ -68,7 +66,7 @@ class AuthController {
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
 
-        //$error = "";
+        $error = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Csrf::verifyToken($_POST["csrf_token"]);
@@ -80,7 +78,7 @@ class AuthController {
             $existingUser = User::findByemail($conn, $email);
 
             if ($existingUser !== null) {
-                //$error = "Cet email est déjà utilisé.";
+                $error = "Cet email est déjà utilisé.";
             } 
             else {
                 if ($account_type == "entreprise") {
@@ -108,12 +106,8 @@ class AuthController {
                     User::create_student($conn, $email, $password, $name, $last_name, $school, $pilot, $role);
             }
             }
-
-            
-
-            
         }
 
-        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken()]);
+        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "error" => $error]);
     }
 }

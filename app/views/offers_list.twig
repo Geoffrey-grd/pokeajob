@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/core.css">
+    <link rel="stylesheet" href="assets/components/navbar.css">
+    <link rel="stylesheet" href="assets/components/card.css">
+    <link rel="stylesheet" href="assets/pages/offer_list.css">
+    <script src="assets/index.js" defer></script>
+    <title>PokeAJob - Accueil</title>
+</head>
+<body class="page-home">
+    <!-- Barre du haut avec menu burger, logo et profil. -->
+    <header>
+        <nav class="navbar--top">
+            <button id="openbtn" class="navbar__menu" aria-label="Ouvrir le menu" aria-expanded="false">
+                <span class="burger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+
+            <!-- Menu lateral ouvert/ferme par le bouton burger. -->
+            <div id="burgermenu" class="burgermenu" aria-hidden="true">
+                <button id="closebtn" type="button" class="close" aria-label="Fermer le menu">
+                    <span class="burger-icon burger-icon--close">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+                <ul class="menu menu--main">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="search.html">Offres</a></li>
+                    <li><a href="connexion.html">Mon profil</a></li>
+                </ul>
+                <ul class="menu menu--footer">
+                    <li><a href="test_redirection.html">Mentions Légales</a></li>
+                    <li><a href="connexion.html">Déconnexion</a></li>
+                </ul>
+            </div>
+            <!-- Fond sombre clique pour fermer le menu. -->
+            <div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
+
+            <a class="navbar__logo" href="index.html"> <img src="images/Logo_PokeAJob.png" alt="Logo du site"></a>
+            <a class="navbar__profile" href="connexion.html"> <img src="images/Profile.png" alt="Logo de profil"></a>
+        </nav>
+    </header>
+
+    <!-- Liste des offres affichees sous forme de cartes. -->
+    <main>
+        <section class="feed">
+            <section class="job-card">
+                <div class="card__banner">
+                    <img class="card__banner-img" src="images/bannière.jpg" alt="Image de l'offre 1">
+                    <a class="card__company-logo" href="offer_description.html"> <img src="images/Pokédex.png" alt="Pokédex"></a>
+                </div>
+
+                <a class="card__body" href="offer_description.html">
+                    <h2 class="texte_blanc card__title"> Centre de recherche Pokémon </h2>
+                    <div class = "card__row--type">
+                        <img src="images/suitcase.png" alt="suitcase">
+                        <h3 class="texte_blanc"> Stage chez le professeur Chen </h3>
+                    </div>
+                    <div class = "card__row--location">
+                        <img src="images/pin.png" alt="pin">
+                        <h3 class="texte_blanc"> Bourg Palette </h3>
+                    </div>
+                    <div class = "card__row--date">
+                        <img src="images/calendar.png" alt="calendar">
+                        <h3 class="texte_blanc"> Date </h3>
+                        <img class="card__wishlist"src="images/wishlist.png" alt="wishlist">
+                    </div>
+                </a>
+            </section>
+        
+
+            <section class="job-card">
+                <div class="card__banner">
+                    <img class="card__banner-img" src="images/bannière.jpg" alt="Image de l'offre 1">
+                    <a class="card__company-logo" href="offer_description.html"> <img src="images/Pokédex.png" alt="Pokédex"></a>
+                </div>
+                
+                <a class="card__body" href="offer_description.html">
+                    <h2 class="texte_blanc card__title"> Centre de recherche Pokémon </h2>
+                    <div class = "card__row--type">
+                        <img src="images/suitcase.png" alt="suitcase">
+                        <h3 class="texte_blanc"> Stage chez le professeur Chen </h3>
+                    </div>
+                    <div class = "card__row--location">
+                        <img src="images/pin.png" alt="pin">
+                        <h3 class="texte_blanc"> Bourg Palette </h3>
+                    </div>
+                    <div class = "card__row--date">
+                        <img src="images/calendar.png" alt="calendar">
+                        <h3 class="texte_blanc"> Date </h3>
+                        <img class="card__wishlist"src="images/wishlist.png" alt="wishlist">
+                    </div>
+                </a>
+            </section>
+
+            <section class="job-card">
+                <div class="card__banner">
+                    <img class="card__banner-img" src="images/bannière.jpg" alt="Image de l'offre 1">
+                    <a class="card__company-logo" href="offer_description.html"> <img src="images/Pokédex.png" alt="Pokédex"></a>
+                </div>
+                
+                <a class="card__body" href="offer_description.html">
+                    <h2 class="texte_blanc card__title"> Centre de recherche Pokémon </h2>
+                    <div class = "card__row--type">
+                        <img src="images/suitcase.png" alt="suitcase">
+                        <h3 class="texte_blanc"> Stage chez le professeur Chen </h3>
+                    </div>
+                    <div class = "card__row--location">
+                        <img src="images/pin.png" alt="pin">
+                        <h3 class="texte_blanc"> Bourg Palette </h3>
+                    </div>
+                    <div class = "card__row--date">
+                        <img src="images/calendar.png" alt="calendar">
+                        <h3 class="texte_blanc"> Date </h3>
+                        <img class="card__wishlist"src="images/wishlist.png" alt="wishlist">
+                    </div>
+                </a>
+            </section>
+        </section>
+    </main>
+
+    <!-- Barre de navigation basse (tableau, recherche, favoris). -->
+    <footer>
+        <nav class="navbar--bottom">
+            <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a>
+            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__wishlist" href="search.html"> <img src="images/wishlist_menu.png" alt="Wishlist"></a>
+        </nav>
+    </footer>
+</body>
+</html>

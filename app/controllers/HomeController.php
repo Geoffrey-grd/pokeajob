@@ -22,10 +22,17 @@ class HomeController {
         ]);
 
     }
-
-    public function boo() {
-        View::render("boo.twig");
+    
+    public function boo1() {
+        View::render("boo1.twig");
     }
 
-    
+    public function boo2() {
+        View::render("boo2.twig");
+    }
+
+    public function boo3() {
+        View::render("boo3.twig");
+    }
+
 }

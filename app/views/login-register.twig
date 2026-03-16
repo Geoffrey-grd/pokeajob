@@ -107,7 +107,6 @@
                             </select>
                         </div>
 
-                        {# for et tout à modif#}
                         <div class="form-group role-company signup-only is-hidden">
                             <label for="company-ciret">ciret</label>
                             <input name="company_ciret" id="company-ciret" type="text" placeholder="ciret">
@@ -131,6 +130,8 @@
 
                         <button id="submit-btn" type="submit" class="login-btn">CONNEXION</button>
 
+                        
+
                         {# <div class="form-links login-only">
                             <a href="connexion.html" class="forgot-password">Mot de passe oublie ?</a>
                         </div>
@@ -140,6 +141,9 @@
                         </div> #}
                     </form>
                 </div>
+                {% if error %}
+                    <p style="color:red;">{{ error }}</p>
+                {% endif %}
             </div>
         </div>
     </main>

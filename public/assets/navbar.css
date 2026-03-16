@@ -1,0 +1,250 @@
+/* Navbar du haut et du bas partagees sur les pages principales. */
+.navbar--top,
+.navbar--bottom {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--top-nav-h);
+    padding: 0 var(--space-4);
+    border: 3px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: linear-gradient(to bottom right, var(--color-bg-start), var(--color-bg-end));
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.navbar--top {
+    /* Barre haute toujours visible. */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1300;
+}
+
+.navbar--bottom {
+    /* Barre basse fixe pour les raccourcis de navigation. */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    gap: var(--space-7);
+    z-index: var(--z-fixed);
+}
+
+.navbar__menu,
+.navbar__logo,
+.navbar__profile,
+.navbar__table,
+.navbar__search,
+.navbar__wishlist {
+    display: block;
+}
+
+.navbar__menu {
+    /* Zone cliquable du bouton burger. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    background: transparent;
+    border: none;
+}
+
+.navbar__logo {
+    /* Le logo reste centre meme avec des elements a gauche et a droite. */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+}
+
+.navbar__profile {
+    margin-left: auto;
+    width: 56px;
+}
+
+.navbar__table,
+.navbar__wishlist {
+    width: 40px;
+}
+
+.navbar__search {
+    /* Le bouton recherche est mis en avant avec une forme ronde. */
+    transform: translateY(-15px);
+    width: 64px;
+    height: 64px;
+    padding: 15px;
+    border-radius: 50%;
+    border: 3px solid var(--color-border);
+    background-color: var(--color-accent);
+}
+
+.navbar__menu img,
+.navbar__logo img,
+.navbar__profile img,
+.navbar__table img,
+.navbar__search img,
+.navbar__wishlist img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Panneau burger + overlay. body.menu-open bloque le scroll de page. */
+.burgermenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    padding-top: 72px;
+    border: 2px solid var(--color-border);
+    border-radius: 0 20px 20px 0;
+    background-color: #0057ff;
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
+    z-index: var(--z-menu);
+    display: flex;
+    flex-direction: column;
+}
+
+.burgermenu.active {
+    /* Etat visible du panneau burger. */
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition: transform 0.3s ease;
+}
+
+.burgermenu a {
+    /* Style commun des liens du menu. */
+    display: block;
+    padding: 10px 16px 10px 24px;
+    color: var(--color-text);
+    font-size: 1.05rem;
+}
+
+.burgermenu .close {
+    /* Bouton de fermeture place en haut a droite du panneau. */
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.burger-icon--close span {
+    /* Version compacte de l'icone dans le bouton fermer. */
+    width: 20px;
+    height: 3px;
+    margin: 2px 0;
+    background-color: #000;
+}
+
+.menu {
+    /* Structure verticale commune aux listes du burger. */
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.menu--main {
+    /* Les liens principaux occupent l'espace disponible. */
+    flex: 1;
+    padding-bottom: var(--space-4);
+    overflow-y: auto;
+}
+
+.menu--footer {
+    /* Les liens de fin restent groupes en bas du panneau. */
+    padding-bottom: var(--space-4);
+}
+
+.burger-icon span {
+    display: block;
+    width: 40px;
+    height: 5px;
+    margin: 8px auto;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-text);
+}
+
+.menu-overlay {
+    /* Fond sombre derriere le burger quand il est ouvert. */
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: var(--z-overlay);
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+body.menu-open {
+    /* Empêche le scroll pendant l'ouverture du menu. */
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    /* Ajustements de taille pour tablette. */
+    .navbar--top,
+    .navbar--bottom {
+        padding-inline: var(--space-5);
+    }
+
+    .navbar__logo {
+        width: 190px;
+    }
+
+    .navbar__profile {
+        width: 60px;
+    }
+
+    .burgermenu {
+        width: 300px;
+        padding-top: 78px;
+    }
+}
+
+@media (min-width: 1024px) {
+    /* Ajustements de taille pour desktop. */
+    .navbar--top,
+    .navbar--bottom {
+        padding-inline: var(--space-6);
+    }
+
+    .navbar--bottom {
+        gap: var(--space-7);
+    }
+
+    .navbar__logo {
+        width: 210px;
+    }
+
+    .navbar__menu,
+    .navbar__table,
+    .navbar__wishlist {
+        width: 44px;
+    }
+
+    .navbar__search {
+        width: 70px;
+        height: 70px;
+    }
+
+    .burgermenu {
+        width: 320px;
+    }
+}
