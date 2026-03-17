@@ -112,7 +112,6 @@ class AuthController {
 
 
     public static function deleteAccount() {
-
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
 
@@ -150,6 +149,6 @@ class AuthController {
                 exit();
             }
         }
-        View::render("delete_account.twig", ["error" => $error, "csrf_token" => Csrf::generateToken()]);
+        View::render("delete_account.twig", ["error" => $error, "csrf_token" => Csrf::generateToken(), 'role' => $_SESSION['role']]);
     }
 }
