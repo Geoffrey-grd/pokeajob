@@ -102,4 +102,54 @@ class AuthController {
 
         View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "error" => $error]);
     }
+
+    public static function logout() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        session_destroy();
+        header("Location: /");
+        exit();
+    }
+
+
+    public static function deleteAccount() {
+
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        global $conn;
+
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: /");
+            exit();
+        }
+
+        $error = "";
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            Csrf::verifyToken($_POST["csrf_token"]);
+
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+
+            $user = User::findByemail($conn, $email);
+
+            if (!$user || !password_verify($password, $user["password"])) {
+
+                $error = "Identifiant ou mot de passe incorrect.";
+
+            } elseif ($user["id_user"] != $_SESSION["user_id"]) {
+
+                $error = "Erreur de sécurité.";
+
+            } else {
+
+                User::delete_account($conn, $_SESSION["user_id"]);
+
+                session_destroy();
+
+                header("Location: /");
+                exit();
+            }
+        }
+        View::render("delete_account.twig", ["error" => $error, "csrf_token" => Csrf::generateToken()]);
+    }
 }

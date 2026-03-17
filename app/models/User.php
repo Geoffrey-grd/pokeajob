@@ -63,12 +63,11 @@ class User {
     }
 
 
-    public static function delete($conn, $user_id) {
+    public static function delete_account($conn, $user_id) {
 
-        $stmt = $conn->prepare("DELETE FROM user WHERE id = ?");
+        $stmt = $conn->prepare("DELETE FROM user WHERE id_user = ?");
         $stmt->bind_param("i", $user_id);
 
         return $stmt->execute();
     }
-
 }

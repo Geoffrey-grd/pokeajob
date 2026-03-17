@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="assets/navbar.css">
     <link rel="stylesheet" href="assets/card.css">
     <link rel="stylesheet" href="assets/offer_list.css">
-    <script src="assets/index.js" defer></script>
+    <link rel="stylesheet" href="assets/button.css">
+    <link rel="stylesheet" href="assets/form.css">
+    <script src="js/burger_menu.js" defer></script>
     <title>PokeAJob - Accueil</title>
 
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -21,7 +23,7 @@
 
 <body>
     <header>
-        <nav class="navbar--top">
+        <nav class="navbar--top">   
             <button id="openbtn" class="navbar__menu" aria-label="Ouvrir le menu" aria-expanded="false">
                 <span class="burger-icon">
                     <span></span>
@@ -39,14 +41,33 @@
                         <span></span>
                     </span>
                 </button>
+
                 <ul class="menu menu--main">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="search.html">Offres</a></li>
-                    <li><a href="connexion.html">Mon profil</a></li>
+                    {% if role == 'etudiant' %}
+                    <li><a href="/boo">Offers</a></li>
+                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/boo">Wishlist</a></li>
+                    <li><a href="/boo">Internship tracker</a></li>
+                    {% endif %}
+
+                    {% if role == 'entreprise' %}   
+                    <li><a href="/boo">Offers</a></li>
+                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/boo">My offers</a></li>
+                    <li><a href="/boo">Create a new offer</a></li>
+                    <li><a href="/boo">My notifications</a></li>
+                    {% endif %}
+
+                    {% if role == 'pilote' %}
+                    <li><a href="/boo">Offers</a></li>
+                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/boo">My students</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="menu menu--footer">
-                    <li><a href="test_redirection.html">Mentions Légales</a></li>
-                    <li><a href="connexion.html">Déconnexion</a></li>
+                    <li><a href="/boo">Mentions Légales</a></li>
+                    <li><a href="/logout">Déconnexion</a></li>
+                    <li><a href="/delete_account">Delete Account</a></li>
                 </ul>
             </div>
             <!-- Fond sombre clique pour fermer le menu. -->
@@ -61,10 +82,9 @@
 
     {% block content %}
     {% endblock %}
-
     
-
-        <!-- Barre de navigation basse (tableau, recherche, favoris). -->
+    {% if role == 'etudiant' %}
+        <!-- Barre de navigation basse étudiant(tableau, recherche, favoris). -->
     <footer>
         <nav class="navbar--bottom">
             <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a>
@@ -72,6 +92,30 @@
             <a class="navbar__wishlist" href="search.html"> <img src="images/wishlist_menu.png" alt="Wishlist"></a>
         </nav>
     </footer>
+    {% endif %}
+
+    {% if role == 'entreprise' %}
+        <!-- Barre de navigation basse entreprise(tableau, recherche, favoris). -->
+    <footer>
+        <nav class="navbar--bottom">
+            <a class="navbar__notif" href="index.html"> <img src="images/email.png" alt="Notification"></a>
+            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__my_offers" href="search.html"> <img src="images/plus.png" alt="Wishlist"></a>
+        </nav>
+    </footer>
+    {% endif %}
+
+    {% if role == 'pilote' %}
+        <!-- Barre de navigation basse pilote(tableau, recherche, favoris). -->
+    <footer>
+        <nav class="navbar--bottom">
+            <!-- <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a> -->
+            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__students" href="search.html"> <img src="images/student.png" alt="Wishlist"></a>
+        </nav>
+    </footer>
+    {% endif %}
+
 
 </body>
 

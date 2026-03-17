@@ -1,0 +1,38 @@
+{% extends "navbar.twig" %}
+
+
+{% block content %}
+    <!-- Bloc central: logo + formulaire dynamique. -->
+    <main>
+        <div class="login-container">
+            <div class="login-box">
+                <div class="logo">
+                    <img src="images/Logo_PokeAJob.png" alt="PokeAJob" class="logo-img">
+                </div>
+                <div class="form-container">
+
+                    <!-- Formulaire -->
+                    <form class="login-form" action="/delete_account" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <p style="color:red;">Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.</p>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input name="email" id="email" type="email" placeholder="Email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input name="password" id="password" type="password" placeholder="Mot de passe" required>
+                        </div>
+
+                        <button id="submit-btn" type="submit" class="login-btn">SUPPRIMER LE COMPTE</button>
+                    </form>
+                </div>
+                {% if error %}
+                    <p style="color:red;">{{ error }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </main> 
+{% endblock %}

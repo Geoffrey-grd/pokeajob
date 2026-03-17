@@ -11,9 +11,13 @@ $router->get("/", "AuthController@renderLoginRegister");
 
 $router->post("/loginregister", "AuthController@form_type");
 
-$router->get("/boo1", "HomeController@boo1");
-$router->get("/boo2", "HomeController@boo2");
-$router->get("/boo3", "HomeController@boo3");
+$router->post("/delete_account", "AuthController@deleteAccount");
+$router->get("/delete_account", "AuthController@deleteAccount");
+
+$router->get("/logout", "AuthController@logout");
+
+$router->get("/boo", "HomeController@boo");
+
 
 $router->get("/offers-list", "OfferslistController@index");
 

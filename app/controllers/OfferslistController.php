@@ -17,6 +17,6 @@ class OfferslistController {
 
         $offers = Offer::getAllOffers($conn);
 
-        View::render("offers_list.twig", ['offers' => $offers]);
+        View::render("offers_list.twig", ['offers' => $offers, 'role' => $_SESSION['role']]);
     }
 }

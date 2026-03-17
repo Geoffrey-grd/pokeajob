@@ -35,7 +35,10 @@
 .navbar__profile,
 .navbar__table,
 .navbar__search,
-.navbar__wishlist {
+.navbar__wishlist, 
+.navbar_students,
+.navbar__notif,
+.navbar__my_offers {
     display: block;
 }
 
