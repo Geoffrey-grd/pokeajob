@@ -30,7 +30,7 @@ class User {
         return $stmt->execute();
     }
 
-    public static function create_company($conn, $email, $password, $company_name, $address, $phone, $ciret, $role) {
+    public static function create_company($conn, $email, $password, $company_name, $address, $sectors, $phone, $ciret, $role) {
 
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -40,8 +40,8 @@ class User {
 
         $id_user = $conn->insert_id;
 
-        $stmt = $conn->prepare("INSERT INTO company (id_user, company_name, address, phone, ciret) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("issss", $id_user, $company_name, $address, $phone, $ciret);
+        $stmt = $conn->prepare("INSERT INTO company (id_user, company_name, address, sectors, phone, ciret) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssss", $id_user, $company_name, $address, $sectors, $phone, $ciret);
 
         return $stmt->execute();
     }

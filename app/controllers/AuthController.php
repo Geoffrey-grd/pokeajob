@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\Sector;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
@@ -11,7 +12,10 @@ require_once __DIR__ . "/../../config/database.php";
 class AuthController {
 
     public function renderLoginRegister() {
-        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken()]);
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        global $conn;
+        $sectors = Sector::getAllSectors($conn);
+        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "sectors" => $sectors]);
     }
 
     public function form_type() {
@@ -76,10 +80,11 @@ class AuthController {
                 if ($account_type == "entreprise") {
                     $company_name = $_POST["company_name"];
                     $address = $_POST["company_address"];
+                    $sectors = isset($_POST["activity_sector"]) ? implode(":", $_POST["activity_sector"]) : "";
                     $phone = $_POST["phone"];
                     $ciret = $_POST["company_ciret"];
                     $role = "entreprise";
-                    User::create_company($conn, $email, $password, $company_name, $address, $phone, $ciret, $role);
+                    User::create_company($conn, $email, $password, $company_name, $address, $sectors, $phone, $ciret, $role);
             } 
                 else if ($account_type == "pilote") {
                     $name= $_POST["name"];
@@ -99,8 +104,8 @@ class AuthController {
             }
             }
         }
-
-        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "error" => $error]);
+        $sectors = Sector::getAllSectors($conn);
+        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "error" => $error, "sectors" => $sectors]);
     }
 
     public static function logout() {

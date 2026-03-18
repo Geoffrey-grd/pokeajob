@@ -59,10 +59,14 @@
                             <input name="company_name" id="company-name" type="text" placeholder="Nom de l'entreprise">
                         </div>
 
-                        {# <div class="form-group role-company signup-only is-hidden">
-                            <label for="activity-sector">Secteur d'activite</label>
-                            <input name="activity_sector" id="activity-sector" type="text" placeholder="Secteur d'activite">
-                        </div> #}
+                        <div class="form-group role-company signup-only is-hidden">
+                            <label for="activity-sector">Sector</label>
+                            {% for sector in sectors %}
+                                <label>
+                                    <input type="checkbox" name="activity_sector[]" value="{{ sector }}">{{ sector }}
+                                </label><br>
+                            {% endfor %}
+                        </div>
 
                         <div class="form-group role-company signup-only is-hidden">
                             <label for="company-address">Adresse</label>
