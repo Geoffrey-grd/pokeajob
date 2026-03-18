@@ -15,7 +15,7 @@ class AuthController {
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
         $sectors = Sector::getAllSectors($conn);
-        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "sectors" => $sectors]);
+        View::render("login-register.twig", ["setup_mode" => "login", "setup_account_type" => "etudiant", "csrf_token" => Csrf::generateToken(), "sectors" => $sectors]);
     }
 
     public function form_type() {
@@ -54,7 +54,7 @@ class AuthController {
                 $error = "Identifiant ou mot de passe incorrect.";
             }
         }
-        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "error" => $error]);
+        View::render("login-register.twig", ["setup_mode" => "login", "setup_account_type" => "etudiant", "csrf_token" => Csrf::generateToken(), "error" => $error]);
     }
 
 
@@ -105,7 +105,8 @@ class AuthController {
             }
         }
         $sectors = Sector::getAllSectors($conn);
-        View::render("login-register.twig", ["csrf_token" => Csrf::generateToken(), "error" => $error, "sectors" => $sectors]);
+        View::render("login-register.twig", ["setup_mode" => $error ? "signup" : "login", "setup_account_type" => $account_type, "csrf_token" => Csrf::generateToken(), "error" => $error, "sectors" => $sectors]);
+
     }
 
     public static function logout() {

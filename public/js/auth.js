@@ -14,8 +14,18 @@
     var roleStudentBlocks = document.querySelectorAll(".role-student");
     var roleCompanyBlocks = document.querySelectorAll(".role-company");
     var rolePiloteBlocks = document.querySelectorAll(".role-pilote");
+    var setupDone = false;
 
     // Affiche ou masque un groupe de champs.
+    function setup() {
+        if (!setupDone) {
+            setMode(document.getElementById("setup-mode").value);
+            accountTypeInput.value = document.getElementById("setup-account-type").value;
+            updateRoleFields();
+            setupDone = true;
+        }
+    }
+
     function setHidden(blocks, isHidden) {
         blocks.forEach(function (block) {
             block.classList.toggle("is-hidden", isHidden)
@@ -66,12 +76,9 @@
 
         authTitle.textContent = isLogin ? "CONNEXION" : "INSCRIPTION";
         submitButton.textContent = isLogin ? "CONNEXION" : "JE M'INSCRIS";
-
-        if (!isLogin) {
-            accountTypeInput.value = "etudiant";
-            updateRoleFields();
-        }
     }
+
+    setup();
 
     if (loginButton && signupButton) {
         loginButton.addEventListener("click", function () {
@@ -80,6 +87,8 @@
 
         signupButton.addEventListener("click", function () {
             setMode("signup");
+            accountTypeInput.value = document.getElementById("setup-account-type").value;
+            updateRoleFields();
         });
     }
 
@@ -99,5 +108,4 @@
         });
     }
 
-    setMode("login");
 })();

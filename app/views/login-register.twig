@@ -13,6 +13,8 @@
 <body class="page-auth">
     <!-- Bloc central: logo + formulaire dynamique. -->
     <main>
+        <input type="hidden" id="setup-mode" value="{{ setup_mode }}">
+        <input type="hidden" id="setup-account-type" value="{{ setup_account_type }}">
         <div class="login-container">
             <div class="login-box">
                 <div class="logo">
@@ -66,6 +68,13 @@
                                     <input type="checkbox" name="activity_sector[]" value="{{ sector }}">{{ sector }}
                                 </label><br>
                             {% endfor %}
+                        </div>
+
+                        <div class="form-group role-company signup-only is-hidden">
+                            <label for="activity_sector">Add up to 3 sectors</label>
+                            <input name="activity_sector[]" id="activity-sector" type="text" placeholder="Activity sector">
+                            <input name="activity_sector[]" id="activity-sector" type="text" placeholder="Activity sector">
+                            <input name="activity_sector[]" id="activity-sector" type="text" placeholder="Activity sector">
                         </div>
 
                         <div class="form-group role-company signup-only is-hidden">
