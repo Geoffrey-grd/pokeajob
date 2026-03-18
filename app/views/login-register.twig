@@ -15,10 +15,10 @@
     <main>
         <input type="hidden" id="setup-mode" value="{{ setup_mode }}">
         <input type="hidden" id="setup-account-type" value="{{ setup_account_type }}">
-        <div class="login-container">
-            <div class="login-box">
-                <div class="logo">
-                    <img src="images/Logo_PokeAJob.png" alt="PokeAJob" class="logo-img">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-logo">
+                    <img src="images/Logo_PokeAJob.png" alt="PokeAJob" class="auth-logo-img">
                 </div>
 
                 <div class="form-container">
@@ -31,7 +31,7 @@
                     <h2 id="auth-title">CONNEXION</h2>
 
                     <!-- Formulaire -->
-                    <form class="login-form" action="/loginregister" method="post">
+                    <form class="auth-form" action="/loginregister" method="post">
                         <input id="auth-mode" name="auth_mode" type="hidden" value="login">
                         <div class="form-group signup-only is-hidden">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
@@ -126,7 +126,7 @@
                             <input name="company_ciret" id="company-ciret" type="text" placeholder="ciret">
                         </div>
 
-                        <button id="submit-btn" type="submit" class="login-btn">CONNEXION</button>
+                        <button id="submit-btn" type="submit" class="auth-submit">CONNEXION</button>
                         
                     </form>
                 </div>
