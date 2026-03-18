@@ -11,6 +11,7 @@
     margin: 0 auto;
 }
 
+.page-auth .auth-box,
 .page-auth .login-box {
     background: rgba(52, 152, 219, 0.9);
     border-radius: 20px;
@@ -18,11 +19,13 @@
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
+.page-auth .auth-logo,
 .page-auth .logo {
     text-align: center;
     margin-bottom: var(--space-5);
 }
 
+.page-auth .auth-logo-img,
 .page-auth .logo-img {
     width: 100%;
     max-width: 200px;
@@ -93,11 +96,13 @@
         padding: calc(var(--top-nav-h) + var(--space-4)) var(--space-6) var(--space-6);
     }
 
+    .page-auth .auth-container,
     .page-auth .login-container {
         width: 100%;
         max-width: 560px;
     }
 
+    .page-auth .auth-box,
     .page-auth .login-box {
         padding: 40px 30px;
     }
@@ -113,14 +118,17 @@
         padding-top: calc(var(--top-nav-h) + var(--space-6));
     }
 
+    .page-auth .auth-container,
     .page-auth .login-container {
         max-width: 700px;
     }
 
+    .page-auth .auth-box,
     .page-auth .login-box {
         padding: 48px 40px;
     }
 
+    .page-auth .auth-logo-img,
     .page-auth .logo-img {
         max-width: 220px;
     }

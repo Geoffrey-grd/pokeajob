@@ -4,15 +4,15 @@
 {% block content %}
     <!-- Bloc central: logo + formulaire dynamique. -->
     <main>
-        <div class="login-container">
-            <div class="login-box">
-                <div class="logo">
-                    <img src="images/Logo_PokeAJob.png" alt="PokeAJob" class="logo-img">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-logo">
+                    <img src="images/Logo_PokeAJob.png" alt="PokeAJob" class="auth-logo-img">
                 </div>
                 <div class="form-container">
 
                     <!-- Formulaire -->
-                    <form class="login-form" action="/delete_account" method="post">
+                    <form class="auth-form" action="/delete_account" method="post">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                         <p style="color:red;">Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.</p>
 
@@ -26,7 +26,7 @@
                             <input name="password" id="password" type="password" placeholder="Mot de passe" required>
                         </div>
 
-                        <button id="submit-btn" type="submit" class="login-btn">SUPPRIMER LE COMPTE</button>
+                        <button id="submit-btn" type="submit" class="auth-submit">SUPPRIMER LE COMPTE</button>
                     </form>
                 </div>
                 {% if error %}
