@@ -21,7 +21,10 @@
         if (!setupDone) {
             setMode(document.getElementById("setup-mode").value);
             accountTypeInput.value = document.getElementById("setup-account-type").value;
-            updateRoleFields();
+            var mode = document.getElementById("setup-mode").value;
+            if (mode === "signup") {
+                updateRoleFields();
+            }
             setupDone = true;
         }
     }

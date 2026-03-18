@@ -80,7 +80,7 @@ class AuthController {
                 if ($account_type == "entreprise") {
                     $company_name = $_POST["company_name"];
                     $address = $_POST["company_address"];
-                    $sectors = isset($_POST["activity_sector"]) ? implode(":", $_POST["activity_sector"]) : "";
+                    $sectors = $_POST["activity_sector"];
                     $phone = $_POST["phone"];
                     $ciret = $_POST["company_ciret"];
                     $role = "entreprise";

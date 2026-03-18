@@ -30,7 +30,7 @@ class User {
         return $stmt->execute();
     }
 
-    public static function create_company($conn, $email, $password, $company_name, $address, $sectors, $phone, $ciret, $role) {
+    public static function create_company($conn, $email, $password, $company_name, $address, $sector, $phone, $ciret, $role) {
 
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -40,27 +40,27 @@ class User {
 
         $id_user = $conn->insert_id;
 
-        $stmt = $conn->prepare("INSERT INTO company (id_user, company_name, address, sectors, phone, ciret) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("isssss", $id_user, $company_name, $address, $sectors, $phone, $ciret);
+        $stmt = $conn->prepare("INSERT INTO company (id_user, company_name, address, id_sector, phone, ciret) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ississ", $id_user, $company_name, $address, $sector, $phone, $ciret);
 
         return $stmt->execute();
     }
 
-    public static function create_pilot($conn, $email, $password, $name, $last_name, $phone, $school, $role) {
+        public static function create_pilot($conn, $email, $password, $name, $last_name, $phone, $school, $role) {
 
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $conn->prepare("INSERT INTO user (email, password, role) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $email, $passwordHash, $role);
-        $stmt->execute();
+            $stmt = $conn->prepare("INSERT INTO user (email, password, role) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $email, $passwordHash, $role);
+            $stmt->execute();
 
-        $id_user = $conn->insert_id;
+            $id_user = $conn->insert_id;
 
-        $stmt = $conn->prepare("INSERT INTO pilot (id_user, name, last_name, phone, school) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("issss", $id_user, $name, $last_name, $phone, $school);
+            $stmt = $conn->prepare("INSERT INTO pilot (id_user, name, last_name, phone, school) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("issss", $id_user, $name, $last_name, $phone, $school);
 
-        return $stmt->execute();
-    }
+            return $stmt->execute();
+        }
 
 
     public static function delete_account($conn, $user_id) {
