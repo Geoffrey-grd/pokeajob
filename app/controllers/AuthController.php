@@ -14,9 +14,17 @@ class AuthController {
     public function renderLoginRegister() {
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
+
         $sectors = Sector::getAllSectors($conn);
-        View::render("login-register.twig", ["setup_mode" => "login", "setup_account_type" => "etudiant", "csrf_token" => Csrf::generateToken(), "sectors" => $sectors]);
-    }
+
+        $setup_mode = $_SESSION["flash_mode"] ?? "login";
+        $setup_account_type = $_SESSION["flash_account_type"] ?? "etudiant";
+        $error = $_SESSION["flash_error"] ?? "";
+
+        unset($_SESSION["flash_mode"], $_SESSION["flash_account_type"], $_SESSION["flash_error"]);
+
+        View::render("login-register.twig", ["setup_mode" => $setup_mode, "setup_account_type" => $setup_account_type, "error" => $error, "csrf_token" => Csrf::generateToken(), "sectors" => $sectors]);
+}
 
     public function form_type() {
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -34,8 +42,6 @@ class AuthController {
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
 
-        $error = "";
-
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Csrf::verifyToken($_POST["csrf_token"]);
             $email = $_POST["email"];
@@ -48,13 +54,16 @@ class AuthController {
                 $_SESSION["email"] = $user["email"];
                 $_SESSION["role"] = $user["role"];
 
-                header("Location: /offers-list");
+                header("Location: /search_page");
                 exit(); 
-            } else {
-                $error = "Identifiant ou mot de passe incorrect.";
+            } 
+            else {
+                $_SESSION["flash_error"] = "Identifiant ou mot de passe incorrect.";
+                $_SESSION["flash_mode"] = "login";
+                header("Location: /");
+                exit();
             }
         }
-        View::render("login-register.twig", ["setup_mode" => "login", "setup_account_type" => "etudiant", "csrf_token" => Csrf::generateToken(), "error" => $error]);
     }
 
 
@@ -62,51 +71,49 @@ class AuthController {
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
 
-        $error = "";
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            Csrf::verifyToken($_POST["csrf_token"]);
+        Csrf::verifyToken($_POST["csrf_token"]);
 
 
-            $email = $_POST["email"];
-            $password = $_POST["password"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $existingUser = User::findByemail($conn, $email);
 
-            $existingUser = User::findByemail($conn, $email);
-
-            if ($existingUser !== null) {
-                $error = "Cet email est déjà utilisé.";
-            } 
-            else {
-                if ($account_type == "entreprise") {
-                    $company_name = $_POST["company_name"];
-                    $address = $_POST["company_address"];
-                    $sectors = $_POST["activity_sector"];
-                    $phone = $_POST["phone"];
-                    $ciret = $_POST["company_ciret"];
-                    $role = "entreprise";
-                    User::create_company($conn, $email, $password, $company_name, $address, $sectors, $phone, $ciret, $role);
-            } 
-                else if ($account_type == "pilote") {
-                    $name= $_POST["name"];
-                    $last_name = $_POST["last_name"];
-                    $phone = $_POST["phone"];
-                    $school = $_POST["school"];
-                    $role = "pilote";
-                    User::create_pilot($conn, $email, $password, $name, $last_name, $phone, $school, $role);
-            } 
-                else {
-                    $name= $_POST["name"];
-                    $last_name = $_POST["last_name"];
-                    $school = $_POST["school"];
-                    $role = "etudiant";
-                    $pilot= $_POST["training_pilot"];
-                    User::create_student($conn, $email, $password, $name, $last_name, $school, $pilot, $role);
-            }
-            }
+        if ($existingUser !== null) {
+            $_SESSION["flash_error"] = "This email is already in use.";
+            $_SESSION["flash_mode"] = "signup";
+            $_SESSION["flash_account_type"] = $account_type;
+            header("Location: /");
+            exit();
         }
-        $sectors = Sector::getAllSectors($conn);
-        View::render("login-register.twig", ["setup_mode" => $error ? "signup" : "login", "setup_account_type" => $account_type, "csrf_token" => Csrf::generateToken(), "error" => $error, "sectors" => $sectors]);
-
+         
+        if ($account_type == "entreprise") {
+            $company_name = $_POST["company_name"];
+            $address = $_POST["company_address"];
+            $sectors = $_POST["activity_sector"];
+            $phone = $_POST["phone"];
+            $ciret = $_POST["company_ciret"];
+            $role = "entreprise";
+            User::create_company($conn, $email, $password, $company_name, $address, $sectors, $phone, $ciret, $role);
+        } 
+        else if ($account_type == "pilote") {
+            $name= $_POST["name"];
+            $last_name = $_POST["last_name"];
+            $phone = $_POST["phone"];
+            $school = $_POST["school"];
+            $role = "pilote";
+            User::create_pilot($conn, $email, $password, $name, $last_name, $phone, $school, $role);
+        } 
+        else {
+            $name= $_POST["name"];
+            $last_name = $_POST["last_name"];
+            $school = $_POST["school"];
+            $role = "etudiant";
+            $pilot= $_POST["training_pilot"];
+            User::create_student($conn, $email, $password, $name, $last_name, $school, $pilot, $role);
+        }
+        $SESSION["flash_mode"] = "login";
+        header("Location: /");
+        exit();
     }
 
     public static function logout() {

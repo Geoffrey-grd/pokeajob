@@ -8,7 +8,6 @@ $router = new Router();
 
 /* ROUTES GÉNÉRALES */
 $router->get("/", "AuthController@renderLoginRegister");
-
 $router->post("/loginregister", "AuthController@form_type");
 
 $router->post("/delete_account", "AuthController@deleteAccount");
@@ -19,7 +18,7 @@ $router->get("/logout", "AuthController@logout");
 $router->get("/boo", "HomeController@boo");
 
 
-$router->get("/offers-list", "OfferslistController@index");
+$router->get("/search_page", "SearchPageController@renderingSearchPage");
 
 $router->dispatch();
 

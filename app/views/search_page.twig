@@ -1,0 +1,70 @@
+
+{% extends "navbar.twig" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="assets/card.css">
+<link rel="stylesheet" href="assets/offer_list.css">
+
+    <main>
+        <a class="offer_button" href={{ offers_btn_url }}>Chercher une offre</a>
+        <a class="company_button" href={{ companies_btn_url }}>Chercher une entreprise</a>
+
+        <section class="feed">
+
+            {% if search_type == 'offers' %}
+                {% for offer in cards %}
+                    <section class="job-card">
+                        <div class="card__banner">
+                            <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre 1">
+                            <a class="card__company-logo" href="offer_description.html"> <img src="{{ offer.logo_path }}" alt="Pokédex"></a>
+                        </div>
+        
+                        <a class="card__body" href="offer_description.html">
+                            <h2 class="texte_blanc card__title"> {{ offer.offer_object }} </h2>
+                            <div class = "card__row--type">
+                                <img src="images/suitcase.png" alt="suitcase">
+                                <h3 class="texte_blanc"> {{ offer.company_name }} </h3>
+                            </div>
+                            <div class = "card__row--location">
+                                <img src="images/pin.png" alt="pin">
+                                <h3 class="texte_blanc"> {{ offer.lieu }} </h3>
+                            </div>
+                            <div class = "card__row--date">
+                                <h5 class="texte_blanc"> {{ offer.release_date }} </h5>
+                                <img class="card__wishlist"src="images/wishlist.png" alt="wishlist">
+                            </div>
+                        </a>
+                    </section>
+                {% endfor %}
+            {% endif %}
+
+            {% if search_type == 'companies' %}
+                {% for company in cards %}
+                    <section class="job-card">
+                        <div class="card__banner">
+                            <img class="card__banner-img" src="{{ company.banner_path }}" alt="Image de l'entreprise">
+                            <a class="card__company-logo" href="company_description.html"> <img src="{{ company.logo_path }}" alt="Logo de l'entreprise"></a>
+                        </div>
+
+                        <a class="card__body" href="offer_description.html">
+                            <h2 class="texte_blanc card__title"> {{ company.company_name }} </h2>
+                        </a>
+                    </section>
+                {% endfor %}
+            {% endif %}
+
+        <nav class="pagination">
+            {% if page > 1 %}
+                <a class="previous_offers" href={{ prev_page_url }}>← Offres précédentes</a>
+            {% endif %}
+
+            <span class="pagination__info">Page {{ page }} / {{ total_pages }}</span>
+
+            {% if page < total_pages %}
+                <a class="next_offers" href={{ next_page_url }}>Offres suivantes →</a>
+            {% endif %}
+        </nav>
+    </main>
+
+{% endblock %}

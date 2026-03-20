@@ -17,7 +17,7 @@
     /* Zone image du haut avec logo de l'entreprise par-dessus. */
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 5 / 1;
     overflow: hidden;
     background: #dbe7ff;
 }
@@ -25,7 +25,6 @@
 .card__banner-img {
     display: block;
     width: 100%;
-    height: 100%;
     object-fit: contain;
     object-position: center;
 
