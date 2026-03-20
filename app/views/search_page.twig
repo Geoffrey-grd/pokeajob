@@ -10,6 +10,26 @@
         <a class="offer_button" href={{ offers_btn_url }}>Chercher une offre</a>
         <a class="company_button" href={{ companies_btn_url }}>Chercher une entreprise</a>
 
+        <form method="get" action="/search_page">
+                <input type="hidden" name="search_type" value="{{ search_type }}">
+                <select name="filter" id>
+                {% if search_type == 'offers' and filter_value %}
+                    <option value="">No filters</option>
+                {% else %}
+                    <option value="">No filters</option>
+                {% endif %}
+                
+                    {% for filter in filters %}
+                        {% if search_type == 'offers' and filter.sector_name == filter_value %}
+                            <option value="{{ filter.domain_name }}"> {{ filter.domain_name }}</option>
+                        {% else %}
+                            <option value="{{ filter.sector_name }}">{{ filter.sector_name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            <button type="submit">Filtrer</button>
+        </form>
+                    
         <section class="feed">
 
             {% if search_type == 'offers' %}

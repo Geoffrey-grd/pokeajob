@@ -20,46 +20,64 @@ class SearchPageController {
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($page - 1) * $limit;
         $search_type = isset($_GET['search_type']) ? $_GET['search_type'] : 'offers';
+        $filter = isset($_GET['filter']) && $_GET['filter'] !== '' ? $_GET['filter'] : null;
 
         $params = $_GET;
 
-        $next_page_url = $this->seturl("next_page_url", $params, $page, $search_type);
-        $prev_page_url = $this->seturl("prev_page_url", $params, $page, $search_type);
-        $companies_btn_url = $this->seturl("companies_btn_url", $params, $page, $search_type);
-        $offers_btn_url = $this->seturl("offers_btn_url", $params, $page, $search_type);
+        $next_page_url = $this->seturl("next_page_url", $params, $page, $search_type, $filter);
+        $prev_page_url = $this->seturl("prev_page_url", $params, $page, $search_type, $filter);
+        $companies_btn_url = $this->seturl("companies_btn_url", $params, $page, $search_type, null);
+        $offers_btn_url = $this->seturl("offers_btn_url", $params, $page, $search_type, null);
 
         //var_dump($limit, $page, $offset, $search_type);
         if ($search_type === 'offers') {
-            $cards = Offer::getAllOffers($conn, $limit, $offset);
-            $total_cards = Offer::countOffers($conn);
+            if ($filter) {
+                $cards = Offer::getFilteredOffers($conn, $limit, $offset, $filter);
+                $total_cards = Offer::countFilteredOffers($conn, $filter);
+            } 
+            else {
+                $cards = Offer::getAllOffers($conn, $limit, $offset);
+                $total_cards = Offer::countOffers($conn);
+            }
             $total_pages = ceil($total_cards / $limit);
+            $filters = Offer::getAllDomains($conn);
             //var_dump($cards, $total_cards);
-        } else {
-            $cards = Companies::getCompanies($conn);
-            $total_cards = Companies::countCompanies($conn);
+        }
+        else {
+            if ($filter) {
+                $cards = Companies::getFilteredCompanies($conn, $limit, $offset, $filter);
+                $total_cards = Companies::countFilteredCompanies($conn, $filter);
+            }
+            else {
+                $cards = Companies::getCompanies($conn);
+                $total_cards = Companies::countCompanies($conn);
+            }
             $total_pages = ceil($total_cards / $limit);
+            $filters = Companies::getAllActivitySectors($conn);
         }
 
-        //var_dump($total_cards, $page, $total_pages, $next_page_url, $prev_page_url, $companies_btn_url, $offers_btn_url);
-        View::render("search_page.twig", ['search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role']]);
-    }
 
-    public function seturl($link, $params, $page, $search_type) {
+        //var_dump($total_cards, $page, $total_pages, $next_page_url, $prev_page_url, $companies_btn_url, $offers_btn_url);
+        View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role']]);
+    }
+    
+
+    public function seturl($link, $params, $page, $search_type, $filter) {
 
         if ($link == "next_page_url") {
-            $params['page'] = $page + 1; $params['search_type'] = $search_type;
+            $params['page'] = $page + 1; $params['search_type'] = $search_type; $params['filter'] = $filter;
             $url = "?" . http_build_query($params);
         }
         else if ($link == "prev_page_url") {
-            $params['page'] = $page - 1; $params['search_type'] = $search_type;
+            $params['page'] = $page - 1; $params['search_type'] = $search_type; $params['filter'] = $filter;
             $url = "?" . http_build_query($params);
         }
         else if ($link == "companies_btn_url") {
-            $params['search_type'] = 'companies'; $params['page'] = $page;
+            $params['search_type'] = 'companies'; $params['page'] = $page; $params['filter'] = $filter;
             $url = "?" . http_build_query($params);
         }
         else if ($link == "offers_btn_url") {
-            $params['search_type'] = 'offers'; $params['page'] = $page;
+            $params['search_type'] = 'offers'; $params['page'] = $page; $params['filter'] = $filter;
             $url = "?" . http_build_query($params);
         }
 
