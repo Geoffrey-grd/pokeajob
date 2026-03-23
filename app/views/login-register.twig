@@ -32,6 +32,7 @@
 
                     <!-- Formulaire -->
                     <form class="auth-form" action="/loginregister" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                         <input id="auth-mode" name="auth_mode" type="hidden" value="login">
                         <div class="form-group signup-only is-hidden">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
