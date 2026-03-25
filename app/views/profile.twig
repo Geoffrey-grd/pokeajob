@@ -47,8 +47,9 @@
 
 
     {% elseif role == 'etudiant' and editmode == true %}
-        <form action="/modify_profile" method="post">
-            <input type="file" name ="profile_pic">
+        <form action="/modify_profile" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="file" name ="profile_pic" accept="image/*">
 
             <div>
                 <label>Last name</label>
@@ -111,8 +112,9 @@
 
 
     {% elseif role == 'pilote' and editmode == true %}
-        <form action="/modify_profile" method="post">
-            <input type="file" name ="profile_pic">
+        <form action="/modify_profile" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="file" name ="profile_pic" accept="image/*">
 
             <div>
                 <label>Last name</label>
@@ -199,9 +201,10 @@
 
 
     {% elseif role == 'entreprise' and editmode == true %}
-        <form action="/modify_profile" method="post">
-            <input type="file" name ="logo">
-            <input type="file" name ="banner">
+        <form action="/modify_profile" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="file" name ="logo" accept="image/*">
+            <input type="file" name ="banner" accept="image/*">
 
             <div>
                 <label>Company name</label>
@@ -224,12 +227,14 @@
         </form>
     
     {% endif %}
-
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
 
     {% if editmode == false %}
         <!-- Modifications -->
     <div>
-        <a href="/modify_profile">Modify my informations</a>
+        <a href="/edit_profile">Modify my informations</a>
     </div>
 
     <!-- Suppression de compte -->
