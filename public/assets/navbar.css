@@ -36,7 +36,7 @@
 .navbar__table,
 .navbar__search,
 .navbar__wishlist, 
-.navbar_students,
+.navbar__students,
 .navbar__notif,
 .navbar__my_offers {
     display: block;
@@ -66,7 +66,10 @@
 }
 
 .navbar__table,
-.navbar__wishlist {
+.navbar__wishlist,
+.navbar__notif,
+.navbar__my_offers,
+.navbar__students {
     width: 40px;
 }
 
@@ -81,12 +84,23 @@
     background-color: var(--color-accent);
 }
 
+.navbar__students {
+    /* Positionne students a 50px (gap) a droite de la loupe au centre. */
+    position: absolute;
+    left: calc(50% + 32px + var(--space-7));
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .navbar__menu img,
 .navbar__logo img,
 .navbar__profile img,
 .navbar__table img,
 .navbar__search img,
-.navbar__wishlist img {
+.navbar__wishlist img,
+.navbar__notif img,
+.navbar__my_offers img,
+.navbar__students img {
     width: 100%;
     height: 100%;
 }
@@ -238,7 +252,10 @@ body.menu-open {
 
     .navbar__menu,
     .navbar__table,
-    .navbar__wishlist {
+    .navbar__wishlist,
+    .navbar__notif,
+    .navbar__my_offers,
+    .navbar__students {
         width: 44px;
     }
 
