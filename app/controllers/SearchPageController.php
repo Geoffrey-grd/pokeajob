@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Offer;
-use App\Models\Companies;
+use App\Models\Company;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
@@ -42,23 +42,20 @@ class SearchPageController {
             }
             $total_pages = ceil($total_cards / $limit);
             $filters = Offer::getAllDomains($conn);
-            //var_dump($cards, $total_cards);
         }
         else {
             if ($filter) {
-                $cards = Companies::getFilteredCompanies($conn, $limit, $offset, $filter);
-                $total_cards = Companies::countFilteredCompanies($conn, $filter);
+                $cards = Company::getFilteredCompanies($conn, $limit, $offset, $filter);
+                $total_cards = Company::countFilteredCompanies($conn, $filter);
             }
             else {
-                $cards = Companies::getCompanies($conn);
-                $total_cards = Companies::countCompanies($conn);
+                $cards = Company::getCompanies($conn);
+                $total_cards = Company::countCompanies($conn);
             }
             $total_pages = ceil($total_cards / $limit);
-            $filters = Companies::getAllActivitySectors($conn);
+            $filters = Company::getAllActivitySectors($conn);
         }
 
-
-        //var_dump($total_cards, $page, $total_pages, $next_page_url, $prev_page_url, $companies_btn_url, $offers_btn_url);
         View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role']]);
     }
 

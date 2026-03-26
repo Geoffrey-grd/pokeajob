@@ -10,8 +10,8 @@ $router = new Router();
 $router->get("/", "AuthController@renderLoginRegister");
 $router->post("/loginregister", "AuthController@form_type");
 
-$router->post("/delete_account", "AuthController@deleteAccount");
-$router->get("/delete_account", "AuthController@deleteAccount");
+$router->post("/delete_account", "DelaccountController@deleteAccount");
+$router->get("/delete_account_page", "DelaccountController@renderDeleteAccount");
 
 $router->get("/logout", "AuthController@logout");
 
