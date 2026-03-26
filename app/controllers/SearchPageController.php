@@ -15,12 +15,14 @@ class SearchPageController {
     public function renderingSearchPage() {
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
-        
+
         $limit = 9;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($page - 1) * $limit;
-        $search_type = isset($_GET['search_type']) ? $_GET['search_type'] : 'offers';
+        $search_type = isset($_SESSION['flash_search_type']) ? $_SESSION['flash_search_type'] : (isset($_GET['search_type']) ? $_GET['search_type'] : 'offers');
         $filter = isset($_GET['filter']) && $_GET['filter'] !== '' ? $_GET['filter'] : null;
+
+        unset($_SESSION['flash_search_type']);
 
         $params = $_GET;
 
@@ -29,7 +31,6 @@ class SearchPageController {
         $companies_btn_url = $this->seturl("companies_btn_url", $params, $page, $search_type, null);
         $offers_btn_url = $this->seturl("offers_btn_url", $params, $page, $search_type, null);
 
-        //var_dump($limit, $page, $offset, $search_type);
         if ($search_type === 'offers') {
             if ($filter) {
                 $cards = Offer::getFilteredOffers($conn, $limit, $offset, $filter);
@@ -59,6 +60,13 @@ class SearchPageController {
 
         //var_dump($total_cards, $page, $total_pages, $next_page_url, $prev_page_url, $companies_btn_url, $offers_btn_url);
         View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role']]);
+    }
+
+    public static function searchCompanies() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $_SESSION["flash_search_type"] = "companies";
+        header("Location: /search_page");
+        exit();
     }
     
 

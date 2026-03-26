@@ -40,23 +40,23 @@
 
                 <ul class="menu menu--main">
                     {% if role == 'etudiant' %}
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">Wishlist</a></li>
                     <li><a href="/boo">Internship tracker</a></li>
                     {% endif %}
 
                     {% if role == 'entreprise' %}   
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">My offers</a></li>
                     <li><a href="/boo">Create a new offer</a></li>
                     <li><a href="/boo">My notifications</a></li>
                     {% endif %}
 
                     {% if role == 'pilote' %}
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">My students</a></li>
                     {% endif %}
                 </ul>
@@ -69,7 +69,7 @@
             <!-- Fond sombre clique pour fermer le menu. -->
             <div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
 
-            <a class="navbar__logo" href="index.html"> <img src="images/Logo_PokeAJob.png" alt="Logo du site"></a>
+            <a class="navbar__logo" href="/search_page"> <img src="images/Logo_PokeAJob.png" alt="Logo du site"></a>
             <a class="navbar__profile" href="/profile"> <img src="images/Profile.png" alt="Logo de profil"></a>
         </nav>
     </header>

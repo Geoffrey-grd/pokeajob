@@ -12,6 +12,12 @@ class User {
         return $stmt->get_result()->fetch_assoc();
     }
 
+    public static function getAllPilots($conn) {
+        $stmt = $conn->prepare("SELECT pilot.id_user, pilot.name, pilot.last_name FROM pilot");
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
 
     public static function create_student($conn, $email, $password, $name, $last_name, $school, $pilot, $role) {
 

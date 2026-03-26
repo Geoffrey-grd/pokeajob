@@ -22,8 +22,6 @@ class ProfileController {
 
         if ($_SESSION["role"] == "etudiant") {
             $userData = User::getStudentInformations($conn, $_SESSION["user_id"]);
-            var_dump($_SESSION["user_id"], $userData);
-            die();
         } 
         else if ($_SESSION["role"] == "entreprise") {
             $userData = User::getCompanyInformations($conn, $_SESSION["user_id"]);

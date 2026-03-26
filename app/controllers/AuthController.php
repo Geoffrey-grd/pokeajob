@@ -16,6 +16,7 @@ class AuthController {
         global $conn;
 
         $sectors = Sector::getAllSectors($conn);
+        $pilots = User::getAllPilots($conn);
 
         $setup_mode = $_SESSION["flash_mode"] ?? "login";
         $setup_account_type = $_SESSION["flash_account_type"] ?? "etudiant";
@@ -23,7 +24,7 @@ class AuthController {
 
         unset($_SESSION["flash_mode"], $_SESSION["flash_account_type"], $_SESSION["flash_error"]);
 
-        View::render("login-register.twig", ["setup_mode" => $setup_mode, "setup_account_type" => $setup_account_type, "error" => $error, "csrf_token" => Csrf::generateToken(), "sectors" => $sectors]);
+        View::render("login-register.twig", ["setup_mode" => $setup_mode, "setup_account_type" => $setup_account_type, "error" => $error, "csrf_token" => Csrf::generateToken(), "sectors" => $sectors, "pilots" => $pilots]);
 }
 
     public function form_type() {
