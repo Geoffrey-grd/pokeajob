@@ -18,7 +18,6 @@
 
 
 <body>
-    {% set role_key = role|default('')|lower|trim %}
     <header>
         <nav class="navbar--top">   
             <button id="openbtn" class="navbar__menu" aria-label="Ouvrir le menu" aria-expanded="false">
@@ -40,24 +39,24 @@
                 </button>
 
                 <ul class="menu menu--main">
-                    {% if role_key in ['etudiant', 'student'] %}
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    {% if role == 'etudiant' %}
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">Wishlist</a></li>
                     <li><a href="/boo">Internship tracker</a></li>
                     {% endif %}
 
-                    {% if role_key in ['entreprise', 'company'] %}   
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    {% if role == 'entreprise' %}   
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">My offers</a></li>
                     <li><a href="/boo">Create a new offer</a></li>
                     <li><a href="/boo">My notifications</a></li>
                     {% endif %}
 
-                    {% if role_key in ['pilote', 'pilot'] %}
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    {% if role == 'pilote' %}
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">My students</a></li>
                     {% endif %}
                 </ul>
@@ -70,8 +69,8 @@
             <!-- Fond sombre clique pour fermer le menu. -->
             <div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
 
-            <a class="navbar__logo" href="index.html"> <img src="images/Logo_PokeAJob.png" alt="Logo du site"></a>
-            <a class="navbar__profile" href="connexion.html"> <img src="images/Profile.png" alt="Logo de profil"></a>
+            <a class="navbar__logo" href="/search_page"> <img src="images/Logo_PokeAJob.png" alt="Logo du site"></a>
+            <a class="navbar__profile" href="/profile"> <img src="images/Profile.png" alt="Logo de profil"></a>
         </nav>
     </header>
 
@@ -80,7 +79,7 @@
     {% block content %}
     {% endblock %}
     
-    {% if role_key in ['etudiant', 'student'] %}
+    {% if role == 'etudiant' %}
         <!-- Barre de navigation basse étudiant(tableau, recherche, favoris). -->
     <footer>
         <nav class="navbar--bottom">
@@ -91,7 +90,7 @@
     </footer>
     {% endif %}
 
-    {% if role_key in ['entreprise', 'company'] %}
+    {% if role == 'entreprise' %}
         <!-- Barre de navigation basse entreprise(tableau, recherche, favoris). -->
     <footer>
         <nav class="navbar--bottom">
@@ -102,21 +101,13 @@
     </footer>
     {% endif %}
 
-    {% if role_key in ['pilote', 'pilot'] %}
+    {% if role == 'pilote' %}
         <!-- Barre de navigation basse pilote(tableau, recherche, favoris). -->
     <footer>
         <nav class="navbar--bottom">
             <!-- <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a> -->
             <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
             <a class="navbar__students" href="search.html"> <img src="images/student.png" alt="Wishlist"></a>
-        </nav>
-    </footer>
-    {% endif %}
-
-    {% if role_key not in ['etudiant', 'student', 'entreprise', 'company', 'pilote', 'pilot'] %}
-    <footer>
-        <nav class="navbar--bottom">
-            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
         </nav>
     </footer>
     {% endif %}

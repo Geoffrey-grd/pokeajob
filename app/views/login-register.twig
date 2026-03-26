@@ -32,6 +32,7 @@
 
                     <!-- Formulaire -->
                     <form class="auth-form" action="/loginregister" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                         <input id="auth-mode" name="auth_mode" type="hidden" value="login">
                         <div class="form-group signup-only is-hidden">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
@@ -87,12 +88,7 @@
                         <div class="form-group">
                             <label for="password">Mot de passe</label>
                             <input name="password" id="password" type="password" placeholder="Mot de passe" required>
-                        </div>
-
-                        <div class="form-group role-company signup-only is-hidden">
-                            <label for="confirm-password">Confirmer le mot de passe</label>
-                            <input name="confirm_password" id="confirm-password" type="password" placeholder="Confirmer le mot de passe">
-                        </div>
+                        </div>  
 
                         <div class="form-group role-student role-pilote signup-only is-hidden">
                             <label for="school">Etablissement</label>
@@ -107,9 +103,10 @@
                         <div class="form-group role-student signup-only is-hidden">
                             <label for="training-pilot">Pilote de formation</label>
                             <select name="training_pilot" id="training-pilot" class="form-select">
-                                <option value="">Choisir un pilote</option>
-                                <option value="dupont">M. Dupont</option>
-                                <option value="martin">Mme Martin</option>
+                                <option value="">Votre pilote</option>
+                                {% for pilot in pilots %}
+                                    <option value="{{ pilot.id_user }}">{{ pilot.name }} {{ pilot.last_name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
