@@ -16,7 +16,7 @@ class SearchPageController {
         if (session_status() === PHP_SESSION_NONE) session_start();
         global $conn;
 
-        $limit = 9;
+        $limit = 12;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($page - 1) * $limit;
         $search_type = isset($_SESSION['flash_search_type']) ? $_SESSION['flash_search_type'] : (isset($_GET['search_type']) ? $_GET['search_type'] : 'offers');
