@@ -14,9 +14,10 @@ class SearchPageController {
 
     public function renderingSearchPage() {
         if (session_status() === PHP_SESSION_NONE) session_start();
+        Auth::check();
         global $conn;
         
-        $limit = 9;
+        $limit = 12;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($page - 1) * $limit;
         $search_type = isset($_GET['search_type']) ? $_GET['search_type'] : 'offers';
@@ -58,7 +59,8 @@ class SearchPageController {
 
 
         //var_dump($total_cards, $page, $total_pages, $next_page_url, $prev_page_url, $companies_btn_url, $offers_btn_url);
-        View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role']]);
+        $role = strtolower(trim((string)($_SESSION['role'] ?? '')));
+        View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $role]);
     }
     
 

@@ -50,6 +50,7 @@
     /* Contenu texte de la carte. */
     color: var(--color-text);
     padding: var(--space-4);
+    min-width: 0;
 }
 
 .card__title {
@@ -66,6 +67,7 @@
     align-items: center;
     gap: var(--space-2);
     margin-bottom: var(--space-2);
+    min-width: 0;
 }
 
 .card__row--type h3,
@@ -73,6 +75,8 @@
 .card__row--date h3 {
     font-size: 0.98rem;
     font-weight: 700;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .card__body img {

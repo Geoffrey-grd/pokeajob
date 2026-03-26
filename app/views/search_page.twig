@@ -7,8 +7,10 @@
 <link rel="stylesheet" href="assets/offer_list.css">
 
     <main>
-        <a class="offer_button" href={{ offers_btn_url }}>Chercher une offre</a>
-        <a class="company_button" href={{ companies_btn_url }}>Chercher une entreprise</a>
+        <div class="search-toggle">
+            <a class="search-toggle__btn offer_button {{ search_type == 'offers' ? 'is-active' : 'is-inactive' }}" href={{ offers_btn_url }}>Chercher une offre</a>
+            <a class="search-toggle__btn company_button {{ search_type == 'companies' ? 'is-active' : 'is-inactive' }}" href={{ companies_btn_url }}>Chercher une entreprise</a>
+        </div>
 
         <form method="get" action="/search_page">
                 <input type="hidden" name="search_type" value="{{ search_type }}">
@@ -73,16 +75,17 @@
                     </section>
                 {% endfor %}
             {% endif %}
+        </section>
 
         <nav class="pagination">
             {% if page > 1 %}
-                <a class="previous_offers" href={{ prev_page_url }}>← Offres précédentes</a>
+                <a class="previous_offers" href="{{ prev_page_url }}" aria-label="Page precedente" title="Page precedente"></a>
             {% endif %}
 
             <span class="pagination__info">Page {{ page }} / {{ total_pages }}</span>
 
             {% if page < total_pages %}
-                <a class="next_offers" href={{ next_page_url }}>Offres suivantes →</a>
+                <a class="next_offers" href="{{ next_page_url }}" aria-label="Page suivante" title="Page suivante"></a>
             {% endif %}
         </nav>
     </main>
