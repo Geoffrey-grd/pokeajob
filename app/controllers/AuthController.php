@@ -2,6 +2,9 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\Student;
+use App\Models\Company;
+use App\Models\Pilot;
 use App\Models\Sector;
 use Core\Csrf;
 use Core\Auth;
@@ -16,7 +19,7 @@ class AuthController {
         global $conn;
 
         $sectors = Sector::getAllSectors($conn);
-        $pilots = User::getAllPilots($conn);
+        $pilots = Pilot::getAllPilots($conn);
 
         $setup_mode = $_SESSION["flash_mode"] ?? "login";
         $setup_account_type = $_SESSION["flash_account_type"] ?? "etudiant";
@@ -94,7 +97,7 @@ class AuthController {
             $phone = $_POST["phone"];
             $ciret = $_POST["company_ciret"];
             $role = "entreprise";
-            User::create_company($conn, $email, $password, $company_name, $address, $sectors, $phone, $ciret, $role);
+            Company::create_company($conn, $email, $password, $company_name, $address, $sectors, $phone, $ciret, $role);
         } 
         else if ($account_type == "pilote") {
             $name= $_POST["name"];
@@ -102,7 +105,7 @@ class AuthController {
             $phone = $_POST["phone"];
             $school = $_POST["school"];
             $role = "pilote";
-            User::create_pilot($conn, $email, $password, $name, $last_name, $phone, $school, $role);
+            Pilot::create_pilot($conn, $email, $password, $name, $last_name, $phone, $school, $role);
         } 
         else {
             $name= $_POST["name"];
@@ -110,7 +113,7 @@ class AuthController {
             $school = $_POST["school"];
             $role = "etudiant";
             $pilot= $_POST["training_pilot"];
-            User::create_student($conn, $email, $password, $name, $last_name, $school, $pilot, $role);
+            Student::create_student($conn, $email, $password, $name, $last_name, $school, $pilot, $role);
         }
         $SESSION["flash_mode"] = "login";
         header("Location: /");
@@ -125,44 +128,5 @@ class AuthController {
     }
 
 
-    public static function deleteAccount() {
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        global $conn;
-
-        if (!isset($_SESSION["user_id"])) {
-            header("Location: /");
-            exit();
-        }
-
-        $error = "";
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            Csrf::verifyToken($_POST["csrf_token"]);
-
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-
-            $user = User::findByemail($conn, $email);
-
-            if (!$user || !password_verify($password, $user["password"])) {
-
-                $error = "Identifiant ou mot de passe incorrect.";
-
-            } elseif ($user["id_user"] != $_SESSION["user_id"]) {
-
-                $error = "Erreur de sécurité.";
-
-            } else {
-
-                User::delete_account($conn, $_SESSION["user_id"]);
-
-                session_destroy();
-
-                header("Location: /");
-                exit();
-            }
-        }
-        View::render("delete_account.twig", ["error" => $error, "csrf_token" => Csrf::generateToken(), 'role' => $_SESSION['role']]);
-    }
+    
 }

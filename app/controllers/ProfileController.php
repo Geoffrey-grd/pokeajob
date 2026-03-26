@@ -2,6 +2,9 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\Student;
+use App\Models\Company;
+use App\Models\Pilot;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
@@ -21,13 +24,13 @@ class ProfileController {
         unset($_SESSION["flash_error"], $_SESSION["flash_mode"]);
 
         if ($_SESSION["role"] == "etudiant") {
-            $userData = User::getStudentInformations($conn, $_SESSION["user_id"]);
+            $userData = Student::getStudentInformations($conn, $_SESSION["user_id"]);
         } 
         else if ($_SESSION["role"] == "entreprise") {
-            $userData = User::getCompanyInformations($conn, $_SESSION["user_id"]);
+            $userData = Company::getCompanyInformations($conn, $_SESSION["user_id"]);
         }
         else if ($_SESSION["role"] == "pilote") {
-            $userData = User::getPilotInformations($conn, $_SESSION["user_id"]);
+            $userData = Pilot::getPilotInformations($conn, $_SESSION["user_id"]);
         }
         View::render("profile.twig", ["role" => $_SESSION["role"], "userData" => $userData, "editmode" => $editmode, "csrf_token" => Csrf::generateToken(), "error" => $error]);
 
@@ -52,10 +55,10 @@ class ProfileController {
                 $profile_pic_path = $this->moveFile($_FILES["profile_pic"], "profile_img");
             }
             else {
-                $profile_pic_path = USER::getStudentProfilePicture($conn, $_SESSION["user_id"])["profile_pic_path"];
+                $profile_pic_path = Student::getStudentProfilePicture($conn, $_SESSION["user_id"])["profile_pic_path"];
             }
 
-            User::updateStudent($conn, $_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["school"], $_POST["description"]);
+            Student::updateStudent($conn, $_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["school"], $_POST["description"]);
         } 
         else if ($_SESSION["role"] == "entreprise") {
             if ($_FILES["logo"]["error"] !== UPLOAD_ERR_NO_FILE) {
@@ -63,17 +66,17 @@ class ProfileController {
                 $logo_path = $this->moveFile($_FILES["logo"], "company_logo");
             }
             else {
-                $logo_path = USER::getLogo($conn, $_SESSION["user_id"])["logo_path"];
+                $logo_path = Company::getLogo($conn, $_SESSION["user_id"])["logo_path"];
             }
             if ($_FILES["banner"]["error"] !== UPLOAD_ERR_NO_FILE) {
                 $this->checkpicture($_FILES["banner"], "5:1");
                 $banner_path = $this->moveFile($_FILES["banner"], "company_banner");
             }
             else {
-                $banner_path = USER::getBanner($conn, $_SESSION["user_id"])["banner_path"];
+                $banner_path = Company::getBanner($conn, $_SESSION["user_id"])["banner_path"];
             }
 
-            User::updateCompany($conn, $_SESSION["user_id"], $logo_path, $banner_path, $_POST["company_name"], $_POST["email"], $_POST["phone"], $_POST["description"]);
+            Company::updateCompany($conn, $_SESSION["user_id"], $logo_path, $banner_path, $_POST["company_name"], $_POST["email"], $_POST["phone"], $_POST["description"]);
         }
         else if ($_SESSION["role"] == "pilote") {
             if ($_FILES["profile_pic"]["error"] !== UPLOAD_ERR_NO_FILE) {
@@ -81,10 +84,10 @@ class ProfileController {
                 $profile_pic_path = $this->moveFile($_FILES["profile_pic"], "profile_img");
             }
             else {
-                $profile_pic_path = USER::getPilotProfilePicture($conn, $_SESSION["user_id"])["profile_pic_path"];
+                $profile_pic_path = Pilot::getPilotProfilePicture($conn, $_SESSION["user_id"])["profile_pic_path"];
             }
 
-            User::updatePilot($conn, $_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["phone"], $_POST["school"]);
+            Pilot::updatePilot($conn, $_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["phone"], $_POST["school"]);
         }
         header("Location: /profile"); 
     }
