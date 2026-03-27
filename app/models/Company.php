@@ -47,7 +47,7 @@ class Company extends User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getCompanies($limit = 9, $offset = 0) {
+    public function getCompanies($limit = 12, $offset = 0) {
         $stmt = $this->conn->prepare("SELECT company_name, banner_path, logo_path FROM company WHERE id_user != ? LIMIT ?, ?");
 
         $stmt->bindValue(1, $_SESSION["user_id"], PDO::PARAM_INT);

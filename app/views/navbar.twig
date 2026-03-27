@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/core.css">
-    <link rel="stylesheet" href="assets/navbar.css">
+    <link rel="stylesheet" href="assets/base/core.css">
+    <link rel="stylesheet" href="assets/components/navbar.css">
     <script src="js/burger_menu.js" defer></script>
     <title>PokeAJob - Accueil</title>
 
@@ -29,8 +29,8 @@
             </button>
 
             <!-- Menu lateral ouvert/ferme par le bouton burger. -->
-            <div id="burgermenu" class="burgermenu" aria-hidden="true">
-                <button id="closebtn" type="button" class="close" aria-label="Fermer le menu">
+            <div id="burger-menu" class="burger-menu" aria-hidden="true">
+                <button id="closebtn" type="button" class="burger-menu__close" aria-label="Fermer le menu">
                     <span class="burger-icon burger-icon--close">
                         <span></span>
                         <span></span>
@@ -96,7 +96,7 @@
         <nav class="navbar--bottom">
             <a class="navbar__notif" href="index.html"> <img src="images/email.png" alt="Notification"></a>
             <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
-            <a class="navbar__my_offers" href="search.html"> <img src="images/plus.png" alt="Wishlist"></a>
+            <a class="navbar__my-offers" href="search.html"> <img src="images/plus.png" alt="Wishlist"></a>
         </nav>
     </footer>
     {% endif %}

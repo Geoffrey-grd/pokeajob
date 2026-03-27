@@ -10,7 +10,7 @@ class Offer extends BDDlink {
         parent::__construct();
     }
     
-    public function getAllOffers($limit = 9, $offset = 0) {
+    public function getAllOffers($limit = 12, $offset = 0) {
         
             $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
                 FROM offer JOIN company ON offer.id_company = company.id_user
