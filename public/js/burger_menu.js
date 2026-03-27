@@ -1,4 +1,4 @@
-var sidenav = document.getElementById("burgermenu");
+var sidenav = document.getElementById("burger-menu");
 var closebtn = document.getElementById("closebtn");
 var openbtn = document.getElementById("openbtn");
 var overlay = document.getElementById("menu-overlay");

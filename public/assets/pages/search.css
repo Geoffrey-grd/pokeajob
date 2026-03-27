@@ -3,7 +3,7 @@
     font-weight: 700;
 }
 
-main {
+.search-page {
     width: 100%;
     max-width: 100%;
     padding-inline: var(--space-4);
@@ -59,7 +59,7 @@ main {
     min-width: 0;
 }
 
-main > form {
+.search-page > form {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -71,7 +71,7 @@ main > form {
     border: none;
 }
 
-main > form select {
+.search-page > form select {
     width: 100%;
     min-width: 0;
     padding: 10px 42px 10px 12px;
@@ -81,26 +81,25 @@ main > form select {
     color: var(--color-text-dark);
     font-weight: 700;
     appearance: none;
-    background-image: url('../images/filter_arrow.png');
+    background-image: url('../../images/filter_arrow.png');
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 25px;
 }
 
-main > form button[type="submit"] {
+.search-page > form button[type="submit"] {
     width: 100%;
     padding: 10px 16px;
     border: 2px solid var(--color-border);
     border-radius: var(--radius-pill);
     background-color: var(--color-accent);
-    color: white;
     color: #1f1f1f;
     font-weight: 650;
     text-transform: uppercase;
     transition: transform 0.2s ease, box-shadow 0.2s ease,filter 0.2s ease;
 }
 
-main > form button[type="submit"]:hover {
+.search-page > form button[type="submit"]:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.28);
     filter: brightness(0.98);
@@ -119,28 +118,23 @@ main > form button[type="submit"]:hover {
     font-weight: 700;
 }
 
-.previous_offers {
+.pagination__nav {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 56px;
     height: 56px;
-    background-image: url('../images/left_arrow.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 40px 40px;
 }
 
-.next_offers {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    background-image: url('../images/right_arrow.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 40px 40px;
+.pagination__nav--prev {
+    background-image: url('../../images/left_arrow.png');
+}
+
+.pagination__nav--next {
+    background-image: url('../../images/right_arrow.png');
 }
 
 @media (min-width: 768px) {
@@ -154,7 +148,7 @@ main > form button[type="submit"]:hover {
         justify-items: center;
 
     }
-    main > form {
+    .search-page > form {
         width: 100%;
         max-width: min(34rem, calc(100vw - 2 * var(--space-5)));
         flex-direction: row;
@@ -162,12 +156,12 @@ main > form button[type="submit"]:hover {
         gap: var(--space-3);
     }
 
-    main > form select {
+    .search-page > form select {
         flex: 1;
         min-width: 0;
     }
 
-    main > form button[type="submit"] {
+    .search-page > form button[type="submit"] {
         width: auto;
     }
 }
@@ -180,7 +174,7 @@ main > form button[type="submit"]:hover {
         justify-items: center;
         width: 100%;
     }
-    main > form {
+    .search-page > form {
         max-width: min(40%, var(--layout-desktop), calc(100vw - 2 * var(--space-6)));
         padding-inline: 0;
     }
