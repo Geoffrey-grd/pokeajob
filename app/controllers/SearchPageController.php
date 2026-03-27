@@ -6,15 +6,12 @@ use App\Models\Company;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
-require_once __DIR__ . "/../../config/database.php";
-
 
 
 class SearchPageController {
 
     public function renderingSearchPage() {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        global $conn;
 
         $limit = 12;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -32,28 +29,30 @@ class SearchPageController {
         $offers_btn_url = $this->seturl("offers_btn_url", $params, $page, $search_type, null);
 
         if ($search_type === 'offers') {
+            $offer = new Offer();
             if ($filter) {
-                $cards = Offer::getFilteredOffers($conn, $limit, $offset, $filter);
-                $total_cards = Offer::countFilteredOffers($conn, $filter);
+                $cards = $offer->getFilteredOffers($limit, $offset, $filter);
+                $total_cards = $offer->countFilteredOffers($filter);
             } 
             else {
-                $cards = Offer::getAllOffers($conn, $limit, $offset);
-                $total_cards = Offer::countOffers($conn);
+                $cards = $offer->getAllOffers($limit, $offset);
+                $total_cards = $offer->countOffers();
             }
             $total_pages = ceil($total_cards / $limit);
-            $filters = Offer::getAllDomains($conn);
+            $filters = $offer->getAllDomains();
         }
         else {
+            $company = new Company();
             if ($filter) {
-                $cards = Company::getFilteredCompanies($conn, $limit, $offset, $filter);
-                $total_cards = Company::countFilteredCompanies($conn, $filter);
+                $cards = $company->getFilteredCompanies($limit, $offset, $filter);
+                $total_cards = $company->countFilteredCompanies($filter);
             }
             else {
-                $cards = Company::getCompanies($conn);
-                $total_cards = Company::countCompanies($conn);
+                $cards = $company->getCompanies();
+                $total_cards = $company->countCompanies();
             }
             $total_pages = ceil($total_cards / $limit);
-            $filters = Company::getAllActivitySectors($conn);
+            $filters = $company->getAllActivitySectors();
         }
 
         View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role']]);
@@ -65,10 +64,8 @@ class SearchPageController {
         header("Location: /search_page");
         exit();
     }
-    
 
     public function seturl($link, $params, $page, $search_type, $filter) {
-
         if ($link == "next_page_url") {
             $params['page'] = $page + 1; $params['search_type'] = $search_type; $params['filter'] = $filter;
             $url = "?" . http_build_query($params);
@@ -78,14 +75,13 @@ class SearchPageController {
             $url = "?" . http_build_query($params);
         }
         else if ($link == "companies_btn_url") {
-            $params['search_type'] = 'companies'; $params['page'] = $page; $params['filter'] = $filter;
+            $params['search_type'] = 'companies'; $params['page'] = 1; $params['filter'] = $filter;
             $url = "?" . http_build_query($params);
         }
         else if ($link == "offers_btn_url") {
-            $params['search_type'] = 'offers'; $params['page'] = $page; $params['filter'] = $filter;
+            $params['search_type'] = 'offers'; $params['page'] = 1; $params['filter'] = $filter;
             $url = "?" . http_build_query($params);
         }
-
         return $url;
     }
 }

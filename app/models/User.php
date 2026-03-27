@@ -1,21 +1,23 @@
 <?php
  
 namespace App\Models;
+
+use PDO;
  
-require_once __DIR__ . "/../../config/database.php";
- 
-class User {
- 
-    public static function findByemail($conn, $email) {
-        $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+class User extends BDDlink {
+
+    public function __construct() {
+        parent::__construct();
     }
  
-    public static function delete_account($conn, $user_id) {
-        $stmt = $conn->prepare("DELETE FROM user WHERE id_user = ?");
-        $stmt->bind_param("i", $user_id);
-        return $stmt->execute();
+    public function findByemail($email) {
+        $stmt = $this->conn->prepare("SELECT * FROM user WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-}
+ 
+    public function delete_account($user_id) {
+        $stmt = $this->conn->prepare("DELETE FROM user WHERE id_user = ?");
+        return $stmt->execute([$user_id]);
+    }
+}   

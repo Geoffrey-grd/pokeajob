@@ -8,93 +8,91 @@ use App\Models\Pilot;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
-require_once __DIR__ . "/../../config/database.php";
+
 
 class ProfileController {
 
     public function renderProfile($editmode = false) {
-
         if (session_status() === PHP_SESSION_NONE) session_start();
-        global $conn;
 
         $error = "";
 
-        if (isset($_SESSION["flash_error"])) { $error = $_SESSION["flash_error"];}
-        if (isset($_SESSION["flash_mode"])) { $editmode = $_SESSION["flash_mode"];}
+        if (isset($_SESSION["flash_error"])) { $error = $_SESSION["flash_error"]; }
+        if (isset($_SESSION["flash_mode"])) { $editmode = $_SESSION["flash_mode"]; }
         unset($_SESSION["flash_error"], $_SESSION["flash_mode"]);
 
         if ($_SESSION["role"] == "etudiant") {
-            $userData = Student::getStudentInformations($conn, $_SESSION["user_id"]);
+            $student = new Student();
+            $userData = $student->getStudentInformations($_SESSION["user_id"]);
         } 
         else if ($_SESSION["role"] == "entreprise") {
-            $userData = Company::getCompanyInformations($conn, $_SESSION["user_id"]);
+            $company = new Company();
+            $userData = $company->getCompanyInformations($_SESSION["user_id"]);
         }
         else if ($_SESSION["role"] == "pilote") {
-            $userData = Pilot::getPilotInformations($conn, $_SESSION["user_id"]);
+            $pilot = new Pilot();
+            $userData = $pilot->getPilotInformations($_SESSION["user_id"]);
         }
+
         View::render("profile.twig", ["role" => $_SESSION["role"], "userData" => $userData, "editmode" => $editmode, "csrf_token" => Csrf::generateToken(), "error" => $error]);
-
-        
     }
-
 
     public function editProfile() {
         $this->renderProfile(true);
     }
 
-
-    public function modifyProfile(){
+    public function modifyProfile() {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        global $conn;
 
         Csrf::verifyToken($_POST["csrf_token"]);
 
         if ($_SESSION["role"] == "etudiant") {
+            $student = new Student();
             if ($_FILES["profile_pic"]["error"] !== UPLOAD_ERR_NO_FILE) {
                 $this->checkpicture($_FILES["profile_pic"], "1:1");
                 $profile_pic_path = $this->moveFile($_FILES["profile_pic"], "profile_img");
             }
             else {
-                $profile_pic_path = Student::getStudentProfilePicture($conn, $_SESSION["user_id"])["profile_pic_path"];
+                $profile_pic_path = $student->getStudentProfilePicture($_SESSION["user_id"])["profile_pic_path"];
             }
-
-            Student::updateStudent($conn, $_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["school"], $_POST["description"]);
+            $student->updateStudent($_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["school"], $_POST["description"]);
         } 
         else if ($_SESSION["role"] == "entreprise") {
+            $company = new Company();
             if ($_FILES["logo"]["error"] !== UPLOAD_ERR_NO_FILE) {
                 $this->checkpicture($_FILES["logo"], "1:1");
                 $logo_path = $this->moveFile($_FILES["logo"], "company_logo");
             }
             else {
-                $logo_path = Company::getLogo($conn, $_SESSION["user_id"])["logo_path"];
+                $logo_path = $company->getLogo($_SESSION["user_id"])["logo_path"];
             }
             if ($_FILES["banner"]["error"] !== UPLOAD_ERR_NO_FILE) {
                 $this->checkpicture($_FILES["banner"], "5:1");
                 $banner_path = $this->moveFile($_FILES["banner"], "company_banner");
             }
             else {
-                $banner_path = Company::getBanner($conn, $_SESSION["user_id"])["banner_path"];
+                $banner_path = $company->getBanner($_SESSION["user_id"])["banner_path"];
             }
-
-            Company::updateCompany($conn, $_SESSION["user_id"], $logo_path, $banner_path, $_POST["company_name"], $_POST["email"], $_POST["phone"], $_POST["description"]);
+            $company->updateCompany($_SESSION["user_id"], $logo_path, $banner_path, $_POST["company_name"], $_POST["email"], $_POST["phone"], $_POST["description"]);
         }
         else if ($_SESSION["role"] == "pilote") {
+            $pilot = new Pilot();
             if ($_FILES["profile_pic"]["error"] !== UPLOAD_ERR_NO_FILE) {
                 $this->checkpicture($_FILES["profile_pic"], "1:1");
                 $profile_pic_path = $this->moveFile($_FILES["profile_pic"], "profile_img");
             }
             else {
-                $profile_pic_path = Pilot::getPilotProfilePicture($conn, $_SESSION["user_id"])["profile_pic_path"];
+                $profile_pic_path = $pilot->getPilotProfilePicture($_SESSION["user_id"])["profile_pic_path"];
             }
-
-            Pilot::updatePilot($conn, $_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["phone"], $_POST["school"]);
+            $pilot->updatePilot($_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["phone"], $_POST["school"]);
         }
+
         header("Location: /profile"); 
     }
 
     public function checkpicture($file, $type) {
         if ($file["error"] === UPLOAD_ERR_OK) {
-            $error="";
+            $error = "";
             $tmp = getimagesize($file["tmp_name"]);
             $width = $tmp[0];
             $height = $tmp[1];
