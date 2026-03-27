@@ -48,7 +48,7 @@ class Company extends User {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public static function getCompanies($conn, $limit = 9, $offset = 0) {
+    public static function getCompanies($conn, $limit = 12, $offset = 0) {
         $stmt = $conn->prepare("SELECT company_name, banner_path, logo_path FROM company WHERE id_user != ? LIMIT ?, ?");
         $stmt->bind_param("iii", $_SESSION["user_id"], $offset, $limit);
         $stmt->execute();

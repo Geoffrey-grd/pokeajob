@@ -6,7 +6,7 @@ require_once __DIR__ . "/../../config/database.php";
 
 class Offer {
     
-    public static function getAllOffers($conn, $limit = 9, $offset = 0) {
+    public static function getAllOffers($conn, $limit = 12, $offset = 0) {
         
             $stmt = $conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
                 FROM offer JOIN company ON offer.id_company = company.id_user
