@@ -15,11 +15,10 @@ class Company extends User {
         $stmt = $this->conn->prepare("INSERT INTO user (email, password, role) VALUES (?, ?, ?)");
         $stmt->execute([$email, $passwordHash, $role]);
 
-        $id_user = $this->conn->insert_id;
+        $id_user = $this->conn->lastInsertId();
 
         $stmt = $this->conn->prepare("INSERT INTO company (id_user, company_name, address, id_sector, phone, ciret) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$id_user, $company_name, $address, $sector, $phone, $ciret]);
-        return $stmt->execute();
+        return $stmt->execute([$id_user, $company_name, $address, $sector, $phone, $ciret]);
     }
 
     public function getCompanyInformations($id_user) {
@@ -31,7 +30,6 @@ class Company extends User {
 
     public function updateCompany($id_user, $logo_path, $banner_path, $company_name, $email, $phone, $description) {
         $stmt = $this->conn->prepare("UPDATE user JOIN company ON user.id_user = company.id_user SET user.email = ?, company.company_name = ?, company.phone = ?, company.description = ?, company.logo_path = ?, company.banner_path = ? WHERE user.id_user = ?");
-        $stmt->execute([$email, $company_name, $phone, $description, $logo_path, $banner_path, $id_user]);
         return $stmt->execute([$email, $company_name, $phone, $description, $logo_path, $banner_path, $id_user]);
     }
 

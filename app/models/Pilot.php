@@ -22,11 +22,10 @@ class Pilot extends User {
         $stmt = $this->conn->prepare("INSERT INTO user (email, password, role) VALUES (?, ?, ?)");
         $stmt->execute([$email, $passwordHash, $role]);
 
-        $id_user = $this->conn->insert_id;
+        $id_user = $this->conn->lastInsertId();
 
         $stmt = $this->conn->prepare("INSERT INTO pilot (id_user, name, last_name, phone, school) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$id_user, $name, $last_name, $phone, $school]);
-        return $stmt->execute();
+        return $stmt->execute([$id_user, $name, $last_name, $phone, $school]);
     }
 
     public function getPilotInformations($id_user) {
@@ -38,8 +37,7 @@ class Pilot extends User {
 
     public function updatePilot($id_user, $profile_pic_path, $last_name, $name, $email, $phone, $school) {
         $stmt = $this->conn->prepare("UPDATE user JOIN pilot ON user.id_user = pilot.id_user SET user.email = ?, pilot.name = ?, pilot.last_name = ?, pilot.phone = ?, pilot.school = ?, pilot.profile_pic_path = ? WHERE user.id_user = ?");
-        $stmt->execute([$email, $name, $last_name, $phone, $school, $profile_pic_path, $id_user]);
-        return $stmt->execute();
+        return $stmt->execute([$email, $name, $last_name, $phone, $school, $profile_pic_path, $id_user]);
     }
 
     public function getPilotProfilePicture($user_id) {
