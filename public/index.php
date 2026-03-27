@@ -21,6 +21,7 @@ $router->post("/modify_profile", "ProfileController@modifyProfile");
 
 $router->get("/boo", "HomeController@boo");
 
+$router->get("/legal_mentions", "LegalMentionsController@renderLegalMentions");
 
 $router->get("/search_page", "SearchPageController@renderingSearchPage");
 $router->get("/search_companies", "SearchPageController@searchCompanies");
