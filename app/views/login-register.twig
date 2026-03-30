@@ -13,6 +13,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="images/pokeball-apple-touch-icon.png">
     <link rel="shortcut icon" href="favicon.ico">
     <script src="js/auth.js" defer></script>
+    <script src="js/form-validation.js" defer></script>
 </head>
 <body class="page-auth">
     <!-- Bloc central: logo + formulaire dynamique. -->
@@ -35,13 +36,14 @@
                     <h2 id="auth-title">CONNEXION</h2>
 
                     <!-- Formulaire -->
-                    <form class="auth-form" action="/loginregister" method="post">
+                    <form class="auth-form" action="/loginregister" method="post" novalidate>
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                         <input id="auth-mode" name="auth_mode" type="hidden" value="login">
+
+                        <!-- Type de compte -->
                         <div class="form-group signup-only is-hidden">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                             <label>Type de compte</label>
-                            <div class="auth-switch auth-switch--roles" role="tablist" aria-label="Choisir un type de compte">
+                            <div class="auth-switch auth-switch--roles" role="tablist">
                                 <button type="button" class="auth-switch__btn role-switch__btn is-active" data-role="etudiant">Etudiant</button>
                                 <button type="button" class="auth-switch__btn role-switch__btn" data-role="entreprise">Entreprise</button>
                                 <button type="button" class="auth-switch__btn role-switch__btn" data-role="pilote">Pilote</button>
@@ -49,75 +51,127 @@
                             <input name="account_type" id="account-type" type="hidden" value="etudiant">
                         </div>
 
+                        <!-- Prénom -->
                         <div class="form-group role-student role-pilote signup-only is-hidden">
                             <label for="name">Prenom</label>
+                            <div class="input-wrapper">
                             <input name="name" id="name" type="text" placeholder="Prenom">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
+                        <!-- Nom -->
                         <div class="form-group role-student role-pilote signup-only is-hidden">
                             <label for="last-name">Nom</label>
+                             <div class="input-wrapper">
                             <input name="last_name" id="last-name" type="text" placeholder="Nom">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
-
-
+                        <!-- Nom entreprise -->
                         <div class="form-group role-company signup-only is-hidden">
                             <label for="company-name">Nom de l'entreprise</label>
+                            <div class="input-wrapper">
                             <input name="company_name" id="company-name" type="text" placeholder="Nom de l'entreprise">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
+                        <!-- Secteur d'activité -->
                         <div class="form-group role-company signup-only is-hidden">
                             <label for="activity-sector">Secteur d'activité</label>
+                            <div class="input-wrapper">
                             <select name="activity_sector" id="activity-sector" class="form-select">
-                            <option value="">Votre secteur</option>
-                            {% for sector in sectors %}
-                                <option value="{{ sector.id_sector }}">{{ sector.sector_name }}</option>
-                            {% endfor %}
+                                <option value="">Votre secteur</option>
+                                {% for sector in sectors %}
+                                    <option value="{{ sector.id_sector }}">{{ sector.sector_name }}</option>
+                                {% endfor %}
                             </select>
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
+                        <!-- Adresse -->
                         <div class="form-group role-company signup-only is-hidden">
                             <label for="company-address">Adresse</label>
+                            <div class="input-wrapper">
                             <input name="company_address" id="company-address" type="text" placeholder="Adresse">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
+                        <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input name="email" id="email" type="email" placeholder="Email" required>
+                            <div class="input-wrapper">
+                            <input name="email" id="email" type="email" placeholder="Email">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
+                        <!-- Téléphone -->
                         <div class="form-group role-company role-pilote signup-only is-hidden">
                             <label for="phone">Telephone</label>
+                            <div class="input-wrapper">
                             <input name="phone" id="phone" type="tel" placeholder="Telephone">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
+                        <!-- Mot de passe -->
                         <div class="form-group">
                             <label for="password">Mot de passe</label>
-                            <input name="password" id="password" type="password" placeholder="Mot de passe" required>
-                        </div>  
-
-                        <div class="form-group role-pilote signup-only is-hidden">
-                            <label for="school">Etablissement</label>
-                            <input name="school" id="school" type="text" placeholder="Etablissement">
+                            <div class="input-wrapper">
+                            <input name="password" id="password" type="password" placeholder="Mot de passe">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
+                        <!-- Établissement (pilote) -->
+                        <div class="form-group role-pilote signup-only is-hidden">
+                            <label for="school">Etablissement</label>
+                            <div class="input-wrapper">
+                            <input name="school" id="school" type="text" placeholder="Etablissement">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
+                        </div>
+
+                        <!-- Pilote de formation (étudiant) -->
                         <div class="form-group role-student signup-only is-hidden">
                             <label for="training-pilot">Pilote de formation</label>
-                            <select name="training_pilot" id="training-pilot" class="form-select" >
+                            <div class="input-wrapper">
+                            <select name="training_pilot" id="training-pilot" class="form-select">
                                 <option value="">Votre pilote</option>
                                 {% for pilot in pilots %}
                                     <option value="{{ pilot.id_user }}">{{ pilot.name }} {{ pilot.last_name }}</option>
                                 {% endfor %}
                             </select>
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
+                        <!-- CIRET -->
                         <div class="form-group role-company signup-only is-hidden">
-                            <label for="company-ciret">ciret</label>
-                            <input name="company_ciret" id="company-ciret" type="text" placeholder="ciret">
+                            <label for="company-ciret">Ciret</label>
+                            <div class="input-wrapper">
+                            <input name="company_ciret" id="company-ciret" type="text" placeholder="Ciret">
+                            <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
                         <button id="submit-btn" type="submit" class="auth-submit">CONNEXION</button>
-                        
                     </form>
                 </div>
                 {% if error %}

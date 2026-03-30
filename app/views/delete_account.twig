@@ -3,6 +3,7 @@
 {% block content %}
     <link rel="stylesheet" href="assets/components/form.css">
     <link rel="stylesheet" href="assets/pages/auth.css">
+    <script src="js/form-validation.js" defer></script>
     <!-- Bloc central: logo + formulaire dynamique. -->
     <main>
         <div class="auth-container">
@@ -19,12 +20,20 @@
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input name="email" id="email" type="email" placeholder="Email" required>
+                            <div class="input-wrapper">
+                                <input name="email" id="email" type="email" placeholder="Email" required>
+                                <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
                         <div class="form-group">
                             <label>Password</label>
-                            <input name="password" id="password" type="password" placeholder="Mot de passe" required>
+                            <div class="input-wrapper">
+                                <input name="password" id="password" type="password" placeholder="Mot de passe" required>
+                                <span class="validation-icon"></span>
+                            </div>
+                            <span class="error-message"></span>
                         </div>
 
                         <button id="submit-btn" type="submit" class="auth-submit">SUPPRIMER LE COMPTE</button>
