@@ -55,7 +55,7 @@ class ProfileController {
             else {
                 $profile_pic_path = $student->getStudentProfilePicture($_SESSION["user_id"])["profile_pic_path"];
             }
-            $student->updateStudent($_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["school"], $_POST["description"]);
+            $student->updateStudent($_SESSION["user_id"], $profile_pic_path, $_POST["last_name"], $_POST["name"], $_POST["email"], $_POST["description"]);
         } 
         else if ($_SESSION["role"] == "entreprise") {
             $company = new Company();

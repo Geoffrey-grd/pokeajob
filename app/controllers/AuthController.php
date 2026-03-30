@@ -81,7 +81,7 @@ class AuthController {
         $user = new User();
         $existingUser = $user->findByemail($email);
 
-        if ($existingUser !== null) {
+        if ($existingUser !== false) {
             $_SESSION["flash_error"] = "This email is already in use.";
             $_SESSION["flash_mode"] = "signup";
             $_SESSION["flash_account_type"] = $account_type;
@@ -115,7 +115,7 @@ class AuthController {
             $role = "etudiant";
             $pilot = $_POST["training_pilot"];
             $student = new Student();
-            $student->create_student($email, $password, $name, $last_name, $school, $pilot, $role);
+            $student->create_student($email, $password, $name, $last_name, $pilot, $role);
         }
         $_SESSION["flash_mode"] = "login";
         header("Location: /");
