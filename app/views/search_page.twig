@@ -3,12 +3,14 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="assets/card.css">
-<link rel="stylesheet" href="assets/offer_list.css">
+<link rel="stylesheet" href="assets/components/card.css">
+<link rel="stylesheet" href="assets/pages/search.css">
 
-    <main>
-        <a class="offer_button" href={{ offers_btn_url }}>Chercher une offre</a>
-        <a class="company_button" href={{ companies_btn_url }}>Chercher une entreprise</a>
+    <main class="search-page">
+        <div class="search-toggle">
+            <a class="search-toggle__btn search-toggle__btn--offers {{ search_type == 'offers' ? 'is-active' : 'is-inactive' }}" href={{ offers_btn_url }}>Chercher une offre</a>
+            <a class="search-toggle__btn search-toggle__btn--companies {{ search_type == 'companies' ? 'is-active' : 'is-inactive' }}" href={{ companies_btn_url }}>Chercher une entreprise</a>
+        </div>
 
         <form method="get" action="/search_page">
                 <input type="hidden" name="search_type" value="{{ search_type }}">
@@ -36,22 +38,22 @@
                 {% for offer in cards %}
                     <section class="job-card">
                         <div class="card__banner">
-                            <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre 1">
+                            <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre {{ offer.id_offer }}">
                             <a class="card__company-logo" href="offer_description.html"> <img src="{{ offer.logo_path }}" alt="Pokédex"></a>
                         </div>
         
-                        <a class="card__body" href="offer_description.html">
-                            <h2 class="texte_blanc card__title"> {{ offer.offer_object }} </h2>
+                        <a class="card__body" href="/offer_description?id_offer={{ offer.id_offer }}">
+                            <h2 class="card__title"> {{ offer.offer_object }} </h2>
                             <div class = "card__row--type">
                                 <img src="images/suitcase.png" alt="suitcase">
-                                <h3 class="texte_blanc"> {{ offer.company_name }} </h3>
+                                <h3> {{ offer.company_name }} </h3>
                             </div>
                             <div class = "card__row--location">
                                 <img src="images/pin.png" alt="pin">
-                                <h3 class="texte_blanc"> {{ offer.lieu }} </h3>
+                                <h3> {{ offer.lieu }} </h3>
                             </div>
                             <div class = "card__row--date">
-                                <h5 class="texte_blanc"> {{ offer.release_date }} </h5>
+                                <h5> {{ offer.release_date }} </h5>
                                 <img class="card__wishlist"src="images/wishlist.png" alt="wishlist">
                             </div>
                         </a>
@@ -68,21 +70,22 @@
                         </div>
 
                         <a class="card__body" href="offer_description.html">
-                            <h2 class="texte_blanc card__title"> {{ company.company_name }} </h2>
+                            <h2 class="card__title"> {{ company.company_name }} </h2>
                         </a>
                     </section>
                 {% endfor %}
             {% endif %}
+        </section>
 
         <nav class="pagination">
             {% if page > 1 %}
-                <a class="previous_offers" href={{ prev_page_url }}>← Offres précédentes</a>
+                <a class="pagination__nav pagination__nav--prev" href="{{ prev_page_url }}" aria-label="Page precedente" title="Page precedente"></a>
             {% endif %}
 
             <span class="pagination__info">Page {{ page }} / {{ total_pages }}</span>
 
             {% if page < total_pages %}
-                <a class="next_offers" href={{ next_page_url }}>Offres suivantes →</a>
+                <a class="pagination__nav pagination__nav--next" href="{{ next_page_url }}" aria-label="Page suivante" title="Page suivante"></a>
             {% endif %}
         </nav>
     </main>

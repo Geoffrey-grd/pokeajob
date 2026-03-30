@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - PokeAJob</title>
-    <link rel="stylesheet" href="assets/core.css">
-    <link rel="stylesheet" href="assets/form.css">
-    <link rel="stylesheet" href="assets/auth.css">
+    <link rel="stylesheet" href="assets/base/core.css">
+    <link rel="stylesheet" href="assets/components/form.css">
+    <link rel="stylesheet" href="assets/pages/auth.css">
     
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/pokeball-apple-touch-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
     <script src="js/auth.js" defer></script>
 </head>
 <body class="page-auth">
@@ -32,6 +36,7 @@
 
                     <!-- Formulaire -->
                     <form class="auth-form" action="/loginregister" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                         <input id="auth-mode" name="auth_mode" type="hidden" value="login">
                         <div class="form-group signup-only is-hidden">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
@@ -62,7 +67,9 @@
                         </div>
 
                         <div class="form-group role-company signup-only is-hidden">
+                            <label for="activity-sector">Secteur d'activité</label>
                             <select name="activity_sector" id="activity-sector" class="form-select">
+                            <option value="">Votre secteur</option>
                             {% for sector in sectors %}
                                 <option value="{{ sector.id_sector }}">{{ sector.sector_name }}</option>
                             {% endfor %}
@@ -87,29 +94,20 @@
                         <div class="form-group">
                             <label for="password">Mot de passe</label>
                             <input name="password" id="password" type="password" placeholder="Mot de passe" required>
-                        </div>
+                        </div>  
 
-                        <div class="form-group role-company signup-only is-hidden">
-                            <label for="confirm-password">Confirmer le mot de passe</label>
-                            <input name="confirm_password" id="confirm-password" type="password" placeholder="Confirmer le mot de passe">
-                        </div>
-
-                        <div class="form-group role-student role-pilote signup-only is-hidden">
+                        <div class="form-group role-pilote signup-only is-hidden">
                             <label for="school">Etablissement</label>
-                            <select name="school" id="school" class="form-select">
-                                <option value="">Choisir un etablissement</option>
-                                <option value="paris1">Universite Paris 1</option>
-                                <option value="polytechnique">Ecole Polytechnique</option>
-                                <option value="hec">HEC Paris</option>
-                            </select>
+                            <input name="school" id="school" type="text" placeholder="Etablissement">
                         </div>
 
                         <div class="form-group role-student signup-only is-hidden">
                             <label for="training-pilot">Pilote de formation</label>
-                            <select name="training_pilot" id="training-pilot" class="form-select">
-                                <option value="">Choisir un pilote</option>
-                                <option value="dupont">M. Dupont</option>
-                                <option value="martin">Mme Martin</option>
+                            <select name="training_pilot" id="training-pilot" class="form-select" >
+                                <option value="">Votre pilote</option>
+                                {% for pilot in pilots %}
+                                    <option value="{{ pilot.id_user }}">{{ pilot.name }} {{ pilot.last_name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
 

@@ -2,55 +2,80 @@
 
 namespace App\Models;
 
-require_once __DIR__ . "/../../config/database.php";
+use PDO;
 
-class Offer {
+class Offer extends BDDlink {
+
+    public function __construct() {
+        parent::__construct();
+    }
+
+    public function create_offer($id_company, $id_domain, $offer_object, $lieu, $annual_salary, $description) {
+        $stmt = $this->conn->prepare("INSERT INTO offer (id_company, id_domain, offer_object, lieu, annual_salary, description) VALUES (?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$id_company, $id_domain, $offer_object, $lieu, $annual_salary, $description]);
+    }
     
-    public static function getAllOffers($conn, $limit = 9, $offset = 0) {
+    public function getAllOffers($limit = 12, $offset = 0) {
         
-            $stmt = $conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
+            $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
                 FROM offer JOIN company ON offer.id_company = company.id_user
                 WHERE offer.id_company != ?
                 ORDER BY offer.release_date ASC
                 LIMIT ?, ?");
-            $stmt->bind_param("iii", $_SESSION["user_id"], $offset, $limit);
+
+            $stmt->bindValue(1  , $_SESSION["user_id"], PDO::PARAM_INT);
+            $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+            $stmt->bindValue(3, $limit, PDO::PARAM_INT);
+
             $stmt->execute();
-            $result = $stmt->get_result();
-            
-            return $result->fetch_all(MYSQLI_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function countOffers($conn) {
-        $stmt = $conn->prepare("SELECT COUNT(*) as total FROM offer WHERE id_company != ?");
-        $stmt->bind_param("i", $_SESSION["user_id"]);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc()["total"];
+    public function getOfferById($id_offer) {
+        $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
+            FROM offer JOIN company ON offer.id_company = company.id_user
+            WHERE offer.id_offer = ?");
+        $stmt->execute([$id_offer]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function getFilteredOffers($conn, $limit, $offset, $filter) {
-        $stmt = $conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path FROM offer 
+    public function countOffers() {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM offer WHERE id_company != ?");
+        $stmt->execute([$_SESSION["user_id"]]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)["total"];
+    }
+
+    public function getFilteredOffers($limit, $offset, $filter) {
+        $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path FROM offer 
         JOIN company ON offer.id_company = company.id_user
         JOIN domain ON offer.id_domain = domain.id_domain
         WHERE company.id_user != ? AND domain.domain_name = ?
         LIMIT ?, ?");
-        $stmt->bind_param("isii", $_SESSION["user_id"], $filter, $offset, $limit);  
+
+        $stmt->bindValue(1, $_SESSION["user_id"], PDO::PARAM_INT);
+        $stmt->bindValue(2, $filter, PDO::PARAM_STR);
+        $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+        $stmt->bindValue(4, $limit, PDO::PARAM_INT);
+
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function countFilteredOffers($conn, $filter) {
-        $stmt = $conn->prepare("SELECT COUNT(*) as total FROM offer 
+    public function countFilteredOffers($filter) {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM offer 
             JOIN company ON offer.id_company = company.id_user
             JOIN domain ON offer.id_domain = domain.id_domain
             WHERE company.id_user != ? AND domain.domain_name = ?");
-        $stmt->bind_param("is", $_SESSION["user_id"], $filter);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc()["total"];
+        $stmt->execute([$_SESSION["user_id"], $filter]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)["total"];
     }
 
-    public static function getAllDomains($conn) {
-        $stmt = $conn->prepare("SELECT DISTINCT domain_name FROM domain");
+    public function getAllDomains() {
+        $stmt = $this->conn->prepare("SELECT id_domain, domain_name FROM domain");
         $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
 }

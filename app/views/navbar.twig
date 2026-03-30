@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/core.css">
-    <link rel="stylesheet" href="assets/navbar.css">
+    <link rel="stylesheet" href="assets/base/core.css">
+    <link rel="stylesheet" href="assets/components/navbar.css">
     <script src="js/burger_menu.js" defer></script>
     <title>PokeAJob - Accueil</title>
 
@@ -29,8 +29,8 @@
             </button>
 
             <!-- Menu lateral ouvert/ferme par le bouton burger. -->
-            <div id="burgermenu" class="burgermenu" aria-hidden="true">
-                <button id="closebtn" type="button" class="close" aria-label="Fermer le menu">
+            <div id="burger-menu" class="burger-menu" aria-hidden="true">
+                <button id="closebtn" type="button" class="burger-menu__close" aria-label="Fermer le menu">
                     <span class="burger-icon burger-icon--close">
                         <span></span>
                         <span></span>
@@ -40,37 +40,36 @@
 
                 <ul class="menu menu--main">
                     {% if role == 'etudiant' %}
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">Wishlist</a></li>
                     <li><a href="/boo">Internship tracker</a></li>
                     {% endif %}
 
                     {% if role == 'entreprise' %}   
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">My offers</a></li>
                     <li><a href="/boo">Create a new offer</a></li>
                     <li><a href="/boo">My notifications</a></li>
                     {% endif %}
 
                     {% if role == 'pilote' %}
-                    <li><a href="/boo">Offers</a></li>
-                    <li><a href="/boo">Companies</a></li>
+                    <li><a href="/search_page">Offers</a></li>
+                    <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/boo">My students</a></li>
                     {% endif %}
                 </ul>
                 <ul class="menu menu--footer">
-                    <li><a href="/boo">Mentions Légales</a></li>
+                    <li><a href="/legal_mentions">Mentions Légales</a></li>
                     <li><a href="/logout">Déconnexion</a></li>
-                    <li><a href="/delete_account">Delete Account</a></li>
                 </ul>
             </div>
             <!-- Fond sombre clique pour fermer le menu. -->
             <div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
 
-            <a class="navbar__logo" href="index.html"> <img src="images/Logo_PokeAJob.png" alt="Logo du site"></a>
-            <a class="navbar__profile" href="connexion.html"> <img src="images/Profile.png" alt="Logo de profil"></a>
+            <a class="navbar__logo" href="/search_page"> <img src="images/Logo_PokeAJob.png" alt="Logo du site"></a>
+            <a class="navbar__profile" href="/profile"> <img src="images/Profile.png" alt="Logo de profil"></a>
         </nav>
     </header>
 
@@ -84,7 +83,7 @@
     <footer>
         <nav class="navbar--bottom">
             <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a>
-            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__search" href="/search_page"> <img src="images/search.png" alt="Recherche"></a>
             <a class="navbar__wishlist" href="search.html"> <img src="images/wishlist_menu.png" alt="Wishlist"></a>
         </nav>
     </footer>
@@ -95,18 +94,19 @@
     <footer>
         <nav class="navbar--bottom">
             <a class="navbar__notif" href="index.html"> <img src="images/email.png" alt="Notification"></a>
-            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
-            <a class="navbar__my_offers" href="search.html"> <img src="images/plus.png" alt="Wishlist"></a>
+            <a class="navbar__search" href="/search_page"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__my-offers" href="/create_offer"> <img src="images/plus.png" alt="Wishlist"></a>
+            
         </nav>
     </footer>
     {% endif %}
 
-    {% if role == 'pilote' %}
+    {% if role == 'pilote' %}   
         <!-- Barre de navigation basse pilote(tableau, recherche, favoris). -->
     <footer>
         <nav class="navbar--bottom">
             <!-- <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a> -->
-            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__search" href="/search_page"> <img src="images/search.png" alt="Recherche"></a>
             <a class="navbar__students" href="search.html"> <img src="images/student.png" alt="Wishlist"></a>
         </nav>
     </footer>

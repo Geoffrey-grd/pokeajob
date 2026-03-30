@@ -1,27 +1,4 @@
 /* Styles communs du formulaire de connexion/inscription. */
-.auth-container {
-    width: 100%;
-    max-width: 560px;
-    margin: 0 auto;
-}
-
-.auth-box {
-    background: rgba(52, 152, 219, 0.9);
-    border-radius: 20px;
-    padding: var(--space-6) var(--space-4);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-}
-
-.auth-logo {
-    text-align: center;
-    margin-bottom: var(--space-5);
-}
-
-.auth-logo-img {
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
-}
 
 .form-container h2 {
     color: #2c3e50;
@@ -130,14 +107,6 @@
 }
 
 @media (min-width: 768px) {
-    .auth-box {
-        padding: 40px 30px;
-    }
-
-    .auth-logo-img {
-        max-width: 220px;
-    }
-
     .form-container {
         padding: 30px;
     }

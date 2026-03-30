@@ -2,20 +2,25 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\Student;
+use App\Models\Company;
+use App\Models\Pilot;
 use App\Models\Sector;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
-require_once __DIR__ . "/../../config/database.php";
 
 
 class AuthController {
 
     public function renderLoginRegister() {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        global $conn;
 
-        $sectors = Sector::getAllSectors($conn);
+        $sector = new Sector();
+        $pilot = new Pilot();
+
+        $sectors = $sector->getAllSectors();
+        $pilots = $pilot->getAllPilots();
 
         $setup_mode = $_SESSION["flash_mode"] ?? "login";
         $setup_account_type = $_SESSION["flash_account_type"] ?? "etudiant";
@@ -23,8 +28,8 @@ class AuthController {
 
         unset($_SESSION["flash_mode"], $_SESSION["flash_account_type"], $_SESSION["flash_error"]);
 
-        View::render("login-register.twig", ["setup_mode" => $setup_mode, "setup_account_type" => $setup_account_type, "error" => $error, "csrf_token" => Csrf::generateToken(), "sectors" => $sectors]);
-}
+        View::render("login-register.twig", ["setup_mode" => $setup_mode, "setup_account_type" => $setup_account_type, "error" => $error, "csrf_token" => Csrf::generateToken(), "sectors" => $sectors, "pilots" => $pilots]);
+    }
 
     public function form_type() {
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -36,23 +41,22 @@ class AuthController {
             $this->register($account_type);
         }
     }
-    
 
     public function login() {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        global $conn;
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Csrf::verifyToken($_POST["csrf_token"]);
             $email = $_POST["email"];
             $password = $_POST["password"];
 
-            $user = User::findByemail($conn, $email);
+            $user = new User();
+            $userData = $user->findByemail($email);
 
-            if ($user && password_verify($password, $user["password"])) {
-                $_SESSION["user_id"] = $user["id_user"];
-                $_SESSION["email"] = $user["email"];
-                $_SESSION["role"] = $user["role"];
+            if ($userData && password_verify($password, $userData["password"])) {
+                $_SESSION["user_id"] = $userData["id_user"];
+                $_SESSION["email"] = $userData["email"];
+                $_SESSION["role"] = $userData["role"];
 
                 header("Location: /search_page");
                 exit(); 
@@ -66,19 +70,18 @@ class AuthController {
         }
     }
 
-
     public function register($account_type) {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        global $conn;
 
         Csrf::verifyToken($_POST["csrf_token"]);
 
-
         $email = $_POST["email"];
         $password = $_POST["password"];
-        $existingUser = User::findByemail($conn, $email);
 
-        if ($existingUser !== null) {
+        $user = new User();
+        $existingUser = $user->findByemail($email);
+
+        if ($existingUser !== false) {
             $_SESSION["flash_error"] = "This email is already in use.";
             $_SESSION["flash_mode"] = "signup";
             $_SESSION["flash_account_type"] = $account_type;
@@ -93,25 +96,28 @@ class AuthController {
             $phone = $_POST["phone"];
             $ciret = $_POST["company_ciret"];
             $role = "entreprise";
-            User::create_company($conn, $email, $password, $company_name, $address, $sectors, $phone, $ciret, $role);
+            $company = new Company();
+            $company->create_company($email, $password, $company_name, $address, $sectors, $phone, $ciret, $role);
         } 
         else if ($account_type == "pilote") {
-            $name= $_POST["name"];
+            $name = $_POST["name"];
             $last_name = $_POST["last_name"];
             $phone = $_POST["phone"];
             $school = $_POST["school"];
             $role = "pilote";
-            User::create_pilot($conn, $email, $password, $name, $last_name, $phone, $school, $role);
+            $pilot = new Pilot();
+            $pilot->create_pilot($email, $password, $name, $last_name, $phone, $school, $role);
         } 
         else {
-            $name= $_POST["name"];
+            $name = $_POST["name"];
             $last_name = $_POST["last_name"];
             $school = $_POST["school"];
             $role = "etudiant";
-            $pilot= $_POST["training_pilot"];
-            User::create_student($conn, $email, $password, $name, $last_name, $school, $pilot, $role);
+            $pilot = $_POST["training_pilot"];
+            $student = new Student();
+            $student->create_student($email, $password, $name, $last_name, $pilot, $role);
         }
-        $SESSION["flash_mode"] = "login";
+        $_SESSION["flash_mode"] = "login";
         header("Location: /");
         exit();
     }
@@ -121,47 +127,5 @@ class AuthController {
         session_destroy();
         header("Location: /");
         exit();
-    }
-
-
-    public static function deleteAccount() {
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        global $conn;
-
-        if (!isset($_SESSION["user_id"])) {
-            header("Location: /");
-            exit();
-        }
-
-        $error = "";
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            Csrf::verifyToken($_POST["csrf_token"]);
-
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-
-            $user = User::findByemail($conn, $email);
-
-            if (!$user || !password_verify($password, $user["password"])) {
-
-                $error = "Identifiant ou mot de passe incorrect.";
-
-            } elseif ($user["id_user"] != $_SESSION["user_id"]) {
-
-                $error = "Erreur de sécurité.";
-
-            } else {
-
-                User::delete_account($conn, $_SESSION["user_id"]);
-
-                session_destroy();
-
-                header("Location: /");
-                exit();
-            }
-        }
-        View::render("delete_account.twig", ["error" => $error, "csrf_token" => Csrf::generateToken(), 'role' => $_SESSION['role']]);
     }
 }

@@ -36,9 +36,9 @@
 .navbar__table,
 .navbar__search,
 .navbar__wishlist, 
-.navbar_students,
+.navbar__students,
 .navbar__notif,
-.navbar__my_offers {
+.navbar__my-offers {
     display: block;
 }
 
@@ -66,7 +66,10 @@
 }
 
 .navbar__table,
-.navbar__wishlist {
+.navbar__wishlist,
+.navbar__notif,
+.navbar__my-offers,
+.navbar__students {
     width: 40px;
 }
 
@@ -81,18 +84,29 @@
     background-color: var(--color-accent);
 }
 
+.navbar__students {
+    /* Positionne students a 50px (gap) a droite de la loupe au centre. */
+    position: absolute;
+    left: calc(50% + 32px + var(--space-7));
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .navbar__menu img,
 .navbar__logo img,
 .navbar__profile img,
 .navbar__table img,
 .navbar__search img,
-.navbar__wishlist img {
+.navbar__wishlist img,
+.navbar__notif img,
+.navbar__my-offers img,
+.navbar__students img {
     width: 100%;
     height: 100%;
 }
 
 /* Panneau burger + overlay. body.menu-open bloque le scroll de page. */
-.burgermenu {
+.burger-menu {
     position: fixed;
     top: 0;
     left: 0;
@@ -111,7 +125,7 @@
     flex-direction: column;
 }
 
-.burgermenu.active {
+.burger-menu.active {
     /* Etat visible du panneau burger. */
     transform: translateX(0);
     visibility: visible;
@@ -119,7 +133,7 @@
     transition: transform 0.3s ease;
 }
 
-.burgermenu a {
+.burger-menu a {
     /* Style commun des liens du menu. */
     display: block;
     padding: 10px 16px 10px 24px;
@@ -127,7 +141,7 @@
     font-size: 1.05rem;
 }
 
-.burgermenu .close {
+.burger-menu__close {
     /* Bouton de fermeture place en haut a droite du panneau. */
     position: absolute;
     top: 14px;
@@ -215,7 +229,7 @@ body.menu-open {
         width: 60px;
     }
 
-    .burgermenu {
+    .burger-menu {
         width: 300px;
         padding-top: 78px;
     }
@@ -238,7 +252,10 @@ body.menu-open {
 
     .navbar__menu,
     .navbar__table,
-    .navbar__wishlist {
+    .navbar__wishlist,
+    .navbar__notif,
+    .navbar__my-offers,
+    .navbar__students {
         width: 44px;
     }
 
@@ -247,7 +264,7 @@ body.menu-open {
         height: 70px;
     }
 
-    .burgermenu {
+    .burger-menu {
         width: 320px;
     }
 }

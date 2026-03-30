@@ -1,0 +1,246 @@
+{% extends "navbar.twig" %}
+
+{% block content %}
+<link rel="stylesheet" href="assets/components/form.css">
+<div class="container">
+    <br><br><br><br>
+    {% if role == 'etudiant' and editmode == false %}
+ 
+        <!-- Avatar (modifiable)-->
+        <div class=>
+            {% if userData.profile_pic_path %}
+                <img src= "{{ userData.profile_pic_path }}" alt="Avatar" class="avatar-img">
+            {% else %}
+                <img src="images/Profile.png" alt="Avatar" class="avatar-img">
+            {% endif %}
+        </div>
+
+        <!-- name / last_name (modifiable) -->
+        <div>
+            {{ userData['last_name'] }} {{ userData['name'] }}
+        </div>
+
+        <!-- Email (modifiable) -->
+        <div> 
+            <label>Email</label>
+            {{ userData['email'] }}
+        </div>
+    
+        <!-- Etablissement (modifiable) -->
+        <div>
+            <label>School</label>
+            {{ userData['school'] }}
+        </div>
+
+        <!-- Pilote de formation (non modifiable) -->
+        <div>
+            <label>Pilot</label>
+            {{ userData['pilot_last_name'] }}  {{ userData['pilot_name'] }}
+        </div>
+
+        <!-- Description (modifiable) -->
+        <div>
+            <label>Description</label>
+            {{ userData['description'] }}
+        </div>
+
+
+
+    {% elseif role == 'etudiant' and editmode == true %}
+        <form action="/modify_profile" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="file" name ="profile_pic" accept="image/*">
+
+            <div>
+                <label>Last name</label>
+                <input type="text" name="last_name" value="{{ userData['last_name'] }}">
+            </div>
+            <div>
+                <label>Name</label>
+                <input type="text" name="name" value="{{ userData['name'] }}">
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" value="{{ userData['email'] }}">
+            </div>
+            <div>
+                <label>Description</label>
+                <textarea name="description">{{ userData['description'] }}</textarea>
+            </div>
+
+            <button type="submit">Save changes</button>
+        </form>
+
+
+
+    {% elseif role == 'pilote' and editmode == false %}
+        <!-- Avatar (modifiable) -->
+        <div>
+            {% if userData.profile_pic_path %}
+                <img src= "{{ userData.profile_pic_path }}" alt="Avatar" class="avatar-img">
+            {% else %}
+                <img src="images/Profile.png" alt="Avatar" class="avatar-img">
+            {% endif %}
+        </div>
+
+        <!-- name / last_name (modifiable) -->
+        <div>
+            {{ userData['last_name'] }} {{ userData['name'] }}
+        </div>
+
+        <!-- Email (modifiable) -->
+        <div> 
+            <label>Email</label>
+            {{ userData['email'] }}
+        </div>
+
+        <!-- Telephone (modifiable) -->
+        <div>
+            <label>Phone</label>
+            {{ userData['phone'] }}
+        </div>
+
+        <!-- Etablissement (modifiable) -->
+        <div>
+            <label>School</label>
+            {{ userData['school'] }}
+        </div>
+
+
+    {% elseif role == 'pilote' and editmode == true %}
+        <form action="/modify_profile" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="file" name ="profile_pic" accept="image/*">
+
+            <div>
+                <label>Last name</label>
+                <input type="text" name="last_name" value="{{ userData['last_name'] }}">
+            </div>
+            <div>
+                <label>Name</label>
+                <input type="text" name="name" value="{{ userData['name'] }}">
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" value="{{ userData['email'] }}">
+            </div>
+            <div>
+                <label>Phone</label>
+                <input type="text" name="phone" value="{{ userData['phone'] }}">
+            </div>
+            <div>
+                <label>School</label>
+                <input type="text" name="school" value="{{ userData['school'] }}">
+            </div>
+            <button type="submit">Save changes</button>
+        </form>
+
+
+
+    {% elseif role == 'entreprise' and editmode == false %}
+        <!-- Logo de l'entreprise (modifiable)-->
+        <div>
+            {% if userData.logo_path %}
+                <img src= "{{ userData.logo_path }}" alt="Logo" class="avatar-img">
+            {% else %}
+                <img src="images/Profile.png" alt="Avatar" class="avatar-img">
+            {% endif %}
+        </div>
+
+        <!-- bannière de l'entreprise (modifiable) -->
+        <div>
+            {% if userData.banner_path %}
+                <img src= "{{ userData.banner_path }}" alt="Banner" class="avatar-img">
+            {% endif %}
+        </div>
+
+        <!-- name (modifiable) -->
+        <div>
+            {{ userData['company_name'] }}
+        </div>
+
+        <!-- Email (modifiable) -->
+        <div> 
+            <label>Email</label>
+            {{ userData['email'] }}
+        </div>
+
+        <!-- Telephone (modifiable) -->
+        <div>
+            <label>Phone</label>
+            {{ userData['phone'] }}
+        </div>
+
+        <!-- Secteur d'activité (non modifiable) -->
+        <div>
+            <label>Activity sector</label>
+            {{ userData['sector_name'] }}
+        </div>
+
+        <!-- Description (modifiable) -->
+        <div>
+            <label>Description</label>
+            {{ userData['description'] }}
+        </div>
+
+        <!-- Ciret (non modifiable) -->
+        <div>
+            <label>Ciret</label>
+            {{ userData['ciret'] }}
+        </div>
+
+        <!-- rating (non modifiable) -->
+        <div>
+            <label>Rating</label>
+            {{ userData['rating'] }}
+        </div>
+
+
+    {% elseif role == 'entreprise' and editmode == true %}
+        <form action="/modify_profile" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="file" name ="logo" accept="image/*">
+            <input type="file" name ="banner" accept="image/*">
+
+            <div>
+                <label>Company name</label>
+                <input type="text" name="company_name" value="{{ userData['company_name'] }}">
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" value="{{ userData['email'] }}">
+            </div>
+            <div>
+                <label>Phone</label>
+                <input type="text" name="phone" value="{{ userData['phone'] }}">
+            </div>
+            <div>
+                <label>Description</label>
+                <textarea name="description">{{ userData['description'] }}</textarea>
+            </div>
+
+            <button type="submit">Save changes</button>
+        </form>
+    
+    {% endif %}
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    {% if editmode == false %}
+        <!-- Modifications -->
+    <div>
+        <a href="/edit_profile">Modify my informations</a>
+    </div>
+
+    <!-- Suppression de compte -->
+    <div>
+        <a href="/delete_account_page">Delete my account</a>
+    </div>
+    {% endif %}
+    
+
+    <br><br><br><br>
+ 
+</div>
+{% endblock %}
