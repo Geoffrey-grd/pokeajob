@@ -1,0 +1,21 @@
+{% extends "navbar.twig" %}
+
+{% block content %}
+<br><br><br><br><br>
+<img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre {{ offer.id_offer }}">
+
+<img class="card__company-logo" src="{{ offer.logo_path }}" alt="Logo de l'entreprise {{ offer.company_name }}">
+
+<h1>{{ offer.offer_object }}</h1>
+
+<h2>{{ offer.company_name }}</h2>
+
+<p>{{ offer.lieu }}</p>
+
+<p>{{ offer.annual_salary }}</p>
+
+<p>{{ description|raw }}</p>
+
+<br><br><br><br><br>
+
+{% endblock %}

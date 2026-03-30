@@ -9,10 +9,10 @@ class Offer extends BDDlink {
     public function __construct() {
         parent::__construct();
     }
-    
-    public function create_offer($id_company, $id_domain, $offer_object, $lieu, $description, ) {
-        $stmt = $this->conn->prepare("INSERT INTO offer (id_company, id_domain, offer_object, lieu, description) VALUES (?, ?, ?, ?, ?)");
-        return $stmt->execute([$id_company, $id_domain, $offer_object, $lieu, $description]);
+
+    public function create_offer($id_company, $id_domain, $offer_object, $lieu, $annual_salary, $description) {
+        $stmt = $this->conn->prepare("INSERT INTO offer (id_company, id_domain, offer_object, lieu, annual_salary, description) VALUES (?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$id_company, $id_domain, $offer_object, $lieu, $annual_salary, $description]);
     }
     
     public function getAllOffers($limit = 12, $offset = 0) {
@@ -29,6 +29,14 @@ class Offer extends BDDlink {
 
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOfferById($id_offer) {
+        $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
+            FROM offer JOIN company ON offer.id_company = company.id_user
+            WHERE offer.id_offer = ?");
+        $stmt->execute([$id_offer]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function countOffers() {

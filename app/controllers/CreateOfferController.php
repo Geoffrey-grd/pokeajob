@@ -29,7 +29,7 @@ class CreateOfferController {
         Csrf::verifyToken($_POST["csrf_token"]);
 
         $offerModel = new Offer();
-        $offerModel->create_offer($_SESSION["user_id"], $_POST["domain"], $_POST["offer_object"], $_POST["place"], $_POST["description"]);
+        $offerModel->create_offer($_SESSION["user_id"], $_POST["domain"], $_POST["offer_object"], $_POST["place"], $_POST["annual_salary"], $_POST["description"]);
 
         header("Location: /create_offer");
         exit();
