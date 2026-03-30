@@ -10,6 +10,11 @@ class Offer extends BDDlink {
         parent::__construct();
     }
     
+    public function create_offer($id_company, $id_domain, $offer_object, $lieu, $description, ) {
+        $stmt = $this->conn->prepare("INSERT INTO offer (id_company, id_domain, offer_object, lieu, description) VALUES (?, ?, ?, ?, ?)");
+        return $stmt->execute([$id_company, $id_domain, $offer_object, $lieu, $description]);
+    }
+    
     public function getAllOffers($limit = 12, $offset = 0) {
         
             $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
@@ -58,8 +63,11 @@ class Offer extends BDDlink {
     }
 
     public function getAllDomains() {
-        $stmt = $this->conn->prepare("SELECT DISTINCT domain_name FROM domain");
+        $stmt = $this->conn->prepare("SELECT id_domain, domain_name FROM domain");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
 }

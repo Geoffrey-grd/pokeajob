@@ -63,7 +63,6 @@
                 <ul class="menu menu--footer">
                     <li><a href="/legal_mentions">Mentions Légales</a></li>
                     <li><a href="/logout">Déconnexion</a></li>
-                    <li><a href="/delete_account_page">Delete Account</a></li>
                 </ul>
             </div>
             <!-- Fond sombre clique pour fermer le menu. -->
@@ -84,7 +83,7 @@
     <footer>
         <nav class="navbar--bottom">
             <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a>
-            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__search" href="/search_page"> <img src="images/search.png" alt="Recherche"></a>
             <a class="navbar__wishlist" href="search.html"> <img src="images/wishlist_menu.png" alt="Wishlist"></a>
         </nav>
     </footer>
@@ -95,18 +94,19 @@
     <footer>
         <nav class="navbar--bottom">
             <a class="navbar__notif" href="index.html"> <img src="images/email.png" alt="Notification"></a>
-            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
-            <a class="navbar__my-offers" href="search.html"> <img src="images/plus.png" alt="Wishlist"></a>
+            <a class="navbar__search" href="/search_page"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__my-offers" href="/create_offer"> <img src="images/plus.png" alt="Wishlist"></a>
+            
         </nav>
     </footer>
     {% endif %}
 
-    {% if role == 'pilote' %}
+    {% if role == 'pilote' %}   
         <!-- Barre de navigation basse pilote(tableau, recherche, favoris). -->
     <footer>
         <nav class="navbar--bottom">
             <!-- <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a> -->
-            <a class="navbar__search" href="search.html"> <img src="images/search.png" alt="Recherche"></a>
+            <a class="navbar__search" href="/search_page"> <img src="images/search.png" alt="Recherche"></a>
             <a class="navbar__students" href="search.html"> <img src="images/student.png" alt="Wishlist"></a>
         </nav>
     </footer>

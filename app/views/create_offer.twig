@@ -1,0 +1,35 @@
+{% extends "navbar.twig" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+<br><br><br><br>
+<form method="POST" action="/create_offer">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    
+    <input type="text" name="offer_object" placeholder="Title" required>
+
+    <select name="domain" id="domain" class="form-select" required>
+        <option value="">Select a domain</option>
+        {% for domain in domains %}
+            <option value="{{ domain.id_domain }}">{{ domain.domain_name }}</option>
+        {% endfor %}
+    </select>
+
+    <input type='text' name='place' placeholder='Place' required>
+
+    <input type='text' name='salary' placeholder='Salary' required>
+
+    <textarea id="markdown-editor" name="description"></textarea>
+
+    <button type="submit">Publish</button>
+</form>
+
+<script>
+  const easyMDE = new EasyMDE({
+    element: document.getElementById("markdown-editor"),
+    spellChecker: false
+  });
+</script>
+{% endblock %}

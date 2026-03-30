@@ -26,6 +26,9 @@ $router->get("/legal_mentions", "LegalMentionsController@renderLegalMentions");
 $router->get("/search_page", "SearchPageController@renderingSearchPage");
 $router->get("/search_companies", "SearchPageController@searchCompanies");
 
+$router->get("/create_offer", "CreateOfferController@renderCreateOffer");
+$router->post("/create_offer", "CreateOfferController@createOffer");
+
 $router->dispatch();
 
 

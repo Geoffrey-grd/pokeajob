@@ -101,7 +101,7 @@
 
                         <div class="form-group role-student signup-only is-hidden">
                             <label for="training-pilot">Pilote de formation</label>
-                            <select name="training_pilot" id="training-pilot" class="form-select">
+                            <select name="training_pilot" id="training-pilot" class="form-select" >
                                 <option value="">Votre pilote</option>
                                 {% for pilot in pilots %}
                                     <option value="{{ pilot.id_user }}">{{ pilot.name }} {{ pilot.last_name }}</option>
