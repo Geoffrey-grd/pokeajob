@@ -8,6 +8,7 @@
         }
     },
     "require": {
-        "twig/twig": "^3.23"
+        "twig/twig": "^3.23",
+        "erusev/parsedown": "^1.8"
     }
 }

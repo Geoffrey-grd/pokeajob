@@ -29,6 +29,8 @@ $router->get("/search_companies", "SearchPageController@searchCompanies");
 $router->get("/create_offer", "CreateOfferController@renderCreateOffer");
 $router->post("/create_offer", "CreateOfferController@createOffer");
 
+$router->get("/offer_description", "OfferDescriptionController@renderOfferDescription");
+
 $router->dispatch();
 
 

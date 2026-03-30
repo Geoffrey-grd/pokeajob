@@ -38,11 +38,11 @@
                 {% for offer in cards %}
                     <section class="job-card">
                         <div class="card__banner">
-                            <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre 1">
+                            <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre {{ offer.id_offer }}">
                             <a class="card__company-logo" href="offer_description.html"> <img src="{{ offer.logo_path }}" alt="Pokédex"></a>
                         </div>
         
-                        <a class="card__body" href="offer_description.html">
+                        <a class="card__body" href="/offer_description?id_offer={{ offer.id_offer }}">
                             <h2 class="card__title"> {{ offer.offer_object }} </h2>
                             <div class = "card__row--type">
                                 <img src="images/suitcase.png" alt="suitcase">
