@@ -174,20 +174,22 @@
 
 
     {% elseif role == 'entreprise' and editmode == false %}
-        <!-- Logo de l'entreprise (modifiable)-->
-        <div class="profile-avatar-wrap">
-            {% if userData.logo_path %}
-                <img src="{{ userData.logo_path }}" alt="Logo" class="profile-avatar">
-            {% else %}
-                <img src="images/Profile.png" alt="Avatar" class="profile-avatar">
-            {% endif %}
-        </div>
+        <div class="company-hero">
+            <!-- banniere de l'entreprise -->
+            <div class="company-banner-wrap">
+                {% if userData.banner_path %}
+                    <img src="{{ userData.banner_path }}" alt="Banner" class="company-banner">
+                {% endif %}
+            </div>
 
-        <!-- bannière de l'entreprise (modifiable) -->
-        <div>
-            {% if userData.banner_path %}
-                <img src= "{{ userData.banner_path }}" alt="Banner" class="avatar-img">
-            {% endif %}
+            <!-- Logo de l'entreprise superpose a gauche -->
+            <div class="company-logo-overlay">
+                {% if userData.logo_path %}
+                    <img src="{{ userData.logo_path }}" alt="Logo" class="profile-avatar">
+                {% else %}
+                    <img src="images/Profile.png" alt="Avatar" class="profile-avatar">
+                {% endif %}
+            </div>
         </div>
 
         <!-- name (modifiable) -->
