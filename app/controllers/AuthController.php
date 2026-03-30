@@ -62,10 +62,18 @@ class AuthController {
                 exit(); 
             } 
             else {
-                $_SESSION["flash_error"] = "Identifiant ou mot de passe incorrect.";
-                $_SESSION["flash_mode"] = "login";
-                header("Location: /");
-                exit();
+                $sector = new Sector();
+                $pilot = new Pilot();
+
+                View::render("login-register.twig", [
+                    "setup_mode" => "login",
+                    "setup_account_type" => "etudiant",
+                    "error" => "Identifiant ou mot de passe incorrect.",
+                    "csrf_token" => Csrf::generateToken(),
+                    "sectors" => $sector->getAllSectors(),
+                    "pilots" => $pilot->getAllPilots()
+                ]);
+                return;
             }
         }
     }
@@ -82,11 +90,18 @@ class AuthController {
         $existingUser = $user->findByemail($email);
 
         if ($existingUser !== false) {
-            $_SESSION["flash_error"] = "This email is already in use.";
-            $_SESSION["flash_mode"] = "signup";
-            $_SESSION["flash_account_type"] = $account_type;
-            header("Location: /");
-            exit();
+            $sector = new Sector();
+            $pilot = new Pilot();
+
+            View::render("login-register.twig", [
+                "setup_mode" => "signup",
+                "setup_account_type" => $account_type,
+                "error" => "This email is already in use.",
+                "csrf_token" => Csrf::generateToken(),
+                "sectors" => $sector->getAllSectors(),
+                "pilots" => $pilot->getAllPilots()
+            ]);
+            return;
         }
          
         if ($account_type == "entreprise") {

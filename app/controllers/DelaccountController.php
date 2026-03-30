@@ -17,6 +17,9 @@ class DelaccountController {
             exit();
         }
 
+        $error = $_SESSION["flash_error"] ?? "";
+        unset($_SESSION["flash_error"]);
+
         View::render("delete_account.twig", ["error" => $error, "csrf_token" => Csrf::generateToken(), 'role' => $_SESSION['role']]);
     }
 
@@ -30,14 +33,20 @@ class DelaccountController {
         $userData = $user->findByemail($email);
 
         if (!$userData || !password_verify($password, $userData["password"])) {
-            $_SESSION["flash_error"] = "Identifiant ou mot de passe incorrect.";
-            header("Location: /delete_account_page");
-            exit();
+            View::render("delete_account.twig", [
+                "error" => "Identifiant ou mot de passe incorrect.",
+                "csrf_token" => Csrf::generateToken(),
+                "role" => $_SESSION["role"]
+            ]);
+            return;
         } 
         elseif ($userData["id_user"] != $_SESSION["user_id"]) {
-            $_SESSION["flash_error"] = "Vous ne pouvez supprimer que votre propre compte.";
-            header("Location: /delete_account_page");
-            exit();
+            View::render("delete_account.twig", [
+                "error" => "Vous ne pouvez supprimer que votre propre compte.",
+                "csrf_token" => Csrf::generateToken(),
+                "role" => $_SESSION["role"]
+            ]);
+            return;
         } 
         else {
             $user->delete_account($_SESSION["user_id"]);
