@@ -1,4 +1,3 @@
-
 {% extends "navbar.twig" %}
 
 {% block content %}
@@ -15,12 +14,7 @@
         <form method="get" action="/search_page">
                 <input type="hidden" name="search_type" value="{{ search_type }}">
                 <select name="filter" id>
-                {% if search_type == 'offers' and filter_value %}
-                    <option value="">No filters</option>
-                {% else %}
-                    <option value="">No filters</option>
-                {% endif %}
-                
+                <option value="">No filters</option>
                     {% for filter in filters %}
                         {% if search_type == 'offers' and filter.sector_name == filter_value %}
                             <option value="{{ filter.domain_name }}"> {{ filter.domain_name }}</option>
@@ -76,7 +70,7 @@
                 {% endfor %}
             {% endif %}
         </section>
-
+        <p> {{page}} </p>
         <nav class="pagination">
             {% if page > 1 %}
                 <a class="pagination__nav pagination__nav--prev" href="{{ prev_page_url }}" aria-label="Page precedente" title="Page precedente"></a>

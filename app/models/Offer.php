@@ -23,12 +23,18 @@ class Offer extends BDDlink {
                 ORDER BY offer.release_date ASC
                 LIMIT ?, ?");
 
-            $stmt->bindValue(1  , $_SESSION["user_id"], PDO::PARAM_INT);
+            $stmt->bindValue(1, $_SESSION["user_id"], PDO::PARAM_INT);
             $stmt->bindValue(2, $offset, PDO::PARAM_INT);
             $stmt->bindValue(3, $limit, PDO::PARAM_INT);
 
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countOffers() {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM offer WHERE id_company != ?");
+        $stmt->execute([$_SESSION["user_id"]]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)["total"];
     }
 
     public function getOfferById($id_offer) {
@@ -39,9 +45,23 @@ class Offer extends BDDlink {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function countOffers() {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM offer WHERE id_company != ?");
-        $stmt->execute([$_SESSION["user_id"]]);
+    public function getOffersByCompany($id_company, $limit = 12, $offset = 0) {
+        $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
+            FROM offer JOIN company ON offer.id_company = company.id_user
+            WHERE offer.id_company = ?
+            ORDER BY offer.release_date ASC
+            LIMIT ?, ?");
+            
+        $stmt->bindValue(1, $id_company, PDO::PARAM_INT);
+        $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+        $stmt->bindValue(3, $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countOffersByCompany($id_company) {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM offer WHERE id_company = ?");
+        $stmt->execute([$id_company]);
         return $stmt->fetch(PDO::FETCH_ASSOC)["total"];
     }
 
@@ -67,6 +87,31 @@ class Offer extends BDDlink {
             JOIN domain ON offer.id_domain = domain.id_domain
             WHERE company.id_user != ? AND domain.domain_name = ?");
         $stmt->execute([$_SESSION["user_id"], $filter]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)["total"];
+    }
+
+    public function getFilteredOffersByCompany($id_company, $limit, $offset, $filter) {
+        $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path FROM offer 
+        JOIN company ON offer.id_company = company.id_user
+        JOIN domain ON offer.id_domain = domain.id_domain
+        WHERE offer.id_company = ? AND domain.domain_name = ?
+        LIMIT ?, ?");
+
+        $stmt->bindValue(1, $id_company, PDO::PARAM_INT);
+        $stmt->bindValue(2, $filter, PDO::PARAM_STR);
+        $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+        $stmt->bindValue(4, $limit, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countFilteredOffersByCompany($id_company, $filter) {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM offer 
+            JOIN company ON offer.id_company = company.id_user
+            JOIN domain ON offer.id_domain = domain.id_domain
+            WHERE offer.id_company = ? AND domain.domain_name = ?");
+        $stmt->execute([$id_company, $filter]);
         return $stmt->fetch(PDO::FETCH_ASSOC)["total"];
     }
 

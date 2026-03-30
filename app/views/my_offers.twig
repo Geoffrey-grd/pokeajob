@@ -1,0 +1,62 @@
+{% extends "navbar.twig" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="assets/components/card.css">
+<link rel="stylesheet" href="assets/pages/search.css">
+
+
+<br><br><br><br>
+<form method="get" action="/my_offers">
+    <select name="filter" id>
+    <option value="">No filters</option>
+        {% for filter in filters %}
+                <option value="{{ filter.domain_name }}"> {{ filter.domain_name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filtrer</button>
+</form>
+
+
+<section class="feed">
+    {% for card in cards %}
+        <section class="job-card">
+            <div class="card__banner">
+                <img class="card__banner-img" src="{{ card.banner_path }}" alt="Image de l'offre {{ card.id_offer }}">
+                <a class="card__company-logo" href="offer_description.html"> <img src="{{ card.logo_path }}" alt="Pokédex"></a>
+            </div>
+
+            <a class="card__body" href="/offer_description?id_offer={{ card.id_offer }}">
+                <h2 class="card__title"> {{ card.offer_object }} </h2>
+                <div class = "card__row--type">
+                    <img src="images/suitcase.png" alt="suitcase">
+                    <h3> {{ card.company_name }} </h3>
+                </div>
+                <div class = "card__row--location">
+                    <img src="images/pin.png" alt="pin">
+                    <h3> {{ card.lieu }} </h3>
+                </div>
+                <div class = "card__row--date">
+                    <h5> {{ card.release_date }} </h5>
+                    <img class="card__wishlist"src="images/wishlist.png" alt="wishlist">
+                </div>
+            </a>
+        </section>
+    {% endfor %}
+</section>
+
+<nav class="pagination">
+    {% if page > 1 %}
+        <a class="pagination__nav pagination__nav--prev" href="{{ prev_page_url }}" aria-label="Page precedente" title="Page precedente"></a>
+    {% endif %}
+
+    <span class="pagination__info">Page {{ page }} / {{ total_pages }}</span>
+
+    {% if page < total_pages %}
+        <a class="pagination__nav pagination__nav--next" href="{{ next_page_url }}" aria-label="Page suivante" title="Page suivante"></a>
+    {% endif %}
+</nav>
+
+<br><br><br><br><br>
+
+{% endblock %}
