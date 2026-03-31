@@ -31,6 +31,9 @@ $router->post("/create_offer", "CreateOfferController@createOffer");
 
 $router->get("/offer_description", "OfferDescriptionController@renderOfferDescription");
 
+$router->get("/my_offers", "MyOffersController@renderMyOffers");
+$router->post("/my_offers", "MyOffersController@renderMyOffers");
+
 $router->dispatch();
 
 
