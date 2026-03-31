@@ -15,6 +15,11 @@ class ProfileController {
     public function renderProfile($editmode = false) {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
+        if (!isset($_SESSION["user_id"])){
+            header("Location: /");
+            exit();
+        }
+
         $error = "";
 
         if (isset($_SESSION["flash_error"])) { $error = $_SESSION["flash_error"]; }

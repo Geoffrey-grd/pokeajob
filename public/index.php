@@ -34,6 +34,10 @@ $router->get("/offer_description", "OfferDescriptionController@renderOfferDescri
 $router->get("/my_offers", "MyOffersController@renderMyOffers");
 $router->post("/my_offers", "MyOffersController@renderMyOffers");
 
+$router->get("/add_to_wishlist", "OfferDescriptionController@addToWishlist");
+$router->get("/remove_from_wishlist", "OfferDescriptionController@removeFromWishlist");
+$router->get("/wishlist", "WishListController@renderWishlist");
+
 $router->dispatch();
 
 
