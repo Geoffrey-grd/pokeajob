@@ -28,7 +28,7 @@ const RULES = {
   },
   ciret: {
     pattern: /^\d{14}$/,
-    message: "Le SIRET doit contenir exactement 14 chiffres."
+    message: "Le CIRET doit contenir exactement 14 chiffres."
   },
   school: {
     minLength: 2,
