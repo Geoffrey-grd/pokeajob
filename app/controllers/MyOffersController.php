@@ -4,7 +4,6 @@ namespace App\Controllers;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
-use Parsedown;
 
 use App\Models\Offer;
 
