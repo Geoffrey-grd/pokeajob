@@ -32,6 +32,12 @@ class Student extends User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    function getStudentName($id_user) {
+        $stmt = $this->conn->prepare("SELECT name, last_name FROM student WHERE id_user = ?");
+        $stmt->execute([$id_user]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function updateStudent($id_user, $profile_pic_path, $last_name, $name, $email, $description) {
         $stmt = $this->conn->prepare("UPDATE user JOIN student ON user.id_user = student.id_user SET user.email = ?, student.name = ?, student.last_name = ?, student.description = ?, student.profile_pic_path = ? WHERE user.id_user = ?");
         return $stmt->execute([$email, $name, $last_name, $description, $profile_pic_path, $id_user]);

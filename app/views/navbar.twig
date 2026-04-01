@@ -43,7 +43,7 @@
                     <li><a href="/search_page">Offers</a></li>
                     <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/wishlist">Wishlist</a></li>
-                    <li><a href="/boo">Internship tracker</a></li>
+                    <li><a href="/internship_tracker">Internship tracker</a></li>
                     {% endif %}
 
                     {% if role == 'entreprise' %}   
@@ -51,13 +51,12 @@
                     <li><a href="/search_companies">Companies</a></li>
                     <li><a href="/my_offers">My offers</a></li>
                     <li><a href="/create_offer">Create a new offer</a></li>
-                    <li><a href="/boo">My notifications</a></li>
                     {% endif %}
 
                     {% if role == 'pilote' %}
                     <li><a href="/search_page">Offers</a></li>
                     <li><a href="/search_companies">Companies</a></li>
-                    <li><a href="/boo">My students</a></li>
+                    <li><a href="/my_students">My students</a></li>
                     {% endif %}
                 </ul>
                 <ul class="menu menu--footer">
@@ -82,7 +81,7 @@
         <!-- Barre de navigation basse étudiant(tableau, recherche, favoris). -->
     <footer>
         <nav class="navbar--bottom">
-            <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a>
+            <a class="navbar__table" href="/internship_tracker"> <img src="images/table.png" alt="Table"></a>
             <a class="navbar__search" href="/search_page"> <img src="images/search.png" alt="Recherche"></a>
             <a class="navbar__wishlist" href="/wishlist"> <img src="images/wishlist_menu.png" alt="Wishlist"></a>
         </nav>
@@ -107,7 +106,7 @@
         <nav class="navbar--bottom">
             <!-- <a class="navbar__table" href="index.html"> <img src="images/table.png" alt="Table"></a> -->
             <a class="navbar__search" href="/search_page"> <img src="images/search.png" alt="Recherche"></a>
-            <a class="navbar__students" href="search.html"> <img src="images/student.png" alt="Wishlist"></a>
+            <a class="navbar__students" href="/my_students"> <img src="images/student.png" alt="Wishlist"></a>
         </nav>
     </footer>
     {% endif %}

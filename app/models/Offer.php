@@ -20,7 +20,7 @@ class Offer extends BDDlink {
             $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
                 FROM offer JOIN company ON offer.id_company = company.id_user
                 WHERE offer.id_company != ?
-                ORDER BY offer.release_date ASC
+                ORDER BY offer.release_date DESC
                 LIMIT ?, ?");
 
             $stmt->bindValue(1, $_SESSION["user_id"], PDO::PARAM_INT);
@@ -49,7 +49,7 @@ class Offer extends BDDlink {
         $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
             FROM offer JOIN company ON offer.id_company = company.id_user
             WHERE offer.id_company = ?
-            ORDER BY offer.release_date ASC
+            ORDER BY offer.release_date DESC
             LIMIT ?, ?");
             
         $stmt->bindValue(1, $id_company, PDO::PARAM_INT);
