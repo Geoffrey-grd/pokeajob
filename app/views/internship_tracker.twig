@@ -6,7 +6,12 @@
 
 <br><br><br><br><br>
 
-<h1>You caught {{ cards|length }} offers!</h1>
+{% if role == 'pilote' %}
+    <h1> {{ student_name }} {{ student_last_name }} caught {{ cards|length }} offers!</h1>
+{% else %}
+    <h1>You caught {{ cards|length }} offers!</h1>
+{% endif %}
+
 <section class="feed">
     {% for offer in cards %}
         <section class="job-card">

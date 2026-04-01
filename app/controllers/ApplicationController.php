@@ -6,6 +6,7 @@ use Core\Auth;
 use Core\View;
 
 use App\Models\Application;
+use App\Models\Offer;
 
 class ApplicationController {
 
@@ -21,7 +22,10 @@ class ApplicationController {
         if (isset($_SESSION["flash_error"])) { $error = $_SESSION["flash_error"]; }
         unset($_SESSION["flash_error"]);
 
-        View::render("application.twig", ["role" => $_SESSION["role"], "csrf_token" => Csrf::generateToken(), "id_offer" => $_GET["id_offer"], "error" => $error]);
+        $offer_model = new Offer();
+        $offer = $offer_model->getOfferById($_GET["id_offer"]);
+
+        View::render("application.twig", ["role" => $_SESSION["role"], "csrf_token" => Csrf::generateToken(), "id_offer" => $_GET["id_offer"], "offer" => $offer, "error" => $error]);
     }
 
     public function apply() {

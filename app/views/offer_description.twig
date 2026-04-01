@@ -19,12 +19,26 @@
                     <div class="card__body">
                         <h1 class="card__title">{{ offer.offer_object }}</h1>
                         <div class="card__row--type">
+                            <img src="images/suitcase.png" alt="suitcase">
                             <h3>{{ offer.company_name }}</h3>
+                            {% if role === 'etudiant' %}
+                                {% if isinwishlist %}
+                                    <a class="card__wishlist" href="/remove_from_wishlist?id_offer={{ offer.id_offer }}">
+                                        <img src="images/wishlist_full.png" alt="remove from wishlist">
+                                    </a>
+                                {% else %}
+                                    <a class="card__wishlist" href="/add_to_wishlist?id_offer={{ offer.id_offer }}">
+                                        <img src="images/wishlist.png" alt="add to wishlist">
+                                    </a>
+                                {% endif %}
+                            {% endif %}
                         </div>
                         <div class="card__row--location">
+                            <img src="images/pin.png" alt="pin">
                             <h3>{{ offer.lieu }}</h3>
                         </div>
                         <div class="card__row--date">
+                            <img src="images/salary.png" alt="salary">
                             <h3>{{ offer.annual_salary }}</h3>
                         </div>
                     </div>
@@ -32,35 +46,25 @@
                     <div class="card__description">
                         {{ description|raw }}
                     </div>
-                </div>
 
-<h2>{{ offer.company_name }}</h2>
 
-<p>{{ offer.lieu }}</p>
-
-<p>{{ offer.annual_salary }}</p>
-
-<p>{{ description|raw }}</p>
-
-{% if is_owner %}
-    <a class="navbar__notif" href="/edit_offer?id_offer={{ offer.id_offer }}"> <img src="images/pen.png" alt="modify offer"></a>
-
-    <p>Modify my offer</p>
-{% endif %}
-
-{% if role === 'etudiant' %}
-        {% if isinwishlist %}
-            <a class="navbar__notif" href="/remove_from_wishlist?id_offer={{ offer.id_offer }}"> <img src="images/wishlist_full.png" alt="remove from wishlist"></a> 
-        {% else %}
-            <a class="navbar__notif" href="/add_to_wishlist?id_offer={{ offer.id_offer }}"> <img src="images/wishlist.png" alt="add to wishlist"></a> 
+        {% if is_owner %}
+            <form method="GET" action="/edit_offer">
+                <input type="hidden" name="id_offer" value="{{ offer.id_offer }}">
+                <button class="auth-submit">Modify my offer</button>
+            </form>
         {% endif %}
 
-        {% if not hasapplied %}
-            <a class="navbar__notif" href="/apply?id_offer={{ offer.id_offer }}"> Apply to this offer</a> 
-        {% else %}
-            <p>You have already applied to this offer</p>
-        {% endif %}
-{% endif %}
+        {% if role === 'etudiant' %}
+            {% if not hasapplied %}
+                <form method="GET" action="/apply">
+                    <input type="hidden" name="id_offer" value="{{ offer.id_offer }}">
+                    <button type="submit" class="auth-submit">Apply to this offer</button>
+                </form>
+            {% else %}
+                <button class="auth-submit">You have already applied to this offer</buton>
+            {% endif %}
+    {% endif %}
 
         </div>
     </main>
