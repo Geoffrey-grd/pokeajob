@@ -21,42 +21,43 @@
 
         <!-- name / last_name (modifiable) -->
         <div class="profile-info-wrap">
+            <label class="label-profil">Name:</label>
             <span class="profil-info">{{ userData['last_name'] }} {{ userData['name'] }}</span>
         </div>
 
         <!-- Email (modifiable) -->
         <div class="profile-info-wrap"> 
-            <label>Email</label>
+            <label class="label-profil">Email:</label>
             <span class="profil-info">{{ userData['email'] }}</span>
         </div>
     
         <!-- Etablissement (modifiable) -->
         <div class="profile-info-wrap">
-            <label>School</label>
+            <label class="label-profil">School:</label>
             <span class="profil-info">{{ userData['school'] }}</span>
         </div>
 
         <!-- Pilote de formation (non modifiable) -->
         <div class="profile-info-wrap">
-            <label>Pilot</label>
+            <label class="label-profil">Pilot:</label>
             <span class="profil-info">{{ userData['pilot_last_name'] }}  {{ userData['pilot_name'] }}</span>
         </div>
 
         <!-- Description (modifiable) -->
         <div class="profile-info-wrap">
-            <label>Description</label>
+            <label class="label-profil">Description:</label>
             <span class="profil-info">{{ userData['description'] }}</span>
         </div>
 
 
 
     {% elseif role == 'etudiant' and editmode == true %}
-        <form class="profile-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
+        <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
             <input type="file" name ="profile_pic" accept="image/*">
 
             <div class="form-group">
-                <label>Last name</label>
+                <label class="label-profil">Last name:</label>
                 <div class="input-wrapper">
                     <input type="text" name="last_name" value="{{ userData['last_name'] }}">
                     <span class="validation-icon"></span>
@@ -64,7 +65,7 @@
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>Name</label>
+                <label class="label-profil">Name:</label>
                 <div class="input-wrapper">
                     <input type="text" name="name" value="{{ userData['name'] }}">
                     <span class="validation-icon"></span>
@@ -72,7 +73,7 @@
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>Email</label>
+                <label class="label-profil">Email:</label>
                 <div class="input-wrapper">
                     <input type="email" name="email" value="{{ userData['email'] }}">
                     <span class="validation-icon"></span>
@@ -80,7 +81,7 @@
                 <span class="error-message"></span>
             </div>
             <div>
-                <label>Description</label>
+                <label class="label-profil">Description:</label>
                 <textarea name="description">{{ userData['description'] }}</textarea>
             </div>
 
@@ -101,35 +102,36 @@
 
         <!-- name / last_name (modifiable) -->
         <div class="profile-info-wrap">
+            <label class="label-profil">Name:</label>
             <span class="profil-info">{{ userData['last_name'] }} {{ userData['name'] }}</span>
         </div>
 
         <!-- Email (modifiable) -->
         <div class="profile-info-wrap"> 
-            <label>Email</label>
+            <label class="label-profil">Email:</label>
             <span class="profil-info">{{ userData['email'] }}</span>
         </div>
 
         <!-- Telephone (modifiable) -->
         <div class="profile-info-wrap">
-            <label>Phone</label>
+            <label class="label-profil">Phone:</label>
             <span class="profil-info">{{ userData['phone'] }}</span>
         </div>
 
         <!-- Etablissement (modifiable) -->
         <div class="profile-info-wrap">
-            <label>School</label>
+            <label class="label-profil">School:</label>
             <span class="profil-info">{{ userData['school'] }}</span>
         </div>
 
 
     {% elseif role == 'pilote' and editmode == true %}
-        <form class="profile-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
+        <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
             <input type="file" name ="profile_pic" accept="image/*">
 
             <div class="form-group">
-                <label>Last name</label>
+                <label class="label-profil">Last name:</label>
                 <div class="input-wrapper">
                     <input type="text" name="last_name" value="{{ userData['last_name'] }}">
                     <span class="validation-icon"></span>
@@ -137,7 +139,7 @@
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>Name</label>
+                <label class="label-profil">Name:</label>
                 <div class="input-wrapper">
                     <input type="text" name="name" value="{{ userData['name'] }}">
                     <span class="validation-icon"></span>
@@ -145,7 +147,7 @@
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>Email</label>
+                <label class="label-profil">Email:</label>
                 <div class="input-wrapper">
                     <input type="email" name="email" value="{{ userData['email'] }}">
                     <span class="validation-icon"></span>
@@ -153,7 +155,7 @@
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>Phone</label>
+                <label class="label-profil">Phone:</label>
                 <div class="input-wrapper">
                     <input type="text" name="phone" value="{{ userData['phone'] }}">
                     <span class="validation-icon"></span>
@@ -161,7 +163,7 @@
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>School</label>
+                <label class="label-profil">School:</label>
                 <div class="input-wrapper">
                     <input type="text" name="school" value="{{ userData['school'] }}">
                     <span class="validation-icon"></span>
@@ -199,49 +201,51 @@
 
         <!-- Email (modifiable) -->
         <div class="profile-info-wrap"> 
-            <label>Email</label>
+            <label class="label-profil">Email:</label>
             <span class="profil-info">{{ userData['email'] }}</span>
         </div>
 
         <!-- Telephone (modifiable) -->
         <div class="profile-info-wrap">
-            <label>Phone</label>
+            <label class="label-profil">Phone:</label>
             <span class="profil-info">{{ userData['phone'] }}</span>
         </div>
 
         <!-- Secteur d'activité (non modifiable) -->
         <div class="profile-info-wrap">
-            <label>Activity sector</label>
+            <label class="label-profil">Activity sector:</label>
             <span class="profil-info">{{ userData['sector_name'] }}</span>
         </div>
 
         <!-- Description (modifiable) -->
         <div class="profile-info-wrap">
-            <label>Description</label>
+            <label class="label-profil">Description:</label>
             <span class="profil-info">{{ userData['description'] }}</span>
         </div>
 
         <!-- Ciret (non modifiable) -->
         <div class="profile-info-wrap">
-            <label>Ciret</label>
+            <label class="label-profil">Ciret:</label>
             <span class="profil-info">{{ userData['ciret'] }}</span>
         </div>
 
         <!-- rating (non modifiable) -->
         <div class="profile-info-wrap">
-            <label>Rating</label>
+            <label class="label-profil">Rating:</label>
             <span class="profil-info">{{ userData['rating'] }}</span>
         </div>
 
 
     {% elseif role == 'entreprise' and editmode == true %}
-        <form class="profile-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
+        <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <label class="label-profil">Logo:</label>
             <input type="file" name ="logo" accept="image/*">
+            <label class="label-profil">Banner:</label>
             <input type="file" name ="banner" accept="image/*">
 
             <div class="form-group">
-                <label>Company name</label>
+                <label>Company name:</label>
                 <div class="input-wrapper">
                     <input type="text" name="company_name" value="{{ userData['company_name'] }}">
                     <span class="validation-icon"></span>
@@ -249,7 +253,7 @@
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>Email</label>
+                <label class="label-profil">Email:</label>
                 <div class="input-wrapper">
                     <input type="email" name="email" value="{{ userData['email'] }}">
                     <span class="validation-icon"></span>
@@ -257,7 +261,7 @@
                 <span class="error-message"></span>
             </div>
             <div class="form-group">
-                <label>Phone</label>
+                <label class="label-profil">Phone:</label>
                 <div class="input-wrapper">
                     <input type="text" name="phone" value="{{ userData['phone'] }}">
                     <span class="validation-icon"></span>
@@ -265,7 +269,7 @@
                 <span class="error-message"></span>
             </div>
             <div>
-                <label>Description</label>
+                <label class="label-profil">Description:</label>
                 <textarea name="description">{{ userData['description'] }}</textarea>
             </div>
 
@@ -292,8 +296,6 @@
     </div>
     {% endif %}
     
-
-    <br><br><br><br>
 </div>
 </div>
 </main>

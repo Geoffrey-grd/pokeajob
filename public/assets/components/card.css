@@ -27,8 +27,8 @@
     width: 100%;
     object-fit: contain;
     object-position: center;
-
 }
+
 .card__company-logo {
     position: absolute;
     top: 50%;
@@ -39,11 +39,15 @@
     border-radius: 50%;
     border: 3px solid var(--color-border);
     background: #fff;
+    overflow: hidden;
 }
 
 .card__company-logo img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
 }
 
 .card__body {
@@ -89,10 +93,76 @@
     margin-left: auto;
 }
 
+/* ── Version étendue de la carte (page détail) ── */
+.job-card--detail {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 40px;
+}
+
+/* Bannière plus haute sur la version détail */
+.job-card--detail .card__banner {
+    aspect-ratio: 16 / 5;
+}
+
+.job-card--detail .card__banner-img {
+    object-fit: cover;
+}
+
+/* Logo plus grand */
+.job-card--detail .card__company-logo {
+    width: 90px;
+    height: 90px;
+}
+
+/* Titre plus grand */
+.job-card--detail .card__title {
+    font-size: 1.8rem;
+}
+
+/* Zone de description */
+.card__description {
+    padding: var(--space-4);
+    padding-top: 0;
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: 1.7;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: var(--space-3);
+}
+
+/* Style du contenu Markdown généré par Parsedown */
+.card__description h1,
+.card__description h2,
+.card__description h3 {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-2);
+    font-weight: 700;
+}
+
+.card__description p {
+    margin-bottom: var(--space-3);
+}
+
+.card__description ul,
+.card__description ol {
+    padding-left: var(--space-5);
+    margin-bottom: var(--space-3);
+}
+
+.card__description li {
+    margin-bottom: var(--space-1);
+}
+
 @media (min-width: 768px) {
     /* Ajustements de taille pour tablette. */
     .job-card {
         max-width: 22rem;
+    }
+
+    .job-card--detail {
+        max-width: 100%;
+        border-radius: 40px;
     }
 
     .card__title {
@@ -104,6 +174,11 @@
     /* Ajustements et effet de survol pour desktop. */
     .job-card {
         max-width: 23.5rem;
+    }
+
+    .job-card--detail {
+        max-width: 100%;
+        border-radius: 40px;
     }
 
     .job-card:hover {

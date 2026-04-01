@@ -2,34 +2,72 @@
 
 {% block content %}
 <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<link rel="stylesheet" href="/assets/pages/create-offer.css">
+<link rel="stylesheet" href="/assets/components/form.css">
+<script src="/js/form-validation.js" defer></script>
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-
-<br><br><br><br>
-<form method="POST" action="/create_offer">
+<div class="offer-container">
+<form class="auth-form" method="POST" action="/create_offer">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-    
-    <input type="text" name="offer_object" placeholder="Title" required>
 
-    <select name="domain" id="domain" class="form-select" required>
+  <div class="form-group">
+    <div class="input-wrapper">
+      <input type="text" name="offer_object" placeholder="Title" required>
+      <span class="validation-icon"></span>
+    </div>
+    <small class="error-message"></small>
+  </div>
+
+  <div class="form-group">
+    <div class="input-wrapper">
+      <select name="domain" id="domain" class="form-select" required>
         <option value="">Select a domain</option>
         {% for domain in domains %}
-            <option value="{{ domain.id_domain }}">{{ domain.domain_name }}</option>
+          <option value="{{ domain.id_domain }}">{{ domain.domain_name }}</option>
         {% endfor %}
-    </select>
+      </select>
+      <span class="validation-icon"></span>
+    </div>
+    <small class="error-message"></small>
+  </div>
 
-    <input type='text' name='place' placeholder='Place' required>
+  <div class="form-group">
+    <div class="input-wrapper">
+      <input type="text" name="place" placeholder="Place" required>
+      <span class="validation-icon"></span>
+    </div>
+    <small class="error-message"></small>
+  </div>
 
-    <input type='text' name='annual_salary' placeholder='annual_salary' required>
+  <div class="form-group">
+    <div class="input-wrapper">
+      <input type="text" name="annual_salary" placeholder="annual_salary" required>
+      <span class="validation-icon"></span>
+    </div>
+    <small class="error-message"></small>
+  </div>
 
-    <textarea id="markdown-editor" name="description"></textarea>
+  <div class="form-group">
+    <div class="input-wrapper">
+      <textarea id="markdown-editor" name="description"></textarea>
+    </div>
+    <small class="error-message"></small>
+  </div>
 
-    <button type="submit">Publish</button>
+    <button type="submit" class="auth-submit">Publish</button>
 </form>
+</div>
 
 <script>
   const easyMDE = new EasyMDE({
     element: document.getElementById("markdown-editor"),
-    spellChecker: false
+    spellChecker: false,
+    forceSync: true
+  });
+
+  easyMDE.codemirror.on("change", () => {
+    const source = document.getElementById("markdown-editor");
+    source.dispatchEvent(new Event("input", { bubbles: true }));
   });
 </script>
 {% endblock %}

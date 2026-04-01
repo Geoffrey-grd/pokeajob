@@ -11,7 +11,8 @@
     margin-bottom: var(--space-5);
 }
 
-.auth-form input,
+.auth-form input:not([type="file"]),
+.auth-form textarea,
 .auth-form select.form-select {
     width: 100%;
     padding: 14px;
@@ -22,6 +23,27 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* ← Ajout du style sur l'input lui-même */
+.auth-form input[type="file"] {
+    width: 100%;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.auth-form input[type="file"]::file-selector-button {
+    border: none;
+    outline: none;
+    background: #e0e0e0;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 10px; /* ← espace entre bouton et texte "Aucun fichier choisi" */
+}
 .auth-form input:focus,
 .auth-form select.form-select:focus {
     outline: none;
@@ -107,11 +129,11 @@
 }
 
 /* Feedback de validation par champ */
-.form-group {
+.auth-form .form-group {
     position: relative; /* nécessaire pour positionner l'icône */
 }
 
-.validation-icon {
+.auth-form .validation-icon {
     position: absolute;
     right: 14px;
     top: 50%;
@@ -121,25 +143,20 @@
     /* On le place à droite dans l'input, comme ton select arrow */
 }
 
-/* Le form-group devient le conteneur de référence */
-.form-group {
-    position: relative;
-}
-
 /* Wrapper qui entoure l'input/select + l'icône */
-.input-wrapper {
+.auth-form .input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.input-wrapper input,
-.input-wrapper select {
+.auth-form .input-wrapper input,
+.auth-form .input-wrapper select {
     width: 100%;
 }
 
 /* Icône positionnée à l'intérieur du wrapper, pas du form-group */
-.input-wrapper .validation-icon {
+.auth-form .input-wrapper .validation-icon {
     position: absolute;
     right: 14px;
     font-size: 1rem;
@@ -148,12 +165,12 @@
 }
 
 /* Sur un select, décale pour ne pas chevaucher la flèche */
-.input-wrapper select ~ .validation-icon {
+.auth-form .input-wrapper select ~ .validation-icon {
     right: 44px;
 }
 
 /* Message d'erreur sous le wrapper */
-.error-message {
+.auth-form .error-message {
     display: none;
     margin-top: var(--space-1);
     font-size: 0.8rem;
@@ -162,15 +179,17 @@
 }
 
 /* Bordure rouge quand invalide */
-.input-wrapper.is-invalid input,
-.input-wrapper.is-invalid select {
+.auth-form .input-wrapper.is-invalid input,
+.auth-form .input-wrapper.is-invalid select,
+.auth-form .input-wrapper.is-invalid textarea {
     border-color: #e74c3c;
     box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.18);
 }
 
 /* Bordure verte quand valide */
-.input-wrapper.is-valid input,
-.input-wrapper.is-valid select {
+.auth-form .input-wrapper.is-valid input,
+.auth-form .input-wrapper.is-valid select,
+.auth-form .input-wrapper.is-valid textarea {
     border-color: #27ae60;
     box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.18);
 }
