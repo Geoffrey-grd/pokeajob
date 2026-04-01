@@ -47,7 +47,7 @@ class Pilot extends User {
     }
 
     public function getStudentsByPilot($id_pilot) {
-        $stmt = $this->conn->prepare("SELECT student.name, student.last_name, student.profile_pic_path FROM student WHERE student.id_pilot = ?");
+        $stmt = $this->conn->prepare("SELECT student.id_user, student.name, student.last_name, student.profile_pic_path FROM student WHERE student.id_pilot = ?");
         $stmt->execute([$id_pilot]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

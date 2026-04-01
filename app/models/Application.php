@@ -30,17 +30,11 @@ class Application extends BDDlink {
                 ORDER BY application.application_date DESC
                 LIMIT ?, ?");
 
-            $stmt->bindValue(1, $_SESSION["user_id"], PDO::PARAM_INT);
+            $stmt->bindValue(1, $id_user, PDO::PARAM_INT);
             $stmt->bindValue(2, $offset, PDO::PARAM_INT);
             $stmt->bindValue(3, $limit, PDO::PARAM_INT);
 
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function countApplicationsByStudents($id_user) {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM application WHERE id_user = ?");
-        $stmt->execute([$id_user]);
-        return $stmt->fetch(PDO::FETCH_ASSOC)["total"];
     }
 }
