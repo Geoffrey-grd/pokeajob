@@ -121,6 +121,33 @@ class Offer extends BDDlink {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getFromWishlist($user_id, $offer_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM favorite_offer WHERE id_user = ? AND id_offer = ?");
+        $stmt->execute([$user_id, $offer_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function getWishListByUserId($user_id) {
+        $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path FROM favorite_offer 
+            JOIN offer ON favorite_offer.id_offer = offer.id_offer
+            JOIN user ON favorite_offer.id_user = user.id_user
+            JOIN company ON offer.id_company = company.id_user
+            WHERE favorite_offer.id_user = ?");
+        $stmt->execute([$user_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function addToWishList($user_id, $offer_id) {
+        $stmt = $this->conn->prepare("INSERT INTO favorite_offer (id_user, id_offer) VALUES (?, ?)");
+        return $stmt->execute([$user_id, $offer_id]);
+    }
+
+    public function removeFromWishList($user_id, $offer_id) {
+        $stmt = $this->conn->prepare("DELETE FROM favorite_offer WHERE id_user = ? AND id_offer = ?");
+        return $stmt->execute([$user_id, $offer_id]);
+    }
+
 
 
 }

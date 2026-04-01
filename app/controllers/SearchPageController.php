@@ -13,6 +13,11 @@ class SearchPageController {
     public function renderingSearchPage() {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: /");
+            exit();
+        }
+
         $limit = 12;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($page - 1) * $limit;
