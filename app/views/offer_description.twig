@@ -1,21 +1,41 @@
 {% extends "navbar.twig" %}
 
 {% block content %}
-<br><br><br><br><br>
-<img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre {{ offer.id_offer }}">
+<link rel="stylesheet" href="/assets/pages/profil.css">
+<link rel="stylesheet" href="/assets/components/form.css">
+<link rel="stylesheet" href="/assets/pages/auth.css">
+<link rel="stylesheet" href="/assets/components/card.css">
+<div class="page-auth">
+    <main>
+        <div class="auth-container">
+                <div class="job-card job-card--detail">
+                    <div class="card__banner">
+                        <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Bannière de l'offre {{ offer.id_offer }}">
+                        <div class="card__company-logo">
+                            <img src="{{ offer.logo_path }}" alt="Logo de {{ offer.company_name }}">
+                        </div>
+                    </div>
 
-<img class="card__company-logo" src="{{ offer.logo_path }}" alt="Logo de l'entreprise {{ offer.company_name }}">
+                    <div class="card__body">
+                        <h1 class="card__title">{{ offer.offer_object }}</h1>
+                        <div class="card__row--type">
+                            <h3>{{ offer.company_name }}</h3>
+                        </div>
+                        <div class="card__row--location">
+                            <h3>{{ offer.lieu }}</h3>
+                        </div>
+                        <div class="card__row--date">
+                            <h3>{{ offer.annual_salary }}</h3>
+                        </div>
+                    </div>
 
-<h1>{{ offer.offer_object }}</h1>
+                    <div class="card__description">
+                        {{ description|raw }}
+                    </div>
+                </div>
 
-<h2>{{ offer.company_name }}</h2>
-
-<p>{{ offer.lieu }}</p>
-
-<p>{{ offer.annual_salary }}</p>
-
-<p>{{ description|raw }}</p>
-
-<br><br><br><br><br>
+        </div>
+    </main>
+</div>
 
 {% endblock %}
