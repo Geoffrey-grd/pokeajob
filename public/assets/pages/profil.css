@@ -41,7 +41,13 @@
 
 .profile-info,
 .profil-info {
-    font-size: 25px;
+    font-size: 20px;
+}
+
+.label-profil {
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .company-hero {
@@ -74,6 +80,16 @@
     height: 90px;
     border: 3px solid #fff;
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+}
+
+.modify-profile-box{
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 @media (max-width: 480px) {

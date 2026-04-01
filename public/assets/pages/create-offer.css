@@ -1,0 +1,62 @@
+body {
+    padding-top: calc(var(--top-nav-h) + 16px);
+    padding-bottom: calc(var(--bottom-nav-h) + 16px);
+}
+
+.offer-container {
+    max-width: 700px;        /* ← largeur max du formulaire */
+    margin: 0 auto;          /* ← centrage horizontal */
+    padding: 30px;
+    background: rgba(52, 152, 219, 0.9);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.offer-container .auth-form > * + * {
+    margin-top: var(--space-3);
+}
+
+.offer-container .input-wrapper {
+    width: 100%;
+}
+
+.offer-container .EasyMDEContainer {
+    width: 100%;
+}
+
+.offer-container .EasyMDEContainer .editor-toolbar,
+.offer-container .EasyMDEContainer .CodeMirror {
+    width: 100%;
+}
+
+/* Contour de l'éditeur */
+.offer-container .EasyMDEContainer .CodeMirror {
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    min-height: 200px;
+}
+
+/* Toolbar (barre d'outils) */
+.offer-container .EasyMDEContainer .editor-toolbar {
+    border: 2px solid #e0e0e0;
+    border-bottom: none;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    background: #f5f5f5;
+}
+
+/* Icônes de la toolbar */
+.offer-container .EasyMDEContainer .editor-toolbar button {
+    color: #000;
+}
+
+.offer-container .EasyMDEContainer .editor-toolbar button:hover {
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+/* Zone de preview */
+.offer-container .EasyMDEContainer .editor-preview {
+    background: #fafafa;
+    border-radius: var(--radius-sm);
+}
