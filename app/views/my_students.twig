@@ -1,0 +1,25 @@
+{% extends "navbar.twig" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="assets/components/card.css">
+<link rel="stylesheet" href="assets/pages/search.css">
+
+
+<br><br><br><br>
+
+<section class="feed">
+    {% for student in students %}
+        <section class="job-card">
+            <div class="card__banner">
+                <a class="card__company-logo" href="student_profile.html"> <img src="{{ student.profile_pic_path }}" alt="Profile Picture"></a>
+            </div>
+
+            <a class="card__body" href="/offer_description?id_offer={{ card.id_offer }}">
+                <h2 class="card__title"> {{ student.name }} {{ student.last_name }} </h2>
+            </a>
+        </section>
+    {% endfor %}
+</section>
+
+{% endblock %}
