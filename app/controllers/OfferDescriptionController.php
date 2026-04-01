@@ -7,7 +7,7 @@ use Core\View;
 use Parsedown;
 
 use App\Models\Offer;
-use App\Models\Student;
+use App\Models\Application;
 
 class OfferDescriptionController {
 
@@ -20,7 +20,6 @@ class OfferDescriptionController {
         }
 
         $offerModel = new Offer();
-        $studentModel = new Student();
         $parsedown = new Parsedown();
 
         $is_owner = false;
@@ -45,8 +44,8 @@ class OfferDescriptionController {
     public function hasApplied($offer_id) {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
-        $studentModel = new Student();
-        $getapplication = $studentModel->getApplication($_SESSION["user_id"], $offer_id);
+        $application_model = new Application();
+        $getapplication = $application_model->getApplication($_SESSION["user_id"], $offer_id);
         $hasapplied = !empty($getapplication);
         return $hasapplied;
     }

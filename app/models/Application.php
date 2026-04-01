@@ -17,9 +17,9 @@ class Application extends BDDlink {
         return $stmt->execute([$id_user, $id_offer, $cv_path, $motivation_letter_path]);
     }
 
-    // public function getApplication($id_user, $id_offer) {
-    //     $stmt = $this->conn->prepare("SELECT* FROM application WHERE id_user = ? AND id_offer = ?");
-    //     $stmt->execute([$id_user, $id_offer]);
-    //     return $stmt->fetch(PDO::FETCH_ASSOC);
-    // }
+    public function getApplication($id_user, $id_offer) {
+        $stmt = $this->conn->prepare("SELECT* FROM application WHERE id_user = ? AND id_offer = ?");
+        $stmt->execute([$id_user, $id_offer]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
