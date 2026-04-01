@@ -7,7 +7,7 @@ use Core\View;
 use Parsedown;
 
 use App\Models\Offer;
-
+use App\Models\Student;
 
 class OfferDescriptionController {
 
@@ -20,10 +20,12 @@ class OfferDescriptionController {
         }
 
         $offerModel = new Offer();
+        $studentModel = new Student();
         $parsedown = new Parsedown();
 
         $is_owner = false;
         $isinwishlist = false;
+        $hasapplied = false;
 
         $offer = $offerModel->getOfferById($_GET['id_offer']);
         $description = $parsedown->text($offer['description']);
@@ -33,11 +35,20 @@ class OfferDescriptionController {
         }
 
         if ($_SESSION['role'] === 'etudiant') {
-            // pareil pour postuler
+            $hasapplied = $this->hasApplied($_GET['id_offer']);
             $isinwishlist = $this->isinwishlist($_GET['id_offer']);
         }
-        
-        View::render("offer_description.twig", ["role" => $_SESSION["role"], "offer" => $offer, "description" => $description, "is_owner" => $is_owner, "isinwishlist" => $isinwishlist]);
+
+        View::render("offer_description.twig", ["role" => $_SESSION["role"], "offer" => $offer, "description" => $description, "is_owner" => $is_owner, "isinwishlist" => $isinwishlist, "hasapplied" => $hasapplied]);
+    }
+
+    public function hasApplied($offer_id) {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        $studentModel = new Student();
+        $getapplication = $studentModel->getApplication($_SESSION["user_id"], $offer_id);
+        $hasapplied = !empty($getapplication);
+        return $hasapplied;
     }
 
     public function isinwishlist($offer_id) {

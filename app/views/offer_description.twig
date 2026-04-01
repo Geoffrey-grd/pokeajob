@@ -17,20 +17,24 @@
 <p>{{ description|raw }}</p>
 
 {% if is_owner %}
-    <a class="navbar__notif" href="/edit_offer?id_offer={{ offer.id_offer }}"> <img src="images/pen.png" alt="modify offer"></a> 
+    <a class="navbar__notif" href="/edit_offer?id_offer={{ offer.id_offer }}"> <img src="images/pen.png" alt="modify offer"></a>
+
     <p>Modify my offer</p>
 {% endif %}
 
 {% if role === 'etudiant' %}
         {% if isinwishlist %}
             <a class="navbar__notif" href="/remove_from_wishlist?id_offer={{ offer.id_offer }}"> <img src="images/wishlist_full.png" alt="remove from wishlist"></a> 
-            <p></p>
         {% else %}
             <a class="navbar__notif" href="/add_to_wishlist?id_offer={{ offer.id_offer }}"> <img src="images/wishlist.png" alt="add to wishlist"></a> 
-            <p></p>
+        {% endif %}
+
+        {% if not hasapplied %}
+            <a class="navbar__notif" href="/apply?id_offer={{ offer.id_offer }}"> Apply to this offer</a> 
+        {% else %}
+            <p>You have already applied to this offer</p>
         {% endif %}
 {% endif %}
-
 
 <br><br><br><br><br>
 

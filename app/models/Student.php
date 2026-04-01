@@ -42,4 +42,5 @@ class Student extends User {
         $stmt->execute([$user_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
 }
