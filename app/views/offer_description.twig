@@ -1,12 +1,38 @@
 {% extends "navbar.twig" %}
 
 {% block content %}
-<br><br><br><br><br>
-<img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre {{ offer.id_offer }}">
+<link rel="stylesheet" href="/assets/pages/profil.css">
+<link rel="stylesheet" href="/assets/components/form.css">
+<link rel="stylesheet" href="/assets/pages/auth.css">
+<link rel="stylesheet" href="/assets/components/card.css">
+<div class="page-auth">
+    <main>
+        <div class="auth-container">
+                <div class="job-card job-card--detail">
+                    <div class="card__banner">
+                        <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Bannière de l'offre {{ offer.id_offer }}">
+                        <div class="card__company-logo">
+                            <img src="{{ offer.logo_path }}" alt="Logo de {{ offer.company_name }}">
+                        </div>
+                    </div>
 
-<img class="card__company-logo" src="{{ offer.logo_path }}" alt="Logo de l'entreprise {{ offer.company_name }}">
+                    <div class="card__body">
+                        <h1 class="card__title">{{ offer.offer_object }}</h1>
+                        <div class="card__row--type">
+                            <h3>{{ offer.company_name }}</h3>
+                        </div>
+                        <div class="card__row--location">
+                            <h3>{{ offer.lieu }}</h3>
+                        </div>
+                        <div class="card__row--date">
+                            <h3>{{ offer.annual_salary }}</h3>
+                        </div>
+                    </div>
 
-<h1>{{ offer.offer_object }}</h1>
+                    <div class="card__description">
+                        {{ description|raw }}
+                    </div>
+                </div>
 
 <h2>{{ offer.company_name }}</h2>
 
@@ -17,21 +43,27 @@
 <p>{{ description|raw }}</p>
 
 {% if is_owner %}
-    <a class="navbar__notif" href="/edit_offer?id_offer={{ offer.id_offer }}"> <img src="images/pen.png" alt="modify offer"></a> 
+    <a class="navbar__notif" href="/edit_offer?id_offer={{ offer.id_offer }}"> <img src="images/pen.png" alt="modify offer"></a>
+
     <p>Modify my offer</p>
 {% endif %}
 
 {% if role === 'etudiant' %}
         {% if isinwishlist %}
             <a class="navbar__notif" href="/remove_from_wishlist?id_offer={{ offer.id_offer }}"> <img src="images/wishlist_full.png" alt="remove from wishlist"></a> 
-            <p></p>
         {% else %}
             <a class="navbar__notif" href="/add_to_wishlist?id_offer={{ offer.id_offer }}"> <img src="images/wishlist.png" alt="add to wishlist"></a> 
-            <p></p>
+        {% endif %}
+
+        {% if not hasapplied %}
+            <a class="navbar__notif" href="/apply?id_offer={{ offer.id_offer }}"> Apply to this offer</a> 
+        {% else %}
+            <p>You have already applied to this offer</p>
         {% endif %}
 {% endif %}
 
-
-<br><br><br><br><br>
+        </div>
+    </main>
+</div>
 
 {% endblock %}

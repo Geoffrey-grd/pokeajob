@@ -38,6 +38,11 @@ $router->get("/add_to_wishlist", "OfferDescriptionController@addToWishlist");
 $router->get("/remove_from_wishlist", "OfferDescriptionController@removeFromWishlist");
 $router->get("/wishlist", "WishListController@renderWishlist");
 
+$router->get("/apply", "ApplicationController@renderApplication");
+$router->post("/apply", "ApplicationController@apply");
+
+$router->get("/internship_tracker", "InternshipTrackerController@renderInternshipTracker");
+
 $router->dispatch();
 
 

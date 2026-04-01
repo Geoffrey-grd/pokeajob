@@ -39,6 +39,25 @@ const RULES = {
   },
   selectPilote: {
     message: "Veuillez sélectionner un pilote."
+  },
+  place: {
+    minLength: 2,
+    message: "Veuillez entrer un lieu valide (2 caractères minimum)."
+  },
+  annual_salary: {
+    pattern: /^\d+$/,
+    message: "Veuillez entrer un salaire annuel valide (chiffres uniquement)."
+  },
+  description: {
+    pattern: /^.{1,1000}$/s,
+    message: "La description doit contenir entre 1 et 1000 caractères."
+  },
+  domain: {
+    message: "Veuillez sélectionner un domaine d'activité."
+  },
+  offer_object: {
+    minLength: 2,
+    message: "Veuillez entrer un intitulé d'offre valide (2 caractères minimum)."
   }
 };
 
@@ -48,10 +67,6 @@ const RULES = {
 // =========================================
 const SCHEMAS = {
   auth: {
-    login: {
-      email:    "email",
-      password: "password"
-    },
     signupCommon: {
       email:    "email",
       password: "password"
@@ -101,6 +116,13 @@ const SCHEMAS = {
   deleteAccount: {
     email: "email",
     password: "password"
+  },
+  offer_creation:{
+    place: "place",
+    annual_salary: "annual_salary",
+    description: "description",
+    domain: "domain",
+    offer_object: "offer_object"
   }
 };
 
@@ -160,6 +182,11 @@ function resetState(field) {
 // =========================================
 
 function isFieldActive(field) {
+  // EasyMDE masque le textarea source, mais il reste la source de vérité.
+  if (field instanceof HTMLTextAreaElement && field.name === "description") {
+    return field !== null && field !== undefined && !field.disabled;
+  }
+
   // Un champ inactif = inexistant, disabled, ou visuellement masqué
   // offsetParent === null indique que l'élément n'est pas rendu (display:none
   // sur lui ou un de ses parents, comme la div .is-hidden de ton twig)
@@ -231,6 +258,10 @@ function buildActiveSchema(form, pageType) {
 
   if (pageType === "deleteAccount") {
     return SCHEMAS.deleteAccount;
+  }
+
+  if (pageType === "offer_creation") {
+    return SCHEMAS.offer_creation;
   }
 
   // Cas non reconnu : schéma vide, rien ne sera validé
@@ -394,6 +425,10 @@ function initFormValidation() {
   // Formulaire de modification du profil
   const profileForms = document.querySelectorAll('form[action="/modify_profile"]');
   profileForms.forEach((profileForm) => attachValidation(profileForm, "profile"));
+
+  // Formulaire de création d'offre
+  const offerCreationForm = document.querySelector('form.auth-form[action="/create_offer"]');
+  if (offerCreationForm) attachValidation(offerCreationForm, "offer_creation");
 }
 
 document.addEventListener("DOMContentLoaded", initFormValidation);

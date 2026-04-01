@@ -88,4 +88,6 @@ class Company extends User {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    
 }

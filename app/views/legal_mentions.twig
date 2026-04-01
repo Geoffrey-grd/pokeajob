@@ -1,35 +1,49 @@
 {% extends "navbar.twig" %}
 
 {% block content %}
-<br><br><br><br><br>
-<div class="mentionsLegales">
-    <div>
-    <h2>Editeur : Pokeajob</h2><br>
-    Association loi de 1901 - Siren : 123 123 123 <br>
-    Numéro de TVA intracommunautaire : FR1234567890 <br>
-    Numéro de téléphone : 07 11 22 33 44 <br>
-    e-mail: pokeajob-support@pokeajob.com
+<link rel="stylesheet" href="/assets/pages/legal_mentions.css">
+<link rel="stylesheet" href="/assets/components/form.css">
+<link rel="stylesheet" href="/assets/pages/auth.css">
+<div class="page-auth">
+<main class="mentionsLegales">
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1>Mentions légales</h1>
+
+            <section class="mentions-section">
+                <h2>Editeur : Pokeajob</h2>
+                <p>Association loi de 1901 - Siren : 123 123 123</p>
+                <p>Numéro de TVA intracommunautaire : FR1234567890</p>
+                <p>Numéro de téléphone : 07 11 22 33 44</p>
+                <p>e-mail: pokeajob-support@pokeajob.com</p>
+            </section>
+
+            <section class="mentions-section">
+                <h2>Responsable de la publication</h2>
+                <p>Monsieur Geoffrey POSE-VAY, propriétaire du repositoire Github</p>
+            </section>
+
+            <section class="mentions-section">
+                <h2>Hébergement du site</h2>
+                <p>Nom de l'hébergeur : Azure</p>
+                <p>Adresse : KSP mdr</p>
+                <p>Telephone : 07 11 22 33 44</p>
+            </section>
+
+            <section class="mentions-section">
+                <h2>Propriété intellectuelle</h2>
+                <p>L'ensemble du contenu présent sur ce site (texte, image, videos, logos) est protégé par le droit d'auteur et la propriété intellectuelle. Toute reproduction, représentation, modification, ou exploitation non autorisée est interdite sans l'accord écrit des auteurs.</p>
+                <p>Pokemon est la propriété intellectuelle de Nintendo. Toute ressemblance avec cette propriété est autorisée en raison de l'utilisation non lucrative du site.</p>
+            </section>
+
+            <section class="mentions-section">
+                <h2>Données personnelles</h2>
+                <p>Les informations recueillies via ce site sont destinées à l'usage exclusif de l'entreprise et sont traitées conformement au Réglement Général sur la Protection des Données (RGPD).</p>
+                <p>Pour accèder, modifier, ou supprimer votre information, contactez l'addresse e-mail suivante :</p>
+                <p>pokeajob-support@pokeajob.com</p>
+            </section>
+        </div>
     </div>
-    <div>
-    <h2>Responsable de la publication :</h2><br>
-    Monsieur Geoffrey POSE-VAY, propriétaire du repositoire Github
-    </div>
-    <div>
-    <h2>Hébergement du site :</h2>
-    Nom de l'hébergeur : Azure<br>
-    Adresse : KSP mdr<br>
-    Telephone : 07 11 22 33 44
-    </div>
-    <div>
-    <h2>Propriété intellectuelle :</h2>
-    L'ensemble du contenu présent sur ce site (texte, image, videos, logos) est protégé par le droit d'auteur et la propriété intellectuelle. Toute reproduction, représentation, modification, ou exploitation non autorisée est interdite sans l'accord écrit des auteurs <br>
-    Pokemon est la propriété intellectuelle de Nintendo. Toute ressemblance avec cette propriété est autorisée en raison de l'utilisation non lucrative du site.
-    </div>
-    <div>
-    <h2>Données personnelles :</h2>
-    Les informations recueillies via ce site sont destinées à l'usage exclusif de l'entreprise et sont traitées conformement au Réglement Général sur la Protection des Données (RGPD).<br>
-    Pour accèder, modifier, ou supprimer votre information, contactez l'addresse e-mail suivante : <br>
-    pokeajob-support@pokeajob.com
-    </div>
+</main>
 </div>
 {% endblock %}
