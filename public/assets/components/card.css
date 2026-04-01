@@ -19,7 +19,7 @@
     width: 100%;
     aspect-ratio: 5 / 1;
     overflow: hidden;
-    background: #dbe7ff;
+    background: #0057ff;
 }
 
 .card__banner-img {
@@ -91,6 +91,8 @@
 .card__wishlist {
     /* L'icone favoris est poussee sur la droite. */
     margin-left: auto;
+    display: inline-flex;
+    align-items: center;
 }
 
 /* ── Version étendue de la carte (page détail) ── */

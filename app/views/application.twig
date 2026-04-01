@@ -1,20 +1,36 @@
 {% extends "navbar.twig" %}
 
 {% block content %}
-<br><br><br><br><br>
-<form class="profile-form" data-role="{{ role }}" action="/apply" method="post" enctype="multipart/form-data">
+<link rel="stylesheet" href="assets/components/form.css">
+<link rel="stylesheet" href="assets/pages/auth.css">
+<div class="page-auth">
+<main>
+    <div class="auth-container">
+    <div class="auth-box">
+        <h1>Apply to {{ offer.offer_object }}</h1>
+    <form class="auth-form" data-role="{{ role }}" action="/apply" method="post" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-    <input type="hidden" name="id_offer" value="{{ id_offer }}"> 
-    <p> CV (PDF): </p>
-    <input type="file" name="cv" accept=".pdf" required>
-    <p> Motivation Letter (PDF): </p>
-    <input type="file" name="motivation_letter" accept=".pdf" required>
-    <button type="submit">Submit Application</button>
-</form>
+    <input type="hidden" name="id_offer" value="{{ id_offer }}">
+
+        <div class="form-group">
+            <label for="cv">CV (PDF):</label>
+            <input type="file" id="cv" name="cv" accept=".pdf" required>
+        </div>
+
+        <div class="form-group">
+            <label for="motivation_letter">Motivation Letter (PDF):</label>
+            <input type="file" id="motivation_letter" name="motivation_letter" accept=".pdf" required>
+        </div>
+
+        <button class="auth-submit" type="submit">Submit Application</button>
+    </form>
 
 {% if error %}
-    <p style="color: red;">{{ error }}</p>
+    <p class="form-error">{{ error }}</p>
 {% endif %}
 
-<br><br><br><br><br>
+    </div>
+    </div>
+</main>
+</div>
 {% endblock %}

@@ -194,6 +194,22 @@
     box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.18);
 }
 
+.auth-box h1 {
+    margin-bottom: var(--space-5);
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: 700;
+}
+
+.form-error {
+    color: #e74c3c;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
 @media (min-width: 768px) {
     .form-container {
         padding: 30px;
