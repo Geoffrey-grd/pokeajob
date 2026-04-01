@@ -2,18 +2,13 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="assets/components/card.css">
+<link rel="stylesheet" href="assets/components/studentcard.css">
 <link rel="stylesheet" href="assets/pages/search.css">
 
-
-<br><br><br><br>
-
-<section class="feed">
+<section class="feed my-students__feed">
     {% for student in students %}
         <section class="job-card">
-            <div class="card__banner">
                 <a class="card__company-logo" href="student_profile.html"> <img src="{{ student.profile_pic_path }}" alt="Profile Picture"></a>
-            </div>
 
             <a class="card__body" href="/internship_tracker?id_user={{ student.id_user }}&student_name={{ student.name }}&student_last_name={{ student.last_name }}">
                 <h2 class="card__title"> {{ student.name }} {{ student.last_name }} </h2>

@@ -4,12 +4,10 @@
 <link rel="stylesheet" href="assets/components/card.css">
 <link rel="stylesheet" href="assets/pages/search.css">
 
-<br><br><br><br><br>
-
 {% if role == 'pilote' %}
-    <h1> {{ student_name }} {{ student_last_name }} caught {{ cards|length }} offers!</h1>
+    <h1 class="internship-tracker__title"> {{ student_name }} {{ student_last_name }} caught {{ cards|length }} offers!</h1>
 {% else %}
-    <h1>You caught {{ cards|length }} offers!</h1>
+    <h1 class="internship-tracker__title">You caught {{ cards|length }} offers!</h1>
 {% endif %}
 
 <section class="feed">
@@ -52,6 +50,4 @@
     {% endif %}
 </nav>
 
-
-<br><br><br><br><br>
 {% endblock %}

@@ -9,6 +9,11 @@
     padding-inline: var(--space-4);
 }
 
+.internship-tracker__title {
+    margin-top: calc(var(--space-7) + var(--space-4));
+    text-align: center;
+}
+
 .search-toggle {
     width: 100%;
     max-width: min(34rem, calc(100vw - 2 * var(--space-4)));

@@ -4,6 +4,9 @@
     max-width: 24rem;
     display: flex;
     flex-direction: column;
+    position: relative;
+    min-height: 110px;
+    justify-content: center;
     border: 3px solid var(--color-border);
     border-radius: 40px;
     overflow: hidden;
@@ -13,21 +16,12 @@
     margin-inline: auto;
 }
 
-.card__banner {
-    /* Zone image du haut avec logo de l'entreprise par-dessus. */
-    position: relative;
-    width: 100%;
-    aspect-ratio: 5 / 1;
-    overflow: hidden;
-    background: #0057ff;
+.my-students__feed {
+    margin-top: calc(var(--top-nav-h) + var(--space-4));
 }
 
-.card__banner-img {
-    display: block;
-    width: 100%;
-    object-fit: contain;
-    object-position: center;
-}
+
+
 
 .card__company-logo {
     position: absolute;
@@ -53,14 +47,19 @@
 .card__body {
     /* Contenu texte de la carte. */
     color: var(--color-text);
-    padding: var(--space-4);
+    display: block;
+    width: 100%;
+    padding: var(--space-4) var(--space-4) var(--space-4) calc(70px + var(--space-5));
     min-width: 0;
 }
 
 .card__title {
     font-size: 1.35rem;
-    margin-bottom: var(--space-3);
+    margin: 0;
     line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .card__row--type,
@@ -88,25 +87,6 @@
     height: 30px;
 }
 
-.card__wishlist {
-    /* L'icone favoris est poussee sur la droite. */
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-}
-
-/* ── Version étendue de la carte (page détail) ── */
-.job-card--detail {
-    max-width: 100%;
-    width: 100%;
-    border-radius: 40px;
-}
-
-/* Bannière plus haute sur la version détail */
-.job-card--detail .card__banner {
-    aspect-ratio: 16 / 5;
-}
-
 .job-card--detail .card__banner-img {
     object-fit: cover;
 }
@@ -122,39 +102,6 @@
     font-size: 1.8rem;
 }
 
-/* Zone de description */
-.card__description {
-    padding: var(--space-4);
-    padding-top: 0;
-    color: var(--color-text);
-    font-size: 1rem;
-    line-height: 1.7;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    margin-top: var(--space-3);
-}
-
-/* Style du contenu Markdown généré par Parsedown */
-.card__description h1,
-.card__description h2,
-.card__description h3 {
-    margin-top: var(--space-4);
-    margin-bottom: var(--space-2);
-    font-weight: 700;
-}
-
-.card__description p {
-    margin-bottom: var(--space-3);
-}
-
-.card__description ul,
-.card__description ol {
-    padding-left: var(--space-5);
-    margin-bottom: var(--space-3);
-}
-
-.card__description li {
-    margin-bottom: var(--space-1);
-}
 
 @media (min-width: 768px) {
     /* Ajustements de taille pour tablette. */
@@ -189,7 +136,7 @@
     }
 
     .card__body {
-        padding: 18px;
+        padding: var(--space-4) var(--space-4) var(--space-4) calc(70px + var(--space-5));
     }
 
     .card__title {
