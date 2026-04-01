@@ -97,47 +97,32 @@ class AuthControllerTest extends TestCase {
         ->getMock();
         $userMock->method('findByEmail')->willReturn(false);
 
-        $viewMock = $this->getMockBuilder(Core\View::class)
-        ->onlyMethods(['render'])
-        ->getMock();
-        $viewMock->expects($this->once())
-        ->method('render')
-        ->with(
-            $this->equalTo('login-register.twig'),
-            $this->callback(function($params) {
-                return isset($params['error']) &&
-                $params['error'] === 'Identifiant ou mot de passe incorrect.';
-            })
-        );
-
-        $controller = new class($userMock, $viewMock) extends AuthController {
+        $controller = new class($userMock) extends AuthController {
             private $userMock;
-            private $viewMock;
 
-            public function __construct($userMock, $viewMock) {
+            public function __construct($userMock) {
                 $this->userMock = $userMock;
-                $this->viewMock = $viewMock;
             }
 
             public function login() {
                 $_SERVER['REQUEST_METHOD'] = 'POST';
 
                 $userData = $this->userMock->findByEmail($_POST['email']);
+
                 if (!$userData || !password_verify($_POST['password'], $userData['password'] ?? '')) {
-                    $this->viewMock->render('login-register.twig', [
-                        'error'=> 'Identifiant ou mot de passe incorrect.',
-                    ]);
-            } else {
-                $_SESSIONS['user_id'] = $userData['id_user'];
-                $_SESSIONS['email'] = $userData['email'];
-                $_SESSIONS['role'] = $userData['role'];
+                    $_SESSION['login_error'] = 'Identifiant ou mot de passe incorrect';
+                } else {
+                    $_SESSION['user_id'] = $userData['id_user'];
+                    $_SESSION['email'] = $userData['email'];
+                    $_SESSION['role'] = $userData['role'];
                 }
             }
         };
 
-    $controller->login();
-    $this->assertArrayNotHasKey('user_id', $_SESSION);
-    $this->assertArrayNotHasKey('email', $_SESSION);
-    $this->assertArrayNotHasKey('role', $_SESSION);
+        $controller->login();
+
+        $this->assertArrayHasKey('login_error', $_SESSION);
+        $this->assertEquals('Identifiant ou mot de passe incorrect', $_SESSION['login_error']);
+        $this->assertArrayNotHasKey('user_id', $_SESSION);
     }
 }
