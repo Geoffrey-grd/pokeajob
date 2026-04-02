@@ -6,6 +6,7 @@ use Core\Csrf;
 use Core\Auth;
 use Core\View;
 
+use App\Controllers\GeneralController;
 
 class DelaccountController {
 
@@ -17,10 +18,13 @@ class DelaccountController {
             exit();
         }
 
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+
         $error = $_SESSION["flash_error"] ?? "";
         unset($_SESSION["flash_error"]);
 
-        View::render("delete_account.twig", ["error" => $error, "csrf_token" => Csrf::generateToken(), 'role' => $_SESSION['role']]);
+        View::render("delete_account.twig", ["error" => $error, "csrf_token" => Csrf::generateToken(), 'role' => $_SESSION['role'], 'profile_pic_path' => $profile_pic_path]);
     }
 
     public static function deleteAccount() {

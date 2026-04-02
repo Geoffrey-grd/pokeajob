@@ -5,6 +5,8 @@ use Core\Csrf;
 use Core\Auth;
 use Core\View;
 
+use App\Controllers\GeneralController;
+
 class LegalMentionsController {
 
     public static function renderLegalMentions() {
@@ -16,7 +18,10 @@ class LegalMentionsController {
             exit();
         }
 
-        View::render("legal_mentions.twig");
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+
+        View::render("legal_mentions.twig", ['profile_pic_path' => $profile_pic_path]);
 
     }
 }

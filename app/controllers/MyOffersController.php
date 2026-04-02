@@ -7,6 +7,8 @@ use Core\View;
 
 use App\Models\Offer;
 
+use App\Controllers\GeneralController;
+
 class MyOffersController {
 
     public function renderMyOffers() {
@@ -16,6 +18,9 @@ class MyOffersController {
             header("Location: /");
             exit();
         }
+
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
 
         $limit = 12;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -40,7 +45,7 @@ class MyOffersController {
         $total_pages = ceil($total_cards / $limit);
         $filters = $offerModel->getAllDomains();
 
-        View::render("my_offers.twig", ['filters' => $filters, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'role' => $_SESSION['role']]);
+        View::render("my_offers.twig", ['filters' => $filters, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'role' => $_SESSION['role'], 'profile_pic_path' => $profile_pic_path]);
     }
 
 

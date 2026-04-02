@@ -7,12 +7,19 @@
 <script src="/js/form-validation.js" defer></script>
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <div class="offer-container">
-<form class="auth-form" method="POST" action="/create_offer">
+<form class="auth-form" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    {% if editmode %}
+        <input type="hidden" name="id_offer" value="{{ offer.id_offer }}">
+    {% endif %}
 
   <div class="form-group">
     <div class="input-wrapper">
-      <input type="text" name="offer_object" placeholder="Title" required>
+      {% if editmode %}
+        <input type="text" name="offer_object" placeholder="Title" value="{{ offer.offer_object }}" required>
+      {% else %}
+        <input type="text" name="offer_object" placeholder="Title" required>
+      {% endif %}
       <span class="validation-icon"></span>
     </div>
     <small class="error-message"></small>
@@ -21,9 +28,10 @@
   <div class="form-group">
     <div class="input-wrapper">
       <select name="domain" id="domain" class="form-select" required>
+
         <option value="">Select a domain</option>
         {% for domain in domains %}
-          <option value="{{ domain.id_domain }}">{{ domain.domain_name }}</option>
+          <option value="{{ domain.id_domain }}" {% if editmode and offer.id_domain == domain.id_domain %}selected{% endif %}>{{ domain.domain_name }}</option>
         {% endfor %}
       </select>
       <span class="validation-icon"></span>
@@ -33,7 +41,11 @@
 
   <div class="form-group">
     <div class="input-wrapper">
-      <input type="text" name="place" placeholder="Place" required>
+      {% if editmode %}
+        <input type="text" name="lieu" placeholder="Place" value="{{ offer.lieu }}" required>
+      {% else %}
+        <input type="text" name="lieu" placeholder="Place" required>
+      {% endif %}
       <span class="validation-icon"></span>
     </div>
     <small class="error-message"></small>
@@ -41,7 +53,11 @@
 
   <div class="form-group">
     <div class="input-wrapper">
-      <input type="text" name="annual_salary" placeholder="annual_salary" required>
+      {% if editmode %}
+        <input type="text" name="annual_salary" placeholder="annual_salary" value="{{ offer.annual_salary }}" required>
+      {% else %}
+        <input type="text" name="annual_salary" placeholder="annual_salary" required>
+      {% endif %}
       <span class="validation-icon"></span>
     </div>
     <small class="error-message"></small>
@@ -49,12 +65,20 @@
 
   <div class="form-group">
     <div class="input-wrapper">
-      <textarea id="markdown-editor" name="description"></textarea>
+      {% if editmode %}
+        <textarea id="markdown-editor" name="description">{{ offer.description }}</textarea>
+      {% else %}
+        <textarea id="markdown-editor" name="description"></textarea>
+      {% endif %}
     </div>
     <small class="error-message"></small>
   </div>
-
-    <button type="submit" class="auth-submit">Publish</button>
+  {% if editmode %}
+      <button type="submit" class="auth-submit" formaction="/edit_offer_save">Save Changes</button>
+  {% else %}
+      <button type="submit" class="auth-submit" formaction="/create_offer">Publish</button>
+  {% endif %}
+  
 </form>
 </div>
 

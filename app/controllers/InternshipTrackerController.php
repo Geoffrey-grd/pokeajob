@@ -7,6 +7,8 @@ use Core\View;
 
 use App\Models\Application;
 
+use App\Controllers\GeneralController;
+
 class InternshipTrackerController {
 
     public function renderInternshipTracker() {
@@ -16,6 +18,9 @@ class InternshipTrackerController {
             header("Location: /");
             exit();
         }
+
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
 
         isset($_GET["id_user"]) ? $id_user = $_GET["id_user"] : $id_user = $_SESSION["user_id"];
         isset($_GET["student_name"]) ? $student_name = $_GET["student_name"] : $student_name = "";
@@ -33,6 +38,6 @@ class InternshipTrackerController {
 
         $total_pages = ceil(count($cards) / $limit);
 
-        View::render("internship_tracker.twig", ['cards' => $cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'student_name' => $student_name, 'student_last_name' => $student_last_name, 'role' => $_SESSION['role']]);
+        View::render("internship_tracker.twig", ['cards' => $cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'student_name' => $student_name, 'student_last_name' => $student_last_name, 'role' => $_SESSION['role'], 'profile_pic_path' => $profile_pic_path]);
     }
 }

@@ -148,6 +148,16 @@ class Offer extends BDDlink {
         return $stmt->execute([$user_id, $offer_id]);
     }
 
+    public function editOffer($id_offer, $id_domain, $offer_object, $lieu, $annual_salary, $description) {
+        $stmt = $this->conn->prepare("UPDATE offer SET id_domain = ?, offer_object = ?, lieu = ?, annual_salary = ?, description = ? WHERE id_offer = ?");
+        return $stmt->execute([$id_domain, $offer_object, $lieu, $annual_salary, $description, $id_offer]);
+    }
+
+    public function deleteOffer($id_offer) {
+        $stmt = $this->conn->prepare("DELETE FROM offer WHERE id_offer = ?");
+        return $stmt->execute([$id_offer]);
+    }
+
 
 
 }

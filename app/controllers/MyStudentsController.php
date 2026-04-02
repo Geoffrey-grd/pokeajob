@@ -7,6 +7,8 @@ use Core\View;
 
 use App\Models\Pilot;
 
+use App\Controllers\GeneralController;
+
 class MyStudentsController {
 
     public function renderMyStudents() {
@@ -17,9 +19,12 @@ class MyStudentsController {
             exit();
         }
 
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+
         $pilotModel = new Pilot();
         $students = $pilotModel->getStudentsByPilot($_SESSION["user_id"]);
 
-        View::render("my_students.twig", ['students' => $students, 'role' => $_SESSION['role']]);
+        View::render("my_students.twig", ['students' => $students, 'role' => $_SESSION['role'], 'profile_pic_path' => $profile_pic_path]);
     }
 }

@@ -49,9 +49,10 @@
 
 
         {% if is_owner %}
-            <form method="GET" action="/edit_offer">
+            <form method="POST">
                 <input type="hidden" name="id_offer" value="{{ offer.id_offer }}">
-                <button class="auth-submit">Modify my offer</button>
+                <button class="auth-submit" type="submit" formaction="/edit_offer">Modify my offer</button>
+                <button class="auth-submit" type="submit" formaction="/delete_offer">Supress my offer</button>
             </form>
         {% endif %}
 

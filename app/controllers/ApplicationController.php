@@ -8,6 +8,8 @@ use Core\View;
 use App\Models\Application;
 use App\Models\Offer;
 
+use App\Controllers\GeneralController;
+
 class ApplicationController {
 
     public function renderApplication() {
@@ -18,6 +20,9 @@ class ApplicationController {
             exit();
         }
 
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+
         $error = "";
         if (isset($_SESSION["flash_error"])) { $error = $_SESSION["flash_error"]; }
         unset($_SESSION["flash_error"]);
@@ -25,7 +30,7 @@ class ApplicationController {
         $offer_model = new Offer();
         $offer = $offer_model->getOfferById($_GET["id_offer"]);
 
-        View::render("application.twig", ["role" => $_SESSION["role"], "csrf_token" => Csrf::generateToken(), "id_offer" => $_GET["id_offer"], "offer" => $offer, "error" => $error]);
+        View::render("application.twig", ["role" => $_SESSION["role"], "csrf_token" => Csrf::generateToken(), "id_offer" => $_GET["id_offer"], "offer" => $offer, "error" => $error, 'profile_pic_path' => $profile_pic_path]);
     }
 
     public function apply() {
@@ -38,8 +43,8 @@ class ApplicationController {
         $this->checkfile($_FILES["cv"]);
         $this->checkfile($_FILES["motivation_letter"]);
 
-        $cv_path = $this->moveFile($_FILES["cv"], "cv");
-        $motivation_letter_path = $this->moveFile($_FILES["motivation_letter"], "motivation_letter");
+        $cv_path = $this->moveFile($_FILES["cv"], "cv", $_POST["id_offer"]);
+        $motivation_letter_path = $this->moveFile($_FILES["motivation_letter"], "motivation_letter", $_POST["id_offer"]);
 
         $applicationModel->applyToOffer($_SESSION["user_id"], $_POST["id_offer"], $cv_path, $motivation_letter_path);
 
@@ -65,10 +70,10 @@ class ApplicationController {
         }
     }
 
-    public function moveFile($file, $type) {
+    public function moveFile($file, $type, $id_offer) {
         $base_dir = realpath(__DIR__ . "/../../public/images/uploads/application/" . $type) . "/";
         $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
-        $target_file = $base_dir . $_SESSION["user_id"] . "." . $extension;
+        $target_file = $base_dir . "user" . $_SESSION["user_id"] . "" . "offer" . $id_offer . "." . $extension;
         foreach (glob($base_dir . $_SESSION["user_id"] . ".*") as $existing_file) {
             unlink($existing_file);
         }

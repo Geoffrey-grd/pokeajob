@@ -7,6 +7,7 @@ use Core\Auth;
 use Core\View;
 use App\Models\Offer;
 
+use App\Controllers\GeneralController;
 
 class WishListController {
 
@@ -21,7 +22,10 @@ class WishListController {
         $offerModel = new Offer();
         $cards = $offerModel->getWishListByUserId($_SESSION["user_id"]);
 
-        View::render("wishlist.twig", ["role" => $_SESSION["role"], "cards" => $cards]);
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        
+        View::render("wishlist.twig", ["role" => $_SESSION["role"], "cards" => $cards, 'profile_pic_path' => $profile_pic_path]);
     }
 
 }

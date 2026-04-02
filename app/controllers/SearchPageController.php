@@ -7,6 +7,8 @@ use Core\Csrf;
 use Core\Auth;
 use Core\View;
 
+use App\Controllers\GeneralController;
+
 
 class SearchPageController {
 
@@ -17,6 +19,9 @@ class SearchPageController {
             header("Location: /");
             exit();
         }
+
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
 
         $limit = 12;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -60,7 +65,7 @@ class SearchPageController {
             $filters = $company->getAllActivitySectors();
         }
 
-        View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role']]);
+        View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role'], 'profile_pic_path' => $profile_pic_path]);
     }
 
     public static function searchCompanies() {

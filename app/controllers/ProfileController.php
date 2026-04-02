@@ -9,6 +9,8 @@ use Core\Csrf;
 use Core\Auth;
 use Core\View;
 
+use App\Controllers\GeneralController;
+
 
 class ProfileController {
 
@@ -19,6 +21,9 @@ class ProfileController {
             header("Location: /");
             exit();
         }
+
+        $generalController = new GeneralController();
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
 
         $error = "";
 
@@ -39,7 +44,7 @@ class ProfileController {
             $userData = $pilot->getPilotInformations($_SESSION["user_id"]);
         }
 
-        View::render("profile.twig", ["role" => $_SESSION["role"], "userData" => $userData, "editmode" => $editmode, "csrf_token" => Csrf::generateToken(), "error" => $error]);
+        View::render("profile.twig", ["role" => $_SESSION["role"], "userData" => $userData, "editmode" => $editmode, "csrf_token" => Csrf::generateToken(), "error" => $error, 'profile_pic_path' => $profile_pic_path]);
     }
 
     public function editProfile() {

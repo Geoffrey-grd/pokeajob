@@ -37,6 +37,9 @@ $router->post("/my_offers", "MyOffersController@renderMyOffers");
 $router->get("/add_to_wishlist", "OfferDescriptionController@addToWishlist");
 $router->get("/remove_from_wishlist", "OfferDescriptionController@removeFromWishlist");
 $router->get("/wishlist", "WishListController@renderWishlist");
+$router->post("/delete_offer", "OfferDescriptionController@deleteOffer");
+$router->post("/edit_offer", "CreateOfferController@editOffer");
+$router->post("/edit_offer_save", "CreateOfferController@editOfferSave");
 
 $router->get("/apply", "ApplicationController@renderApplication");
 $router->post("/apply", "ApplicationController@apply");
