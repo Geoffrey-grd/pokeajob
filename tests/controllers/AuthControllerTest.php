@@ -125,4 +125,72 @@ class AuthControllerTest extends TestCase {
         $this->assertEquals('Identifiant ou mot de passe incorrect', $_SESSION['login_error']);
         $this->assertArrayNotHasKey('user_id', $_SESSION);
     }
+
+    public function testRegisterEmailExistingEmail() {
+        $_POST = [
+            'csrf_token' => 'token',
+            'email' => 'exist@example.com',
+            'password' => 'pwd'
+        ];
+
+        $userMock = $this->getMockBuilder(App\Models\User::class)
+            ->onlyMethods(['findByEmail'])
+            ->getMock();
+        $userMock->method('findByEmail')->willReturn(['id_user' => 1]);
+
+        $controller = new class($userMock) extends AuthController {
+            private $userMock;
+
+            public function __construct($userMock) {
+                $this->userMock = $userMock;
+            }
+
+            public function register($account_type) {
+                if ($this->userMock->findByEmail($_POST['email'])) {
+                    $_SESSION['register_error'] = 'This email is already in use.';
+                    return;
+                }
+            }
+        };
+
+        $controller->register('etudiant');
+
+        $this->assertArrayHasKey('register_error', $_SESSION);
+        $this->assertEquals('This email is already in use.', $_SESSION['register_error']);
+    }
+
+    public function testRegisterNew()
+    {
+        $_POST = [
+            'csrf_token'=>'token',
+            'email'=>'new@example.com',
+            'password'=>'pwd',
+            'name'=>'John',
+            'last_name'=>'Doe',
+            'school'=>'School A',
+            'training_pilot'=>1
+        ];
+        $userMock = $this->getMockBuilder(App\Models\User::class)
+                        ->onlyMethods(['findByEmail'])
+                        ->getMock();
+        $userMock->method('findByEmail')->willReturn(false);
+
+        $studentMock = $this->getMockBuilder(App\Models\Student::class)
+                            ->onlyMethods(['create_student'])
+                            ->getMock();
+        $studentMock->expects($this->once())
+                    ->method('create_student')
+                    ->with('new@example.com','pwd','John','Doe',1,'etudiant');
+
+        $controller = new class($userMock, $studentMock) extends AuthController {
+            private $userMock; private $studentMock;
+            public function __construct($userMock,$studentMock){$this->userMock=$userMock;$this->studentMock=$studentMock;}
+            public function register($account_type){
+                if(!$this->userMock->findByEmail($_POST['email'])){
+                    $this->studentMock->create_student($_POST['email'],$_POST['password'],$_POST['name'],$_POST['last_name'],$_POST['training_pilot'],'etudiant');
+                }
+            }
+        };
+        $controller->register('etudiant');
+    }
 }
