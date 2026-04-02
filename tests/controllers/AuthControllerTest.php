@@ -154,7 +154,6 @@ class AuthControllerTest extends TestCase {
         };
 
         $controller->register('etudiant');
-
         $this->assertArrayHasKey('register_error', $_SESSION);
         $this->assertEquals('This email is already in use.', $_SESSION['register_error']);
     }
