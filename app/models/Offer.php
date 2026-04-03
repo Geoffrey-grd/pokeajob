@@ -137,6 +137,12 @@ class Offer extends BDDlink {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getOfferIdinWishlist($user_id) {
+        $stmt = $this->conn->prepare("SELECT id_offer FROM favorite_offer WHERE id_user = ?");
+        $stmt->execute([$user_id]);
+        return $stmt->fetchall(PDO::FETCH_ASSOC);
+    }
+
 
     public function addToWishList($user_id, $offer_id) {
         $stmt = $this->conn->prepare("INSERT INTO favorite_offer (id_user, id_offer) VALUES (?, ?)");

@@ -77,6 +77,7 @@ class ApplicationController {
         foreach (glob($base_dir . $_SESSION["user_id"] . ".*") as $existing_file) {
             unlink($existing_file);
         }
+
         move_uploaded_file($file["tmp_name"], $target_file);
         $bdd_path = str_replace("/var/www/pokeajob/public", "", $target_file);
         return $bdd_path;

@@ -48,7 +48,13 @@
                             </div>
                             <div class = "card__row--date">
                                 <h5> {{ offer.release_date }} </h5>
-                                <img class="card__wishlist"src="images/wishlist.png" alt="wishlist">
+                                {% if role == 'etudiant' %}
+                                    {% if offer.id_offer in offersinwishlist|map(o => o.id_offer) %}
+                                        <img class="card__wishlist" src="images/wishlist_full.png" alt="wishlist_full">
+                                    {% else %}
+                                        <img class="card__wishlist" src="images/wishlist.png" alt="wishlist">
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </a>
                     </section>
