@@ -12,11 +12,7 @@
     {% if role == 'etudiant' and editmode == false %}
         <!-- Avatar (modifiable)-->
         <div class="profile-avatar-wrap">
-            {% if userData.profile_pic_path %}
-                <img src="{{ userData.profile_pic_path }}" alt="Avatar" class="profile-avatar">
-            {% else %}
-                <img src="images/Profile.png" alt="Avatar" class="profile-avatar">
-            {% endif %}
+            <img src="{{ profile_pic_path }}" alt="Logo" class="profile-avatar">
         </div>
 
         <!-- name / last_name (modifiable) -->
@@ -93,11 +89,7 @@
     {% elseif role == 'pilote' and editmode == false %}
         <!-- Avatar (modifiable) -->
         <div class="profile-avatar-wrap">
-            {% if userData.profile_pic_path %}
-                <img src="{{ userData.profile_pic_path }}" alt="Avatar" class="profile-avatar">
-            {% else %}
-                <img src="images/Profile.png" alt="Avatar" class="profile-avatar">
-            {% endif %}
+            <img src="{{ profile_pic_path }}" alt="Logo" class="profile-avatar">
         </div>
 
         <!-- name / last_name (modifiable) -->
@@ -186,11 +178,7 @@
 
             <!-- Logo de l'entreprise superpose a gauche -->
             <div class="company-logo-overlay">
-                {% if userData.logo_path %}
-                    <img src="{{ userData.logo_path }}" alt="Logo" class="profile-avatar">
-                {% else %}
-                    <img src="images/Profile.png" alt="Avatar" class="profile-avatar">
-                {% endif %}
+                <img src="{{ profile_pic_path }}" alt="Logo" class="profile-avatar">
             </div>
         </div>
 

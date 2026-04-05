@@ -51,7 +51,6 @@ class Company extends User {
         $stmt->bindValue(1, $_SESSION["user_id"], PDO::PARAM_INT);
         $stmt->bindValue(2, (int)$offset, PDO::PARAM_INT);
         $stmt->bindValue(3, (int)$limit, PDO::PARAM_INT);
-    
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -87,7 +86,5 @@ class Company extends User {
         $stmt = $this->conn->prepare("SELECT sector_name FROM activity_sector");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    
+    } 
 }

@@ -22,14 +22,7 @@
     margin: 12px 0 20px;
 }
 
-.profile-avatar {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-}
+
 
 .profile-info-wrap,
 .profil-info-wrap {

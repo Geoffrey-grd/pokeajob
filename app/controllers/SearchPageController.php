@@ -28,7 +28,6 @@ class SearchPageController {
         $offset = ($page - 1) * $limit;
         $search_type = isset($_SESSION['flash_search_type']) ? $_SESSION['flash_search_type'] : (isset($_GET['search_type']) ? $_GET['search_type'] : 'offers');
         $filter = isset($_GET['filter']) && $_GET['filter'] !== '' ? $_GET['filter'] : null;
-
         unset($_SESSION['flash_search_type']);
 
         $params = $_GET;
@@ -59,7 +58,7 @@ class SearchPageController {
                 $total_cards = $company->countFilteredCompanies($filter);
             }
             else {
-                $cards = $company->getCompanies();
+                $cards = $company->getCompanies($limit, $offset);
                 $total_cards = $company->countCompanies();
             }
             $total_pages = ceil($total_cards / $limit);

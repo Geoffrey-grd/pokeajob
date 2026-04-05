@@ -217,6 +217,15 @@ body.menu-open {
     overflow: hidden;
 }
 
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
 @media (min-width: 768px) {
     /* Ajustements de taille pour tablette. */
     .navbar--top,
