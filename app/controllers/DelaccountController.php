@@ -19,7 +19,7 @@ class DelaccountController {
         }
 
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
 
         $error = $_SESSION["flash_error"] ?? "";
         unset($_SESSION["flash_error"]);

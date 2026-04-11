@@ -20,7 +20,7 @@ class InternshipTrackerController {
         }
 
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
 
         isset($_GET["id_user"]) ? $id_user = $_GET["id_user"] : $id_user = $_SESSION["user_id"];
         isset($_GET["student_name"]) ? $student_name = $_GET["student_name"] : $student_name = "";

@@ -22,7 +22,7 @@ class OfferDescriptionController {
         }
 
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
 
         $offerModel = new Offer();
         $parsedown = new Parsedown();

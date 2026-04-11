@@ -1,7 +1,6 @@
 /* Cadre general de la page connexion/inscription. */
 .page-auth {
     color: #fff;
-    background: linear-gradient(135deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
 }
 
 .page-auth main {

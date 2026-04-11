@@ -24,8 +24,8 @@
     {% for card in cards %}
         <section class="job-card">
             <div class="card__banner">
-                <img class="card__banner-img" src="{{ card.banner_path }}" alt="Image de l'offre {{ card.id_offer }}">
-                <a class="card__company-logo" href="offer_description.html"> <img src="{{ card.logo_path }}" alt="Pokédex"></a>
+                <img class="card__banner-img" src="{{ card.banner_path }}" alt="Bannière entreprise">
+                <a class="card__company-logo" href="offer_description.html"> <img src="{{ card.logo_path }}" alt="Logo entreprise"></a>
             </div>
 
             <a class="card__body" href="/offer_description?id_offer={{ card.id_offer }}">

@@ -21,7 +21,7 @@ class SearchPageController {
         }
 
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
 
         $limit = 12;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

@@ -23,7 +23,7 @@ class WishListController {
         $cards = $offerModel->getWishListByUserId($_SESSION["user_id"]);
 
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
         
         View::render("wishlist.twig", ["role" => $_SESSION["role"], "cards" => $cards, 'profile_pic_path' => $profile_pic_path]);
     }

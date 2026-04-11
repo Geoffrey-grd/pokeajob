@@ -21,6 +21,12 @@ class Application extends BDDlink {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getApplicationsByOffer($id_offer) {
+        $stmt = $this->conn->prepare("SELECT application.*, student.name, student.last_name FROM application JOIN student ON application.id_user = student.id_user WHERE application.id_offer = ?");
+        $stmt->execute([$id_offer]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getApplicationsByStudents($id_user, $limit = 12, $offset = 0) {
         
             $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path, application.application_date FROM offer 

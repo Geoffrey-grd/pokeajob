@@ -21,7 +21,7 @@ class ApplicationController {
         }
 
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
 
         $error = "";
         if (isset($_SESSION["flash_error"])) { $error = $_SESSION["flash_error"]; }

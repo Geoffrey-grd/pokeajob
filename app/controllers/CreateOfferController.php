@@ -19,7 +19,7 @@ class CreateOfferController {
         }
 
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
 
         isset($_SESSION["flash_id_offer"]) ? $id_offer = $_SESSION["flash_id_offer"] : $id_offer = null;
         unset($_SESSION["flash_id_offer"]);

@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Student;
 use App\Models\Company;
 use App\Models\Pilot;
+use App\Models\Offer;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
@@ -21,30 +22,63 @@ class ProfileController {
             header("Location: /");
             exit();
         }
-
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
 
         $error = "";
 
         if (isset($_SESSION["flash_error"])) { $error = $_SESSION["flash_error"]; }
         if (isset($_SESSION["flash_mode"])) { $editmode = $_SESSION["flash_mode"]; }
+        if (isset($_GET["id_user"])) { $id_user = $_GET["id_user"]; $role_visited = $_GET["role"];} else { $id_user = $_SESSION["user_id"]; $role_visited = ""; $role= $_SESSION["role"]; }
         unset($_SESSION["flash_error"], $_SESSION["flash_mode"]);
 
-        if ($_SESSION["role"] == "etudiant") {
+        $visiting = ($id_user != $_SESSION["user_id"]);
+
+        $limit = 4  ;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+
+        if ($visiting) {
+            if ($role_visited == "etudiant") {
+                $student = new Student();
+                $userData = $student->getStudentInformations($id_user);
+            } 
+            else if ($role_visited == "entreprise") {
+                $company = new Company();
+                $userData = $company->getCompanyInformations($id_user);
+                $offers_model = new Offer();
+                $cards = $offers_model->getOffersByCompany($id_user, $limit, $offset);
+                $offersinwishlist = $offers_model->getOfferIdinWishlist($_SESSION["user_id"]);
+
+                $total_cards = $offers_model->countOffersByCompany($id_user);
+                $total_pages = ceil($total_cards / $limit);
+
+                $next_page_url = "/profile?id_user=" . $id_user . "&page=" . ($page + 1). "&role=" . $role_visited;
+                $prev_page_url = "/profile?id_user=" . $id_user . "&page=" . ($page - 1). "&role=" . $role_visited;
+            }
+            else if ($role_visited == "pilote") {
+                $pilot = new Pilot();
+                $userData = $pilot->getPilotInformations($id_user);
+            }
+        $profile_pic_path_visiting = $generalController->checkprofilepic($id_user, $role_visited);
+        }
+        else {
+            if ($role == "etudiant") {
             $student = new Student();
             $userData = $student->getStudentInformations($_SESSION["user_id"]);
         } 
-        else if ($_SESSION["role"] == "entreprise") {
+        else if ($role == "entreprise") {
             $company = new Company();
             $userData = $company->getCompanyInformations($_SESSION["user_id"]);
         }
-        else if ($_SESSION["role"] == "pilote") {
+        else if ($role == "pilote") {
             $pilot = new Pilot();
             $userData = $pilot->getPilotInformations($_SESSION["user_id"]);
         }
+        }
+        
 
-        View::render("profile.twig", ["role" => $_SESSION["role"], "userData" => $userData, "editmode" => $editmode, "csrf_token" => Csrf::generateToken(), "error" => $error, 'profile_pic_path' => $profile_pic_path]);
+        View::render("profile.twig", ["cards" => $cards, "visiting" => $visiting, "role" => $_SESSION["role"], "role_visited" => $role_visited, "userData" => $userData, "editmode" => $editmode, "csrf_token" => Csrf::generateToken(), "error" => $error, 'profile_pic_path' => $profile_pic_path, 'profile_pic_path_visiting' => $profile_pic_path_visiting, "offersinwishlist" => $offersinwishlist, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url]);
     }
 
     public function editProfile() {

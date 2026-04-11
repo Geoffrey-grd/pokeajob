@@ -4,288 +4,394 @@
 <link rel="stylesheet" href="assets/components/form.css">
 <link rel="stylesheet" href="assets/pages/auth.css">
 <link rel="stylesheet" href="assets/pages/profil.css">
+<link rel="stylesheet" href="assets/components/card.css">
+<link rel="stylesheet" href="assets/pages/search.css">
 <script src="js/form-validation.js" defer></script>
+
 <div class="page-auth">
 <main>
 <div class="auth-container">
 <div class="auth-box">
-    {% if role == 'etudiant' and editmode == false %}
-        <!-- Avatar (modifiable)-->
-        <div class="profile-avatar-wrap">
-            <img src="{{ profile_pic_path }}" alt="Logo" class="profile-avatar">
-        </div>
 
-        <!-- name / last_name (modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Name:</label>
-            <span class="profil-info">{{ userData['last_name'] }} {{ userData['name'] }}</span>
-        </div>
+    {# ============================================================
+       MODE VISITEUR — lecture seule, quel que soit le rôle visité
+       ============================================================ #}
+    {% if visiting == true %}
 
-        <!-- Email (modifiable) -->
-        <div class="profile-info-wrap"> 
-            <label class="label-profil">Email:</label>
-            <span class="profil-info">{{ userData['email'] }}</span>
-        </div>
-    
-        <!-- Etablissement (modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">School:</label>
-            <span class="profil-info">{{ userData['school'] }}</span>
-        </div>
-
-        <!-- Pilote de formation (non modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Pilot:</label>
-            <span class="profil-info">{{ userData['pilot_last_name'] }}  {{ userData['pilot_name'] }}</span>
-        </div>
-
-        <!-- Description (modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Description:</label>
-            <span class="profil-info">{{ userData['description'] }}</span>
-        </div>
-
-
-
-    {% elseif role == 'etudiant' and editmode == true %}
-        <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-            <input type="file" name ="profile_pic" accept="image/*">
-
-            <div class="form-group">
-                <label class="label-profil">Last name:</label>
-                <div class="input-wrapper">
-                    <input type="text" name="last_name" value="{{ userData['last_name'] }}">
-                    <span class="validation-icon"></span>
+        {% if role_visited == 'entreprise' %}
+            <div class="company-hero">
+                <div class="company-banner-wrap">
+                    {% if userData.banner_path %}
+                        <img src="{{ userData.banner_path }}" alt="Banner" class="company-banner">
+                    {% endif %}
                 </div>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <label class="label-profil">Name:</label>
-                <div class="input-wrapper">
-                    <input type="text" name="name" value="{{ userData['name'] }}">
-                    <span class="validation-icon"></span>
+                <div class="company-logo-overlay">
+                    <img src="{{ profile_pic_path_visiting }}" alt="Logo" class="profile-avatar">
                 </div>
-                <span class="error-message"></span>
             </div>
-            <div class="form-group">
+
+            <div class="profile-info-wrap">
+                <span class="profil-info">{{ userData['company_name'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
                 <label class="label-profil">Email:</label>
-                <div class="input-wrapper">
-                    <input type="email" name="email" value="{{ userData['email'] }}">
-                    <span class="validation-icon"></span>
-                </div>
-                <span class="error-message"></span>
+                <span class="profil-info">{{ userData['email'] }}</span>
             </div>
-            <div>
-                <label class="label-profil">Description:</label>
-                <textarea name="description">{{ userData['description'] }}</textarea>
-            </div>
-
-            <button type="submit" class="auth-submit">Save changes</button>
-        </form>
-
-
-
-    {% elseif role == 'pilote' and editmode == false %}
-        <!-- Avatar (modifiable) -->
-        <div class="profile-avatar-wrap">
-            <img src="{{ profile_pic_path }}" alt="Logo" class="profile-avatar">
-        </div>
-
-        <!-- name / last_name (modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Name:</label>
-            <span class="profil-info">{{ userData['last_name'] }} {{ userData['name'] }}</span>
-        </div>
-
-        <!-- Email (modifiable) -->
-        <div class="profile-info-wrap"> 
-            <label class="label-profil">Email:</label>
-            <span class="profil-info">{{ userData['email'] }}</span>
-        </div>
-
-        <!-- Telephone (modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Phone:</label>
-            <span class="profil-info">{{ userData['phone'] }}</span>
-        </div>
-
-        <!-- Etablissement (modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">School:</label>
-            <span class="profil-info">{{ userData['school'] }}</span>
-        </div>
-
-
-    {% elseif role == 'pilote' and editmode == true %}
-        <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-            <input type="file" name ="profile_pic" accept="image/*">
-
-            <div class="form-group">
-                <label class="label-profil">Last name:</label>
-                <div class="input-wrapper">
-                    <input type="text" name="last_name" value="{{ userData['last_name'] }}">
-                    <span class="validation-icon"></span>
-                </div>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <label class="label-profil">Name:</label>
-                <div class="input-wrapper">
-                    <input type="text" name="name" value="{{ userData['name'] }}">
-                    <span class="validation-icon"></span>
-                </div>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <label class="label-profil">Email:</label>
-                <div class="input-wrapper">
-                    <input type="email" name="email" value="{{ userData['email'] }}">
-                    <span class="validation-icon"></span>
-                </div>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
+            <div class="profile-info-wrap">
                 <label class="label-profil">Phone:</label>
-                <div class="input-wrapper">
-                    <input type="text" name="phone" value="{{ userData['phone'] }}">
-                    <span class="validation-icon"></span>
-                </div>
-                <span class="error-message"></span>
+                <span class="profil-info">{{ userData['phone'] }}</span>
             </div>
-            <div class="form-group">
+            <div class="profile-info-wrap">
+                <label class="label-profil">Activity sector:</label>
+                <span class="profil-info">{{ userData['sector_name'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Description:</label>
+                <span class="profil-info">{{ userData['description'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Ciret:</label>
+                <span class="profil-info">{{ userData['ciret'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Rating:</label>
+                <span class="profil-info">{{ userData['rating'] }}</span>
+            </div>
+
+        {% elseif role_visited == 'etudiant' %}
+            <div class="profile-avatar-wrap">
+                <img src="{{ profile_pic_path_visiting }}" alt="Avatar" class="profile-avatar">
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Name:</label>
+                <span class="profil-info">{{ userData['last_name'] }} {{ userData['name'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Email:</label>
+                <span class="profil-info">{{ userData['email'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
                 <label class="label-profil">School:</label>
-                <div class="input-wrapper">
-                    <input type="text" name="school" value="{{ userData['school'] }}">
-                    <span class="validation-icon"></span>
-                </div>
-                <span class="error-message"></span>
+                <span class="profil-info">{{ userData['school'] }}</span>
             </div>
-            <button type="submit" class="auth-submit">Save changes</button>
-        </form>
-
-
-
-    {% elseif role == 'entreprise' and editmode == false %}
-        <div class="company-hero">
-            <!-- banniere de l'entreprise -->
-            <div class="company-banner-wrap">
-                {% if userData.banner_path %}
-                    <img src="{{ userData.banner_path }}" alt="Banner" class="company-banner">
-                {% endif %}
+            <div class="profile-info-wrap">
+                <label class="label-profil">Description:</label>
+                <span class="profil-info">{{ userData['description'] }}</span>
             </div>
 
-            <!-- Logo de l'entreprise superpose a gauche -->
-            <div class="company-logo-overlay">
+        {% elseif role_visited == 'pilote' %}
+            <div class="profile-avatar-wrap">
+                <img src="{{ profile_pic_path_visiting }}" alt="Avatar" class="profile-avatar">
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Name:</label>
+                <span class="profil-info">{{ userData['last_name'] }} {{ userData['name'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Email:</label>
+                <span class="profil-info">{{ userData['email'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Phone:</label>
+                <span class="profil-info">{{ userData['phone'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">School:</label>
+                <span class="profil-info">{{ userData['school'] }}</span>
+            </div>
+        {% endif %}
+
+    {# ============================================================
+       MODE PROPRIÉTAIRE — affichage normal ou édition
+       ============================================================ #}
+    {% else %}
+
+        {# --- ÉTUDIANT : affichage --- #}
+        {% if role == 'etudiant' and editmode == false %}
+            <div class="profile-avatar-wrap">
                 <img src="{{ profile_pic_path }}" alt="Logo" class="profile-avatar">
             </div>
-        </div>
-
-        <!-- name (modifiable) -->
-        <div class="profile-info-wrap">
-            <span class="profil-info">{{ userData['company_name'] }}</span>
-        </div>
-
-        <!-- Email (modifiable) -->
-        <div class="profile-info-wrap"> 
-            <label class="label-profil">Email:</label>
-            <span class="profil-info">{{ userData['email'] }}</span>
-        </div>
-
-        <!-- Telephone (modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Phone:</label>
-            <span class="profil-info">{{ userData['phone'] }}</span>
-        </div>
-
-        <!-- Secteur d'activité (non modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Activity sector:</label>
-            <span class="profil-info">{{ userData['sector_name'] }}</span>
-        </div>
-
-        <!-- Description (modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Description:</label>
-            <span class="profil-info">{{ userData['description'] }}</span>
-        </div>
-
-        <!-- Ciret (non modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Ciret:</label>
-            <span class="profil-info">{{ userData['ciret'] }}</span>
-        </div>
-
-        <!-- rating (non modifiable) -->
-        <div class="profile-info-wrap">
-            <label class="label-profil">Rating:</label>
-            <span class="profil-info">{{ userData['rating'] }}</span>
-        </div>
-
-
-    {% elseif role == 'entreprise' and editmode == true %}
-        <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-            <label class="label-profil">Logo:</label>
-            <input type="file" name ="logo" accept="image/*">
-            <label class="label-profil">Banner:</label>
-            <input type="file" name ="banner" accept="image/*">
-
-            <div class="form-group">
-                <label>Company name:</label>
-                <div class="input-wrapper">
-                    <input type="text" name="company_name" value="{{ userData['company_name'] }}">
-                    <span class="validation-icon"></span>
-                </div>
-                <span class="error-message"></span>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Name:</label>
+                <span class="profil-info">{{ userData['last_name'] }} {{ userData['name'] }}</span>
             </div>
-            <div class="form-group">
+            <div class="profile-info-wrap">
                 <label class="label-profil">Email:</label>
-                <div class="input-wrapper">
-                    <input type="email" name="email" value="{{ userData['email'] }}">
-                    <span class="validation-icon"></span>
-                </div>
-                <span class="error-message"></span>
+                <span class="profil-info">{{ userData['email'] }}</span>
             </div>
-            <div class="form-group">
-                <label class="label-profil">Phone:</label>
-                <div class="input-wrapper">
-                    <input type="text" name="phone" value="{{ userData['phone'] }}">
-                    <span class="validation-icon"></span>
+            <div class="profile-info-wrap">
+                <label class="label-profil">School:</label>
+                <span class="profil-info">{{ userData['school'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Pilot:</label>
+                <span class="profil-info">{{ userData['pilot_last_name'] }} {{ userData['pilot_name'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Description:</label>
+                <span class="profil-info">{{ userData['description'] }}</span>
+            </div>
+
+        {# --- ÉTUDIANT : édition --- #}
+        {% elseif role == 'etudiant' and editmode == true %}
+            <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="file" name="profile_pic" accept="image/*">
+
+                <div class="form-group">
+                    <label class="label-profil">Last name:</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="last_name" value="{{ userData['last_name'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
                 </div>
-                <span class="error-message"></span>
+                <div class="form-group">
+                    <label class="label-profil">Name:</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="name" value="{{ userData['name'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label class="label-profil">Email:</label>
+                    <div class="input-wrapper">
+                        <input type="email" name="email" value="{{ userData['email'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label class="label-profil">Description:</label>
+                    <textarea name="description">{{ userData['description'] }}</textarea>
+                </div>
+                <button type="submit" class="auth-submit">Save changes</button>
+            </form>
+
+        {# --- PILOTE : affichage --- #}
+        {% elseif role == 'pilote' and editmode == false %}
+            <div class="profile-avatar-wrap">
+                <img src="{{ profile_pic_path }}" alt="Logo" class="profile-avatar">
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Name:</label>
+                <span class="profil-info">{{ userData['last_name'] }} {{ userData['name'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Email:</label>
+                <span class="profil-info">{{ userData['email'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Phone:</label>
+                <span class="profil-info">{{ userData['phone'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">School:</label>
+                <span class="profil-info">{{ userData['school'] }}</span>
+            </div>
+
+        {# --- PILOTE : édition --- #}
+        {% elseif role == 'pilote' and editmode == true %}
+            <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="file" name="profile_pic" accept="image/*">
+
+                <div class="form-group">
+                    <label class="label-profil">Last name:</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="last_name" value="{{ userData['last_name'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label class="label-profil">Name:</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="name" value="{{ userData['name'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label class="label-profil">Email:</label>
+                    <div class="input-wrapper">
+                        <input type="email" name="email" value="{{ userData['email'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label class="label-profil">Phone:</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="phone" value="{{ userData['phone'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label class="label-profil">School:</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="school" value="{{ userData['school'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <button type="submit" class="auth-submit">Save changes</button>
+            </form>
+
+        {# --- ENTREPRISE : affichage --- #}
+        {% elseif role == 'entreprise' and editmode == false %}
+            <div class="company-hero">
+                <div class="company-banner-wrap">
+                    {% if userData.banner_path %}
+                        <img src="{{ userData.banner_path }}" alt="Banner" class="company-banner">
+                    {% endif %}
+                </div>
+                <div class="company-logo-overlay">
+                    <img src="{{ profile_pic_path }}" alt="Logo" class="profile-avatar">
+                </div>
+            </div>
+
+            <div class="profile-info-wrap">
+                <span class="profil-info">{{ userData['company_name'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Email:</label>
+                <span class="profil-info">{{ userData['email'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Phone:</label>
+                <span class="profil-info">{{ userData['phone'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Activity sector:</label>
+                <span class="profil-info">{{ userData['sector_name'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Description:</label>
+                <span class="profil-info">{{ userData['description'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Ciret:</label>
+                <span class="profil-info">{{ userData['ciret'] }}</span>
+            </div>
+            <div class="profile-info-wrap">
+                <label class="label-profil">Rating:</label>
+                <span class="profil-info">{{ userData['rating'] }}</span>
+            </div>
+
+        {# --- ENTREPRISE : édition --- #}
+        {% elseif role == 'entreprise' and editmode == true %}
+            <form class="auth-form" data-role="{{ role }}" action="/modify_profile" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <label class="label-profil">Logo:</label>
+                <input type="file" name="logo" accept="image/*">
+                <label class="label-profil">Banner:</label>
+                <input type="file" name="banner" accept="image/*">
+
+                <div class="form-group">
+                    <label>Company name:</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="company_name" value="{{ userData['company_name'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label class="label-profil">Email:</label>
+                    <div class="input-wrapper">
+                        <input type="email" name="email" value="{{ userData['email'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label class="label-profil">Phone:</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="phone" value="{{ userData['phone'] }}">
+                        <span class="validation-icon"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label class="label-profil">Description:</label>
+                    <textarea name="description">{{ userData['description'] }}</textarea>
+                </div>
+                <button type="submit" class="auth-submit">Save changes</button>
+            </form>
+
+        {% endif %}
+
+        {# Boutons d'action — uniquement en mode propriétaire, hors édition #}
+        {% if editmode == false %}
+        <div class="profile-actions">
+            <div>
+                <a href="/edit_profile" class="auth-submit button-profil">Modify my informations</a>
             </div>
             <div>
-                <label class="label-profil">Description:</label>
-                <textarea name="description">{{ userData['description'] }}</textarea>
+                <a href="/delete_account_page" class="auth-submit button-profil">Delete my account</a>
             </div>
+        </div>
+        {% endif %}
 
-            <button type="submit" class="auth-submit">Save changes</button>
-        </form>
-    
-    {% endif %}
-    </div>
+    {% endif %}{# fin visiting #}
+
     {% if error %}
         <p style="color:red;">{{ error }}</p>
     {% endif %}
 
-    {% if editmode == false %}
-    <div class="profile-actions">
-        <!-- Modifications -->
-    <div>
-        <a href="/edit_profile" class="auth-submit button-profil">Modify my informations</a>
-    </div>
-
-    <!-- Suppression de compte -->
-    <div>
-        <a href="/delete_account_page" class="auth-submit  button-profil">Delete my account</a>
-    </div>
-    </div>
-    {% endif %}
-    
-</div>
-</div>
+</div>{# auth-box #}
+</div>{# auth-container #}
 </main>
+
+{# Offres de l'entreprise visitée #}
+{% if visiting == true and role_visited == 'entreprise' %}
+    <section class="feed">
+        {% for offer in cards %}
+            <section class="job-card">
+                <div class="card__banner">
+                    <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Bannière entreprise">
+                    <a class="card__company-logo" href="/profile?id_user={{ offer.id_company }}&role=entreprise">
+                        <img src="{{ offer.logo_path }}" alt="Logo entreprise">
+                    </a>
+                </div>
+                <a class="card__body" href="/offer_description?id_offer={{ offer.id_offer }}">
+                    <h2 class="card__title">{{ offer.offer_object }}</h2>
+                    <div class="card__row--type">
+                        <img src="images/suitcase.png" alt="suitcase">
+                        <h3>{{ offer.company_name }}</h3>
+                    </div>
+                    <div class="card__row--location">
+                        <img src="images/pin.png" alt="pin">
+                        <h3>{{ offer.lieu }}</h3>
+                    </div>
+                    <div class="card__row--date">
+                        <h5>{{ offer.release_date }}</h5>
+                        {% if role == 'etudiant' %}
+                            {% if offer.id_offer in offersinwishlist|map(o => o.id_offer) %}
+                                <img class="card__wishlist" src="images/wishlist_full.png" alt="wishlist_full">
+                            {% else %}
+                                <img class="card__wishlist" src="images/wishlist.png" alt="wishlist">
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </a>
+            </section>
+        {% endfor %}
+    </section>
+
+    <nav class="pagination">
+        {% if page > 1 %}
+            <a class="pagination__nav pagination__nav--prev" href="{{ prev_page_url }}" aria-label="Page precedente" title="Page precedente"></a>
+        {% endif %}
+        <span class="pagination__info">Page {{ page }} / {{ total_pages }}</span>
+        {% if page < total_pages %}
+            <a class="pagination__nav pagination__nav--next" href="{{ next_page_url }}" aria-label="Page suivante" title="Page suivante"></a>
+        {% endif %}
+    </nav>
+{% endif %}
+
 </div>
+<br><br><br><br><br>
 {% endblock %}

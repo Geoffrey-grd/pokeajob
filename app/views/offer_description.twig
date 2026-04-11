@@ -10,9 +10,9 @@
         <div class="auth-container">
                 <div class="job-card job-card--detail">
                     <div class="card__banner">
-                        <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Bannière de l'offre {{ offer.id_offer }}">
+                        <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Bannière entreprise">
                         <div class="card__company-logo">
-                            <img src="{{ offer.logo_path }}" alt="Logo de {{ offer.company_name }}">
+                            <img src="{{ offer.logo_path }}" alt="Logo entreprise">
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@
             <form method="POST">
                 <input type="hidden" name="id_offer" value="{{ offer.id_offer }}">
                 <button class="auth-submit" type="submit" formaction="/edit_offer">Modify my offer</button>
-                <button class="auth-submit" type="submit" formaction="/delete_offer">Supress my offer</button>
+                <button class="auth-submit" type="submit" formaction="/delete_offer">Delete my offer</button>
             </form>
         {% endif %}
 
@@ -70,5 +70,7 @@
         </div>
     </main>
 </div>
+
+<br><br><br><br><br>
 
 {% endblock %}

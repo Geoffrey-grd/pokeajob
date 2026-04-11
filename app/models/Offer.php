@@ -45,7 +45,7 @@ class Offer extends BDDlink {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getOffersByCompany($id_company, $limit = 12, $offset = 0) {
+    public function getOffersByCompany($id_company, $limit = 4, $offset = 0) {
         $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
             FROM offer JOIN company ON offer.id_company = company.id_user
             WHERE offer.id_company = ?

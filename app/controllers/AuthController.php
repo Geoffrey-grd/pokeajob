@@ -60,7 +60,7 @@ class AuthController {
 
                 header("Location: /search_page");
                 exit(); 
-            } 
+            }
             else {
                 $sector = new Sector();
                 $pilot = new Pilot();

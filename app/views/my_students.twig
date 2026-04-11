@@ -8,7 +8,7 @@
 <section class="feed my-students__feed">
     {% for student in students %}
         <section class="job-card">
-                <a class="card__company-logo" href="student_profile.html"> <img src="{{ student.profile_pic_path }}" alt="Profile Picture"></a>
+            <a class="card__company-logo" href="/internship_tracker?id_user={{ student.id_user }}&student_name={{ student.name }}&student_last_name={{ student.last_name }}"> <img src="{{ student.profile_pic_path }}" alt="Profile Picture"></a>
 
             <a class="card__body" href="/internship_tracker?id_user={{ student.id_user }}&student_name={{ student.name }}&student_last_name={{ student.last_name }}">
                 <h2 class="card__title"> {{ student.name }} {{ student.last_name }} </h2>
