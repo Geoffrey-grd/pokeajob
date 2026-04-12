@@ -79,6 +79,27 @@
                 <span class="profil-info">{{ userData['description'] }}</span>
             </div>
 
+            {% if role == 'entreprise' %}
+                <div class="profile-info-wrap">
+                    <label class="label-profil">CV:</label>
+                    <a href="{{ application.cv_path }}" download="CV-{{ application.name }} {{ application.last_name }}.pdf">Télécharger</a>
+                </div>
+                <div class="profile-info-wrap">
+                    <label class="label-profil">Motivation letter:</label>
+                    <a href="{{ application.motivation_letter_path }}" download="Lettre-de-motivation-{{ application.name }} {{ application.last_name }}.pdf">Télécharger</a>
+                </div>
+
+                <form method="POST" class="form-actions">
+                    <input type="hidden" name="url" value="{{ url }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="id_application" value="{{ application.id_candidature }}">
+
+                    <button type="submit" class="btn-accept" formaction="/accept_application" {% if application.state == 'accepted' %}style="background-color: #1D9E75;"{% endif %}>Accept</button>
+                    <button type="submit" class="btn-reject" formaction="/reject_application" {% if application.state == 'rejected' %}style="background-color: #E24B4A;"{% endif %}>Reject</button>
+                    <button type="submit" class="btn-report" formaction="/report_application" {% if application.state == 'reported' %}style="background-color: #BA7517;"{% endif %}>Report</button>
+                </form>
+            {% endif %}
+
         {% elseif role_visited == 'pilote' %}
             <div class="profile-avatar-wrap">
                 <img src="{{ profile_pic_path_visiting }}" alt="Avatar" class="profile-avatar">

@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\Company;
 use App\Models\Pilot;
 use App\Models\Offer;
+use App\Models\Application;
 use Core\Csrf;
 use Core\Auth;
 use Core\View;
@@ -30,6 +31,7 @@ class ProfileController {
         if (isset($_SESSION["flash_error"])) { $error = $_SESSION["flash_error"]; }
         if (isset($_SESSION["flash_mode"])) { $editmode = $_SESSION["flash_mode"]; }
         if (isset($_GET["id_user"])) { $id_user = $_GET["id_user"]; $role_visited = $_GET["role"];} else { $id_user = $_SESSION["user_id"]; $role_visited = ""; $role= $_SESSION["role"]; }
+        if (isset($_GET["id_offer"])) { $id_offer = $_GET["id_offer"]; } else { $id_offer = null; }
         unset($_SESSION["flash_error"], $_SESSION["flash_mode"]);
 
         $visiting = ($id_user != $_SESSION["user_id"]);
@@ -42,6 +44,10 @@ class ProfileController {
             if ($role_visited == "etudiant") {
                 $student = new Student();
                 $userData = $student->getStudentInformations($id_user);
+                if ($_SESSION["role"] == "entreprise") {
+                    $applicationModel = new Application();
+                    $application = $applicationModel->getApplication($id_user, $id_offer);
+                }
             } 
             else if ($role_visited == "entreprise") {
                 $company = new Company();
@@ -77,8 +83,8 @@ class ProfileController {
         }
         }
         
-
-        View::render("profile.twig", ["cards" => $cards, "visiting" => $visiting, "role" => $_SESSION["role"], "role_visited" => $role_visited, "userData" => $userData, "editmode" => $editmode, "csrf_token" => Csrf::generateToken(), "error" => $error, 'profile_pic_path' => $profile_pic_path, 'profile_pic_path_visiting' => $profile_pic_path_visiting, "offersinwishlist" => $offersinwishlist, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url]);
+        $url = $_SERVER['REQUEST_URI'];
+        View::render("profile.twig", ["cards" => $cards, "visiting" => $visiting, "role" => $_SESSION["role"], "role_visited" => $role_visited, "application" => $application, "userData" => $userData, "editmode" => $editmode, "csrf_token" => Csrf::generateToken(), "error" => $error, 'profile_pic_path' => $profile_pic_path, 'profile_pic_path_visiting' => $profile_pic_path_visiting, "offersinwishlist" => $offersinwishlist, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'url' => $url]);
     }
 
     public function editProfile() {
@@ -180,5 +186,41 @@ class ProfileController {
         move_uploaded_file($file["tmp_name"], $target_file);
         $bdd_path = str_replace("/var/www/pokeajob/public", "", $target_file);
         return $bdd_path;
+    }
+
+    public function modifyApplicationStatusAccepted() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        Csrf::verifyToken($_POST["csrf_token"]);
+
+        $applicationModel = new Application();
+        $applicationModel->modifyApplicationStatus($_POST["id_application"], "accepted");
+
+        header("Location: " . $_POST["url"]);
+        exit();
+    }
+
+    public function modifyApplicationStatusRejected() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        Csrf::verifyToken($_POST["csrf_token"]);
+
+        $applicationModel = new Application();
+        $applicationModel->modifyApplicationStatus($_POST["id_application"], "rejected");
+
+        header("Location: " . $_POST["url"]);
+        exit();
+    }
+
+    public function modifyApplicationStatusReported() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        Csrf::verifyToken($_POST["csrf_token"]);
+
+        $applicationModel = new Application();
+        $applicationModel->modifyApplicationStatus($_POST["id_application"], "reported");
+
+        header("Location: " . $_POST["url"]);
+        exit();
     }
 }

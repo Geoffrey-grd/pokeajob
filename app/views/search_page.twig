@@ -32,8 +32,8 @@
                 {% for offer in cards %}
                     <section class="job-card">
                         <div class="card__banner">
-                            <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Bannière entreprise">
-                            <a class="card__company-logo" href="/profile?id_user={{ offer.id_company }}&role=entreprise"> <img src="{{ offer.logo_path }}" alt="Logo entreprise"></a>
+                            <a class="card__banner-img" href="/profile?id_user={{ offer.id_user }}&role=entreprise"> <img src="{{ offer.banner_path }}" alt="Image de l'entreprise"></a>
+                            <a class="card__company-logo" href="/profile?id_user={{ offer.id_user }}&role=entreprise"> <img src="{{ offer.logo_path }}" alt="Logo entreprise"></a>
                         </div>
         
                         <a class="card__body" href="/offer_description?id_offer={{ offer.id_offer }}">
@@ -65,11 +65,11 @@
                 {% for company in cards %}
                     <section class="job-card">
                         <div class="card__banner">
-                            <img class="card__banner-img" src="{{ company.banner_path }}" alt="Image de l'entreprise">
-                            <a class="card__company-logo" href="company_description.html"> <img src="{{ company.logo_path }}" alt="Logo de l'entreprise"></a>
+                            <a class="card__banner-img" href="/profile?id_user={{ company.id_user }}&role=entreprise"> <img src="{{ company.banner_path }}" alt="Image de l'entreprise"></a>
+                            <a class="card__company-logo" href="/profile?id_user={{ company.id_user }}&role=entreprise"> <img src="{{ company.logo_path }}" alt="Logo entreprise"></a>
                         </div>
 
-                        <a class="card__body" href="offer_description.html">
+                        <a class="card__body" href="/profile?id_user={{ company.id_user }}&role=entreprise">
                             <h2 class="card__title"> {{ company.company_name }} </h2>
                         </a>
                     </section>

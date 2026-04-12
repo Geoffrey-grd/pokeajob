@@ -14,8 +14,8 @@
     {% for offer in cards %}
         <section class="job-card">
             <div class="card__banner">
-                <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Image de l'offre {{ offer.id_offer }}">
-                <a class="card__company-logo" href="offer_description.html"> <img src="{{ offer.logo_path }}" alt="Pokédex"></a>
+                <a class="card__banner-img" href="/profile?id_user={{ offer.id_user }}&role=entreprise"> <img src="{{ offer.banner_path }}" alt="Image de l'entreprise"></a>
+                <a class="card__company-logo" href="/profile?id_user={{ offer.id_user }}&role=entreprise"> <img src="{{ offer.logo_path }}" alt="Logo entreprise"></a>
             </div>
 
             <a class="card__body" href="/offer_description?id_offer={{ offer.id_offer }}">
@@ -30,7 +30,13 @@
                 </div>
                 <div class = "card__row--date">
                     <h5> {{ offer.application_date }} </h5>
-                    <img class="card__wishlist"src="images/wishlist.png" alt="wishlist">
+                    {% if offer.state == 'accepted' %}
+                        <img class="card__wishlist" src="images/accepted.png" alt="accepted">
+                    {% elseif offer.state == 'rejected' %}
+                        <img class="card__wishlist" src="images/rejected.png" alt="rejected">
+                    {% elseif offer.state == 'reported' %}
+                        <img class="card__wishlist" src="images/reported.png" alt="reported">
+                    {% endif %}
                 </div>
             </a>
         </section>

@@ -34,16 +34,23 @@ class OfferDescriptionController {
         $offer = $offerModel->getOfferById($_GET['id_offer']);
         $description = $parsedown->text($offer['description']);
 
+        
+
         if ($offer['id_company'] === $_SESSION['user_id']) {
             $is_owner = true;
+        }
+
+        if ($is_owner) {
+            $applicationModel = new Application();
+            $applications = $applicationModel->getApplicationsByOffer($_GET['id_offer']);
         }
 
         if ($_SESSION['role'] === 'etudiant') {
             $hasapplied = $this->hasApplied($_GET['id_offer']);
             $isinwishlist = $this->isinwishlist($_GET['id_offer']);
-        }
+        }   
 
-        View::render("offer_description.twig", ["role" => $_SESSION["role"], "offer" => $offer, "description" => $description, "is_owner" => $is_owner, "isinwishlist" => $isinwishlist, "hasapplied" => $hasapplied, 'profile_pic_path' => $profile_pic_path]);
+        View::render("offer_description.twig", ["role" => $_SESSION["role"], "offer" => $offer, "description" => $description, "is_owner" => $is_owner, "isinwishlist" => $isinwishlist, "hasapplied" => $hasapplied, "applications" => $applications, 'profile_pic_path' => $profile_pic_path]);
     }
 
     public function hasApplied($offer_id) {

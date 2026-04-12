@@ -65,6 +65,7 @@ class SearchPageController {
             $filters = $company->getAllActivitySectors();
         }
 
+
         View::render("search_page.twig", ['filters' => $filters, 'search_type' => $search_type, 'cards' => $cards, 'total_cards' => $total_cards, 'page' => $page, 'total_pages' => $total_pages, 'next_page_url' => $next_page_url, 'prev_page_url' => $prev_page_url, 'companies_btn_url' => $companies_btn_url, 'offers_btn_url' => $offers_btn_url, 'role' => $_SESSION['role'], 'profile_pic_path' => $profile_pic_path, 'offersinwishlist' => $offersinwishlist]);
     }
 
@@ -94,4 +95,5 @@ class SearchPageController {
         }
         return $url;
     }
+    
 }

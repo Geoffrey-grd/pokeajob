@@ -19,9 +19,9 @@ class LegalMentionsController {
         }
 
         $generalController = new GeneralController();
-        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"]);
+        $profile_pic_path = $generalController->checkprofilepic($_SESSION["user_id"], $_SESSION["role"]);
 
-        View::render("legal_mentions.twig", ['profile_pic_path' => $profile_pic_path]);
+        View::render("legal_mentions.twig", ['role' => $_SESSION["role"], 'profile_pic_path' => $profile_pic_path]);
 
     }
 }

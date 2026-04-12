@@ -43,6 +43,10 @@ $router->post("/edit_offer_save", "CreateOfferController@editOfferSave");
 $router->get("/apply", "ApplicationController@renderApplication");
 $router->post("/apply", "ApplicationController@apply");
 
+$router->post("/accept_application", "ProfileController@modifyApplicationStatusAccepted");
+$router->post("/reject_application", "ProfileController@modifyApplicationStatusRejected");
+$router->post("/report_application", "ProfileController@modifyApplicationStatusReported");
+
 $router->get("/internship_tracker", "InternshipTrackerController@renderInternshipTracker");
 
 $router->get("/my_students", "MyStudentsController@renderMyStudents");

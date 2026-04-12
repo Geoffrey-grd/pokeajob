@@ -46,7 +46,7 @@ class Company extends User {
     }
 
     public function getCompanies($limit = 12, $offset = 0) {
-        $stmt = $this->conn->prepare("SELECT company_name, banner_path, logo_path FROM company WHERE id_user != ? LIMIT ?, ?");
+        $stmt = $this->conn->prepare("SELECT id_user, company_name, banner_path, logo_path FROM company WHERE id_user != ? LIMIT ?, ?");
 
         $stmt->bindValue(1, $_SESSION["user_id"], PDO::PARAM_INT);
         $stmt->bindValue(2, (int)$offset, PDO::PARAM_INT);
@@ -62,7 +62,7 @@ class Company extends User {
     }
 
     public function getFilteredCompanies($limit, $offset, $filter) {
-        $stmt = $this->conn->prepare("SELECT company.company_name, company.banner_path, company.logo_path FROM company 
+        $stmt = $this->conn->prepare("SELECT company.id_user, company.company_name, company.banner_path, company.logo_path FROM company 
             JOIN activity_sector ON company.id_sector = activity_sector.id_sector
             WHERE company.id_user != ? AND activity_sector.sector_name = ?
             LIMIT ?, ?");

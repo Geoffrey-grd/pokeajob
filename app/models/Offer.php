@@ -17,7 +17,7 @@ class Offer extends BDDlink {
     
     public function getAllOffers($limit = 12, $offset = 0) {
         
-            $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path
+            $stmt = $this->conn->prepare("SELECT offer.*, company.id_user, company.company_name, company.banner_path, company.logo_path
                 FROM offer JOIN company ON offer.id_company = company.id_user
                 WHERE offer.id_company != ?
                 ORDER BY offer.release_date DESC
@@ -66,7 +66,7 @@ class Offer extends BDDlink {
     }
 
     public function getFilteredOffers($limit, $offset, $filter) {
-        $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path FROM offer 
+        $stmt = $this->conn->prepare("SELECT offer.*, company.id_user; company.company_name, company.banner_path, company.logo_path FROM offer 
         JOIN company ON offer.id_company = company.id_user
         JOIN domain ON offer.id_domain = domain.id_domain
         WHERE company.id_user != ? AND domain.domain_name = ?
@@ -128,7 +128,7 @@ class Offer extends BDDlink {
     }
     
     public function getWishListByUserId($user_id) {
-        $stmt = $this->conn->prepare("SELECT offer.*, company.company_name, company.banner_path, company.logo_path FROM favorite_offer 
+        $stmt = $this->conn->prepare("SELECT offer.*, company.id_user,company.company_name, company.banner_path, company.logo_path FROM favorite_offer 
             JOIN offer ON favorite_offer.id_offer = offer.id_offer
             JOIN user ON favorite_offer.id_user = user.id_user
             JOIN company ON offer.id_company = company.id_user

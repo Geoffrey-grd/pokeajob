@@ -38,7 +38,7 @@
     transform: translateY(-50%);
     border-radius: 50%;
     border: 3px solid var(--color-border);
-    background: #0057ff;
+    background: #0057ff ;
     overflow: hidden;
 }
 
@@ -48,7 +48,7 @@
     object-fit: cover;
     border-radius: 50%;
     display: block;
-}
+}   
 
 .card__body {
     /* Contenu texte de la carte. */

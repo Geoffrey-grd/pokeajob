@@ -83,6 +83,47 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+
+
+
+.form-actions {
+  display: flex;
+  justify-content: center;  
+  margin-top: 1.5rem;      
+  gap: 10px;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.form-actions button:hover {
+  opacity: 0.85;
+}
+
+.btn-accept {
+  background-color: #CDCDCD;
+  color: white;
+}
+
+.btn-reject {
+  background-color: #CDCDCD;
+  color: white;
+}
+
+.btn-report {
+  background-color: #CDCDCD;
+  color: white;
+}
+
+
+
 @media (max-width: 480px) {
     .company-banner {
         height: 110px;

@@ -5,10 +5,13 @@
 <link rel="stylesheet" href="/assets/components/form.css">
 <link rel="stylesheet" href="/assets/pages/auth.css">
 <link rel="stylesheet" href="/assets/components/card.css">
+<link rel="stylesheet" href="assets/components/studentcard.css">
+<link rel="stylesheet" href="assets/pages/search.css">
+
 <div class="page-auth">
     <main>
         <div class="auth-container">
-                <div class="job-card job-card--detail">
+                <div class="job-card job-card--detail" style="width: 100%">
                     <div class="card__banner">
                         <img class="card__banner-img" src="{{ offer.banner_path }}" alt="Bannière entreprise">
                         <div class="card__company-logo">
@@ -63,11 +66,33 @@
                     <button type="submit" class="auth-submit">Apply to this offer</button>
                 </form>
             {% else %}
-                <button class="auth-submit">You have already applied to this offer</buton>
+                <button class="auth-submit">You have already applied to this offer</button>
             {% endif %}
-    {% endif %}
-
+        {% endif %}
         </div>
+
+        {% if is_owner %}
+        <section class="feed my-students__feed">
+            {% for application in applications %}
+                <section class="job-card">
+                    <a class="card__company-logo" href="/profile?id_user={{ application.id_user }}&role=etudiant&id_offer={{ application.id_offer }}"> <img src="{{ application.profile_pic_path }}" alt="Profile Picture"></a>
+
+                    <a class="card__body" href="/profile?id_user={{ application.id_user }}&role=etudiant&id_offer={{ application.id_offer }}">
+                        <h2 class="card__title"> {{ application.name }} {{ application.last_name }} </h2>
+                        {% if application.state == 'rejected' %}
+                        <img class="application-status" src="images/rejected.png" alt="rejected">
+                        {% elseif application.state == 'accepted' %}
+                        <img class="application-status" src="images/accepted.png" alt="accepted">
+                        {% elseif application.state == 'reported' %}
+                        <img class="application-status" src="images/reported.png" alt="reported">
+                        {% endif %} 
+                    </a>
+
+                    
+                </section>
+            {% endfor %}
+        </section>
+        {% endif %}
     </main>
 </div>
 
